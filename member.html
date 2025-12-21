@@ -23,7 +23,7 @@
 
     <section class="bg-white border-b p-6 shadow-sm">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-xl font-bold mb-4 text-gray-800">بحث متقدم عن شريك الحياة 🔍</h2>
+            <h2 class="text-xl font-bold mb-4 text-gray-800">بحث عن شريك الحياة 🔍</h2>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
                     <label class="block text-xs text-gray-500 mb-1">النوع</label>
@@ -55,24 +55,32 @@
     </section>
 
     <main class="max-w-6xl mx-auto py-10 px-4">
-        <div id="membersList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            </div>
-        
-        <div id="noResults" class="hidden text-center py-20">
-            <p class="text-gray-400 text-xl font-bold text-center">عذراً، لم نجد نتائج تطابق بحثك 😕</p>
-        </div>
+        <div id="loading" class="text-center py-10 text-gray-500">جاري تحميل المشتركين...</div>
+        <div id="membersList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+        <div id="noResults" class="hidden text-center py-20 text-gray-400 text-xl font-bold">عذراً، لم نجد نتائج 😕</div>
     </main>
 
     <script>
-        // بيانات المشتركين (يا مصعب هنا بتضيف المشتركين اللي بيسجلوا عندك)
-        const members = [
-            { name: "ود النيل", age: 29, city: "الخرطوم", gender: "ذكر", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400", verified: true },
-            { name: "بنت العز", age: 24, city: "بورتسودان", gender: "أنثى", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400", verified: true },
-            { name: "سوداني أصيل", age: 35, city: "ود مدني", gender: "ذكر", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400", verified: false },
-            { name: "نور الهدى", age: 22, city: "الخرطوم", gender: "أنثى", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400", verified: true },
-            { name: "الفارس", age: 31, city: "خارج السودان", gender: "ذكر", image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400", verified: true },
-            { name: "الدرة", age: 27, city: "الجزيرة", gender: "أنثى", image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400", verified: false },
-        ];
+        let allMembers = [];
+        const dbURL = "https://naseeb-project-1030a-default-rtdb.asia-southeast1.firebasedatabase.app/members.json";
+
+        async function loadMembers() {
+            try {
+                const response = await fetch(dbURL);
+                const data = await response.json();
+                document.getElementById('loading').classList.add('hidden');
+                
+                if (data) {
+                    allMembers = Object.values(data);
+                    displayMembers(allMembers);
+                } else {
+                    document.getElementById('noResults').classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("خطأ في التحميل:", error);
+                document.getElementById('loading').innerText = "حدث خطأ أثناء تحميل البيانات.";
+            }
+        }
 
         function displayMembers(data) {
             const list = document.getElementById('membersList');
@@ -89,7 +97,7 @@
                 const card = `
                     <div class="member-card bg-white rounded-3xl shadow-sm border overflow-hidden">
                         <div class="h-56 relative bg-gray-200">
-                            <img src="${m.image}" class="w-full h-full object-cover">
+                            <img src="${m.image || 'https://via.placeholder.com/400x300?text=No+Image'}" class="w-full h-full object-cover">
                             ${m.verified ? '<span class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] px-2 py-1 rounded-full">✅ موثق</span>' : ''}
                         </div>
                         <div class="p-5">
@@ -97,9 +105,9 @@
                             <div class="flex flex-wrap gap-2 mt-3 text-xs">
                                 <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full">🎂 ${m.age} سنة</span>
                                 <span class="bg-gray-50 text-gray-600 px-3 py-1 rounded-full">📍 ${m.city}</span>
-                                <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full">👤 ${m.gender}</span>
+                                <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full">💍 ${m.status || 'أعزب'}</span>
                             </div>
-                            <button onclick="alert('سجل في الباقة الذهبية للتواصل')" class="w-full mt-5 bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition shadow-md">اطلب تواصل</button>
+                            <button onclick="alert('تواصل مع الإدارة برقم: 0912345678')" class="w-full mt-5 bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition">اطلب تواصل</button>
                         </div>
                     </div>
                 `;
@@ -112,17 +120,15 @@
             const city = document.getElementById('filterCity').value;
             const age = document.getElementById('filterAge').value;
 
-            const filtered = members.filter(m => {
+            const filtered = allMembers.filter(m => {
                 return (gender === 'all' || m.gender === gender) &&
                        (city === 'all' || m.city === city) &&
                        (!age || m.age <= age);
             });
-
             displayMembers(filtered);
         }
 
-        // عرض الكل عند فتح الصفحة لأول مرة
-        displayMembers(members);
+        window.onload = loadMembers;
     </script>
 </body>
 </html>
