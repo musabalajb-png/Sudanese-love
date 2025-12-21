@@ -10,7 +10,6 @@
         body { font-family: 'Cairo', sans-serif; }
         .rtl { direction: rtl; }
         .ltr { direction: ltr; }
-        /* خلفية الهيرو مع صورة معبرة */
         .hero-section {
             background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
                               url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
@@ -32,7 +31,7 @@
             <h1 id="title" class="text-4xl md:text-6xl font-bold mb-6">أهلاً بك في منصة نصيب</h1>
             <p id="subtitle" class="text-xl mb-10 opacity-90">نجمع القلوب بالحلال وفقاً للقيم والتقاليد السودانية الأصيلة</p>
             <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <button class="bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg shadow-xl hover:bg-green-700 transition">سجل الآن مجاناً</button>
+                <a href="register.html" class="bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg shadow-xl hover:bg-green-700 transition inline-block text-center">سجل الآن مجاناً</a>
                 <button class="bg-white/20 backdrop-blur-sm text-white border border-white font-bold py-4 px-10 rounded-full text-lg hover:bg-white/30 transition">تعرف علينا</button>
             </div>
         </div>
@@ -77,7 +76,7 @@
                         <li>تصفح محدود</li>
                         <li>إنشاء ملف شخصي</li>
                     </ul>
-                    <button class="w-full border-2 border-green-700 text-green-700 py-3 rounded-xl font-bold hover:bg-green-700 hover:text-white transition">اختيار</button>
+                    <a href="register.html" class="w-full border-2 border-green-700 text-green-700 py-3 rounded-xl font-bold hover:bg-green-700 hover:text-white transition inline-block">اختيار</a>
                 </div>
                 <div class="bg-white p-8 rounded-3xl shadow-2xl border-4 border-green-600 text-center relative transform scale-105">
                     <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-600 text-white px-6 py-1 rounded-full text-sm font-bold">الأكثر طلباً</div>
@@ -89,7 +88,7 @@
                         <li>أولوية في الظهور</li>
                         <li>دعم فني مباشر</li>
                     </ul>
-                    <button class="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition">اشترك الآن</button>
+                    <a href="register.html" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition inline-block">اشترك الآن</a>
                 </div>
                 <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-200 text-center hover:shadow-lg transition">
                     <span class="text-4xl mb-4 block">💎</span>
@@ -99,7 +98,7 @@
                         <li>مستشار زواج خاص</li>
                         <li>توثيق ذهبي للحساب</li>
                     </ul>
-                    <button class="w-full border-2 border-green-700 text-green-700 py-3 rounded-xl font-bold hover:bg-green-700 hover:text-white transition">اختيار</button>
+                    <a href="register.html" class="w-full border-2 border-green-700 text-green-700 py-3 rounded-xl font-bold hover:bg-green-700 hover:text-white transition inline-block">اختيار</a>
                 </div>
             </div>
         </div>
@@ -115,7 +114,6 @@
             body.className = currentLang === 'ar' ? 'rtl bg-gray-50' : 'ltr bg-gray-50';
             btn.innerText = currentLang === 'ar' ? 'English' : 'العربية';
             
-            // تحديث النصوص
             document.getElementById('title').innerText = currentLang === 'ar' ? 'أهلاً بك في منصة نصيب' : 'Welcome to Nasib Platform';
             document.getElementById('subtitle').innerText = currentLang === 'ar' ? 'نجمع القلوب بالحلال وفقاً للقيم والتقاليد السودانية الأصيلة' : 'Connecting hearts through Halal based on Sudanese values';
             document.getElementById('plansTitle').innerText = currentLang === 'ar' ? 'باقات العضوية' : 'Membership Plans';
