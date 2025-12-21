@@ -17,21 +17,21 @@
             <p class="text-green-100 text-sm">أكمل بياناتك للانضمام إلى منصة نصيب</p>
         </div>
         
-        <form class="p-8 space-y-6">
+        <form action="https://formspree.io/f/mqakpgyq" method="POST" enctype="multipart/form-data" class="p-8 space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">الاسم المستعار</label>
-                    <input type="text" placeholder="مثلاً: ود النيل" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none">
+                    <input type="text" name="الاسم" required placeholder="مثلاً: ود النيل" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none">
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">العمر</label>
-                    <input type="number" placeholder="25" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none">
+                    <input type="number" name="العمر" required placeholder="25" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none">
                 </div>
             </div>
 
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-2">مكان السكن (الولاية/المدينة)</label>
-                <select class="w-full border border-gray-300 p-3 rounded-xl outline-none">
+                <select name="السكن" class="w-full border border-gray-300 p-3 rounded-xl outline-none">
                     <option>الخرطوم</option>
                     <option>الجزيرة</option>
                     <option>بورتسودان</option>
@@ -43,24 +43,18 @@
                 <h3 class="font-bold text-green-800 text-sm">التوثيق والأمان 🛡️</h3>
                 
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 mb-1">الصورة الشخصية (للملف الشخصي)</label>
-                    <input type="file" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700">
+                    <label class="block text-xs font-bold text-gray-600 mb-1">الصورة الشخصية</label>
+                    <input type="file" name="الصورة_الشخصية" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 mb-1">إثبات الشخصية (بطاقة أو جواز - سري للإدارة)</label>
-                    <input type="file" accept="image/*,.pdf" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-600 file:text-white hover:file:bg-gray-700">
-                    <p class="text-[10px] text-red-500 mt-1">* لن تظهر هذه الوثيقة لأي مستخدم آخر، هي للتوثيق فقط.</p>
+                    <label class="block text-xs font-bold text-gray-600 mb-1">إثبات الشخصية (بطاقة/جواز)</label>
+                    <input type="file" name="إثبات_الهوية" accept="image/*,.pdf" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-600 file:text-white hover:file:bg-gray-700">
                 </div>
             </div>
 
-            <div class="flex items-center gap-2">
-                <input type="checkbox" id="terms" class="w-4 h-4 text-green-600">
-                <label for="terms" class="text-xs text-gray-600">أوافق على شروط الاستخدام وسياسة الخصوصية السودانية</label>
-            </div>
-
-            <button type="button" onclick="alert('تم استلام طلبك! سيتم مراجعة البيانات والوثائق وتفعيل الحساب قريباً.')" class="w-full bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-green-800 transition">
-                إرسال الطلب للتدقيق
+            <button type="submit" class="w-full bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-green-800 transition">
+                إرسال الطلب وتوثيق الحساب
             </button>
             
             <p class="text-center text-sm text-gray-500">
