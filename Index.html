@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نصيب - للزواج السوداني</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+        .rtl { direction: rtl; }
+        .ltr { direction: ltr; }
+    </style>
+</head>
+<body id="mainBody" class="rtl bg-gray-50">
+    <nav class="bg-white shadow-sm p-4 flex justify-between items-center sticky top-0 z-50">
+        <div class="text-2xl font-bold text-green-700">نصيب 💍</div>
+        <button id="langBtn" class="bg-gray-200 px-4 py-2 rounded-lg text-sm font-bold">English</button>
+    </nav>
+
+    <header class="py-20 px-6 text-center bg-gradient-to-r from-green-600 to-green-800 text-white">
+        <h1 id="title" class="text-4xl font-bold mb-4">أهلاً بك في منصة نصيب</h1>
+        <p id="subtitle" class="text-lg mb-8">طريقك الحلال للبحث عن شريك الحياة السوداني</p>
+        <button class="bg-yellow-500 text-black font-bold py-3 px-10 rounded-full hover:bg-yellow-400 transition">ابدأ الآن</button>
+    </header>
+
+    <section class="py-16 px-4 max-w-5xl mx-auto">
+        <h2 id="plansTitle" class="text-3xl font-bold text-center mb-12">باقات الاشتراك</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-xl shadow border text-center">
+                <h3 class="font-bold text-xl mb-2">أساسي</h3>
+                <p class="text-3xl font-bold mb-6">$10</p>
+                <button class="w-full bg-green-700 text-white py-2 rounded-lg">اشترك</button>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-xl border-2 border-green-700 text-center transform scale-105">
+                <h3 class="font-bold text-xl mb-2 text-green-700">ذهبي</h3>
+                <p class="text-3xl font-bold mb-6">$25</p>
+                <button class="w-full bg-green-700 text-white py-2 rounded-lg">اشترك</button>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow border text-center">
+                <h3 class="font-bold text-xl mb-2">VIP</h3>
+                <p class="text-3xl font-bold mb-6">$50</p>
+                <button class="w-full bg-green-700 text-white py-2 rounded-lg">اشترك</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const btn = document.getElementById('langBtn');
+        const body = document.getElementById('mainBody');
+        let currentLang = 'ar';
+
+        btn.onclick = () => {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            body.className = currentLang === 'ar' ? 'rtl bg-gray-50' : 'ltr bg-gray-50';
+            btn.innerText = currentLang === 'ar' ? 'English' : 'العربية';
+            document.getElementById('title').innerText = currentLang === 'ar' ? 'أهلاً بك في منصة نصيب' : 'Welcome to Nasib Platform';
+            document.getElementById('subtitle').innerText = currentLang === 'ar' ? 'طريقك الحلال للبحث عن شريك الحياة السوداني' : 'Your Halal way to find a Sudanese partner';
+            document.getElementById('plansTitle').innerText = currentLang === 'ar' ? 'باقات الاشتراك' : 'Subscription Plans';
+        };
+    </script>
+</body>
+</html>
