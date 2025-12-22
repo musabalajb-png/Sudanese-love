@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نصيب - للزواج السوداني</title>
+    <title>نصيب - للزواج الإسلامي العالمي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-        body { font-family: 'Cairo', sans-serif; }
+        body { font-family: 'Cairo', sans-serif; transition: all 0.3s ease; }
         .rtl { direction: rtl; }
         .ltr { direction: ltr; }
         .hero-section {
@@ -21,18 +21,21 @@
 <body id="mainBody" class="rtl bg-gray-50">
     <nav class="bg-white/90 backdrop-blur-md shadow-sm p-4 flex justify-between items-center sticky top-0 z-50">
         <div class="text-2xl font-bold text-green-700 flex items-center gap-2">
-            <span>💍</span> نصيب
+            <span>💍</span> <span id="navLogo">نصيب</span>
         </div>
-        <button id="langBtn" class="border-2 border-green-700 text-green-700 px-4 py-1 rounded-full text-sm font-bold hover:bg-green-700 hover:text-white transition">English</button>
+        <div class="flex items-center gap-4">
+            <a href="members.html" id="navBrowse" class="text-gray-600 font-bold hover:text-green-700 transition">تصفح المشتركين</a>
+            <button id="langBtn" class="border-2 border-green-700 text-green-700 px-4 py-1 rounded-full text-sm font-bold hover:bg-green-700 hover:text-white transition">English</button>
+        </div>
     </nav>
 
     <header class="hero-section h-[80vh] flex items-center justify-center text-white px-6">
         <div class="text-center max-w-3xl">
-            <h1 id="title" class="text-4xl md:text-6xl font-bold mb-6">أهلاً بك في منصة نصيب</h1>
-            <p id="subtitle" class="text-xl mb-10 opacity-90">نجمع القلوب بالحلال وفقاً للقيم والتقاليد السودانية الأصيلة</p>
+            <h1 id="title" class="text-4xl md:text-6xl font-bold mb-6">أهلاً بك في منصة نصيب العالمية</h1>
+            <p id="subtitle" class="text-xl mb-10 opacity-90">نجمع القلوب بالحلال وفقاً للقيم والشريعة الإسلامية في كل أنحاء العالم</p>
             <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="register.html" class="bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg shadow-xl hover:bg-green-700 transition inline-block text-center">سجل الآن مجاناً</a>
-                <button class="bg-white/20 backdrop-blur-sm text-white border border-white font-bold py-4 px-10 rounded-full text-lg hover:bg-white/30 transition">تعرف علينا</button>
+                <a href="register.html" id="regBtn" class="bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg shadow-xl hover:bg-green-700 transition inline-block text-center">سجل الآن مجاناً</a>
+                <button id="aboutBtn" class="bg-white/20 backdrop-blur-sm text-white border border-white font-bold py-4 px-10 rounded-full text-lg hover:bg-white/30 transition">تعرف علينا</button>
             </div>
         </div>
     </header>
@@ -44,22 +47,22 @@
                 <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span class="text-3xl">📝</span>
                 </div>
-                <h3 class="font-bold text-xl mb-2">أنشئ ملفك</h3>
-                <p class="text-gray-600">سجل بياناتك بكل خصوصية وأمان</p>
+                <h3 id="step1T" class="font-bold text-xl mb-2">أنشئ ملفك</h3>
+                <p id="step1D" class="text-gray-600">سجل بياناتك بكل خصوصية وأمان</p>
             </div>
             <div class="text-center">
                 <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span class="text-3xl">🔍</span>
                 </div>
-                <h3 class="font-bold text-xl mb-2">ابحث وتصفح</h3>
-                <p class="text-gray-600">تصفح ملفات المشتركين الموثقة</p>
+                <h3 id="step2T" class="font-bold text-xl mb-2">ابحث وتصفح</h3>
+                <p id="step2D" class="text-gray-600">تصفح ملفات المشتركين من مختلف الدول</p>
             </div>
             <div class="text-center">
                 <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span class="text-3xl">💬</span>
                 </div>
-                <h3 class="font-bold text-xl mb-2">تواصل بالحلال</h3>
-                <p class="text-gray-600">دردشة آمنة بإشراف المنصة</p>
+                <h3 id="step3T" class="font-bold text-xl mb-2">تواصل بالحلال</h3>
+                <p id="step3D" class="text-gray-600">تواصل آمن تحت إشراف المنصة</p>
             </div>
         </div>
     </section>
@@ -70,54 +73,116 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-200 text-center hover:shadow-lg transition">
                     <span class="text-4xl mb-4 block">🌱</span>
-                    <h3 class="font-bold text-xl mb-2">باقة أساسي</h3>
+                    <h3 id="p1T" class="font-bold text-xl mb-2">باقة أساسي</h3>
                     <p class="text-4xl font-bold mb-6 text-gray-800">$10</p>
                     <ul class="text-gray-500 mb-8 text-sm space-y-2">
-                        <li>تصفح محدود</li>
-                        <li>إنشاء ملف شخصي</li>
+                        <li id="p1L1">تصفح محدود</li>
+                        <li id="p1L2">إنشاء ملف شخصي</li>
                     </ul>
-                    <a href="register.html" class="w-full border-2 border-green-700 text-green-700 py-3 rounded-xl font-bold hover:bg-green-700 hover:text-white transition inline-block">اختيار</a>
+                    <a href="register.html" class="w-full border-2 border-green-700 text-green-700 py-3 rounded-xl font-bold hover:bg-green-700 hover:text-white transition inline-block selectBtn">اختيار</a>
                 </div>
                 <div class="bg-white p-8 rounded-3xl shadow-2xl border-4 border-green-600 text-center relative transform scale-105">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-600 text-white px-6 py-1 rounded-full text-sm font-bold">الأكثر طلباً</div>
+                    <div id="badge" class="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-600 text-white px-6 py-1 rounded-full text-sm font-bold">الأكثر طلباً</div>
                     <span class="text-4xl mb-4 block">👑</span>
-                    <h3 class="font-bold text-xl mb-2 text-green-700">باقة ذهبي</h3>
+                    <h3 id="p2T" class="font-bold text-xl mb-2 text-green-700">باقة ذهبي</h3>
                     <p class="text-4xl font-bold mb-6 text-gray-800">$25</p>
                     <ul class="text-gray-600 mb-8 text-sm space-y-2">
-                        <li>تصفح غير محدود</li>
-                        <li>أولوية في الظهور</li>
-                        <li>دعم فني مباشر</li>
+                        <li id="p2L1">تصفح غير محدود</li>
+                        <li id="p2L2">أولوية في الظهور</li>
+                        <li id="p2L3">دعم فني مباشر</li>
                     </ul>
-                    <a href="register.html" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition inline-block">اشترك الآن</a>
+                    <a href="register.html" id="p2Btn" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition inline-block">اشترك الآن</a>
                 </div>
                 <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-200 text-center hover:shadow-lg transition">
                     <span class="text-4xl mb-4 block">💎</span>
-                    <h3 class="font-bold text-xl mb-2">باقة VIP</h3>
+                    <h3 id="p3T" class="font-bold text-xl mb-2">باقة VIP</h3>
                     <p class="text-4xl font-bold mb-6 text-gray-800">$50</p>
                     <ul class="text-gray-500 mb-8 text-sm space-y-2">
-                        <li>مستشار زواج خاص</li>
-                        <li>توثيق ذهبي للحساب</li>
+                        <li id="p3L1">مستشار زواج خاص</li>
+                        <li id="p3L2">توثيق ذهبي للحساب</li>
                     </ul>
-                    <a href="register.html" class="w-full border-2 border-green-700 text-green-700 py-3 rounded-xl font-bold hover:bg-green-700 hover:text-white transition inline-block">اختيار</a>
+                    <a href="register.html" class="w-full border-2 border-green-700 text-green-700 py-3 rounded-xl font-bold hover:bg-green-700 hover:text-white transition inline-block selectBtn">اختيار</a>
                 </div>
             </div>
         </div>
     </section>
+
+    <footer class="bg-white py-10 border-t text-center">
+        <p class="text-gray-500 text-sm">© 2025 Naseeb Platform - Global Islamic Marriage</p>
+        <p class="text-gray-400 text-xs mt-2">Contact: support@naseeb.com</p>
+    </footer>
 
     <script>
         const btn = document.getElementById('langBtn');
         const body = document.getElementById('mainBody');
         let currentLang = 'ar';
 
+        const translations = {
+            ar: {
+                navLogo: "نصيب",
+                navBrowse: "تصفح المشتركين",
+                title: "أهلاً بك في منصة نصيب العالمية",
+                subtitle: "نجمع القلوب بالحلال وفقاً للقيم والشريعة الإسلامية في كل أنحاء العالم",
+                regBtn: "سجل الآن مجاناً",
+                aboutBtn: "تعرف علينا",
+                howTitle: "كيف تجد شريك حياتك؟",
+                step1T: "أنشئ ملفك", step1D: "سجل بياناتك بكل خصوصية وأمان",
+                step2T: "ابحث وتصفح", step2D: "تصفح ملفات المشتركين من مختلف الدول",
+                step3T: "تواصل بالحلال", step3D: "تواصل آمن تحت إشراف المنصة",
+                plansTitle: "باقات العضوية",
+                badge: "الأكثر طلباً",
+                p1T: "باقة أساسي", p1L1: "تصفح محدود", p1L2: "إنشاء ملف شخصي",
+                p2T: "باقة ذهبي", p2L1: "تصفح غير محدود", p2L2: "أولوية في الظهور", p2L3: "دعم فني مباشر", p2Btn: "اشترك الآن",
+                p3T: "باقة VIP", p3L1: "مستشار زواج خاص", p3L2: "توثيق ذهبي للحساب",
+                select: "اختيار"
+            },
+            en: {
+                navLogo: "Naseeb",
+                navBrowse: "Browse Members",
+                title: "Welcome to Global Naseeb Platform",
+                subtitle: "Connecting hearts through Halal according to Islamic values worldwide",
+                regBtn: "Register Now Free",
+                aboutBtn: "About Us",
+                howTitle: "How it works?",
+                step1T: "Create Profile", step1D: "Register your data with privacy and security",
+                step2T: "Search & Browse", step2D: "Browse verified profiles from different countries",
+                step3T: "Halal Connection", step3D: "Secure communication supervised by the platform",
+                plansTitle: "Membership Plans",
+                badge: "Most Popular",
+                p1T: "Basic Plan", p1L1: "Limited Browsing", p1L2: "Create Profile",
+                p2T: "Gold Plan", p2L1: "Unlimited Browsing", p2L2: "Priority Appearance", p2L3: "Live Support", p2Btn: "Subscribe Now",
+                p3T: "VIP Plan", p3L1: "Private Consultant", p3L2: "Golden Verification",
+                select: "Select"
+            }
+        };
+
         btn.onclick = () => {
             currentLang = currentLang === 'ar' ? 'en' : 'ar';
             body.className = currentLang === 'ar' ? 'rtl bg-gray-50' : 'ltr bg-gray-50';
             btn.innerText = currentLang === 'ar' ? 'English' : 'العربية';
             
-            document.getElementById('title').innerText = currentLang === 'ar' ? 'أهلاً بك في منصة نصيب' : 'Welcome to Nasib Platform';
-            document.getElementById('subtitle').innerText = currentLang === 'ar' ? 'نجمع القلوب بالحلال وفقاً للقيم والتقاليد السودانية الأصيلة' : 'Connecting hearts through Halal based on Sudanese values';
-            document.getElementById('plansTitle').innerText = currentLang === 'ar' ? 'باقات العضوية' : 'Membership Plans';
-            document.getElementById('howTitle').innerText = currentLang === 'ar' ? 'كيف تجد شريك حياتك؟' : 'How it works?';
+            const t = translations[currentLang];
+            
+            // تحديث كل النصوص في الصفحة
+            document.getElementById('navLogo').innerText = t.navLogo;
+            document.getElementById('navBrowse').innerText = t.navBrowse;
+            document.getElementById('title').innerText = t.title;
+            document.getElementById('subtitle').innerText = t.subtitle;
+            document.getElementById('regBtn').innerText = t.regBtn;
+            document.getElementById('aboutBtn').innerText = t.aboutBtn;
+            document.getElementById('howTitle').innerText = t.howTitle;
+            document.getElementById('step1T').innerText = t.step1T; document.getElementById('step1D').innerText = t.step1D;
+            document.getElementById('step2T').innerText = t.step2T; document.getElementById('step2D').innerText = t.step2D;
+            document.getElementById('step3T').innerText = t.step3T; document.getElementById('step3D').innerText = t.step3D;
+            document.getElementById('plansTitle').innerText = t.plansTitle;
+            document.getElementById('badge').innerText = t.badge;
+            document.getElementById('p1T').innerText = t.p1T; document.getElementById('p1L1').innerText = t.p1L1; document.getElementById('p1L2').innerText = t.p1L2;
+            document.getElementById('p2T').innerText = t.p2T; document.getElementById('p2L1').innerText = t.p2L1; document.getElementById('p2L2').innerText = t.p2L2; document.getElementById('p2L3').innerText = t.p2L3;
+            document.getElementById('p2Btn').innerText = t.p2Btn;
+            document.getElementById('p3T').innerText = t.p3T; document.getElementById('p3L1').innerText = t.p3L1; document.getElementById('p3L2').innerText = t.p3L2;
+            
+            // تحديث أزرار "اختيار"
+            document.querySelectorAll('.selectBtn').forEach(b => b.innerText = t.select);
         };
     </script>
 </body>
