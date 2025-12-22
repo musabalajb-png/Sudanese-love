@@ -3,70 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تصفح المشتركين - نصيب العالمي</title>
+    <title>تصفح الأعضاء - نصيب العالمي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
         body { font-family: 'Cairo', sans-serif; }
-        .member-card { transition: all 0.3s ease; }
-        .member-card:hover { transform: translateY(-5px); }
+        .member-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .member-card:hover { transform: translateY(-10px); shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+        .blur-image { filter: blur(8px); transition: filter 0.3s; }
+        .image-container:hover .blur-image { filter: blur(0px); } /* اختياري: يظهر عند التمرير أو نلغيها ونخليها بالضغط */
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <nav class="bg-white shadow-sm p-4 sticky top-0 z-50">
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm p-4 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="text-2xl font-bold text-green-700">💍 نصيب العالمي</div>
-            <a href="index.html" class="bg-gray-100 px-4 py-2 rounded-lg text-sm font-bold text-gray-600">الرئيسية</a>
+            <div class="text-2xl font-bold text-green-700 flex items-center gap-2">
+                <span>💍</span> نصيب العالمي
+            </div>
+            <div class="flex gap-3">
+                <a href="index.html" class="text-gray-500 hover:text-green-700 font-bold py-2 px-4 transition">الرئيسية</a>
+                <a href="register.html" class="bg-green-700 text-white px-5 py-2 rounded-full text-sm font-bold shadow-md">سجل الآن</a>
+            </div>
         </div>
     </nav>
 
-    <section class="bg-white border-b p-6 shadow-sm">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-xl font-bold mb-4 text-gray-800">البحث عن شريك الحياة (عالمي) 🌍</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                    <label class="block text-xs text-gray-500 mb-1">النوع</label>
-                    <select id="filterGender" class="w-full border p-3 rounded-xl outline-none focus:ring-2 focus:ring-green-500">
-                        <option value="all">الكل</option>
-                        <option value="ذكر">ذكر</option>
-                        <option value="أنثى">أنثى</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-500 mb-1">الدولة / المنطقة</label>
-                    <select id="filterCity" class="w-full border p-3 rounded-xl outline-none focus:ring-2 focus:ring-green-500">
-                        <option value="all">كل العالم</option>
-                        <option value="السودان">السودان</option>
-                        <option value="السعودية">السعودية</option>
-                        <option value="مصر">مصر</option>
-                        <option value="الإمارات">الإمارات</option>
-                        <option value="المغرب">المغرب</option>
-                        <option value="أوروبا">أوروبا</option>
-                        <option value="أمريكا">أمريكا</option>
-                        <option value="أخرى">دولة أخرى</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-500 mb-1">العمر الأقصى</label>
-                    <input type="number" id="filterAge" placeholder="مثلاً: 40" class="w-full border p-3 rounded-xl outline-none focus:ring-2 focus:ring-green-500">
-                </div>
-                <div class="flex items-end">
-                    <button onclick="applyFilters()" class="w-full bg-green-700 text-white font-bold py-3 rounded-xl hover:bg-green-800 transition shadow-md">تطبيق البحث</button>
-                </div>
+    <header class="bg-white border-b shadow-sm">
+        <div class="max-w-6xl mx-auto p-6">
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">اكتشف شريك حياتك 🔍</h1>
+                <input type="text" id="nameSearch" onkeyup="filterMembers()" placeholder="ابحث بالاسم المستعار..." class="w-full md:w-64 border-2 border-gray-100 p-3 rounded-2xl focus:border-green-500 outline-none transition">
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <select id="filterGender" onchange="filterMembers()" class="bg-gray-50 border-none p-4 rounded-2xl outline-none ring-1 ring-gray-200 focus:ring-2 focus:ring-green-500">
+                    <option value="all">كل الأجناس</option>
+                    <option value="ذكر">ذكر</option>
+                    <option value="أنثى">أنثى</option>
+                </select>
+
+                <select id="filterCity" onchange="filterMembers()" class="bg-gray-50 border-none p-4 rounded-2xl outline-none ring-1 ring-gray-200 focus:ring-2 focus:ring-green-500">
+                    <option value="all">كل العالم</option>
+                    <option value="السودان">السودان</option>
+                    <option value="السعودية">السعودية</option>
+                    <option value="مصر">مصر</option>
+                    <option value="الإمارات">الإمارات</option>
+                    <option value="المغرب">المغرب</option>
+                    <option value="أوروبا">أوروبا</option>
+                    <option value="أخرى">دول أخرى</option>
+                </select>
+
+                <select id="filterAge" onchange="filterMembers()" class="bg-gray-50 border-none p-4 rounded-2xl outline-none ring-1 ring-gray-200 focus:ring-2 focus:ring-green-500">
+                    <option value="100">كل الأعمار</option>
+                    <option value="25">حتى 25 سنة</option>
+                    <option value="35">حتى 35 سنة</option>
+                    <option value="45">حتى 45 سنة</option>
+                </select>
+
+                <button onclick="resetFilters()" class="text-green-700 font-bold hover:bg-green-50 rounded-2xl transition">إعادة ضبط</button>
             </div>
         </div>
-    </section>
+    </header>
 
-    <main class="max-w-6xl mx-auto py-10 px-4">
-        <div id="loading" class="text-center py-10 text-gray-500">جاري تحميل المشتركين من حول العالم...</div>
-        <div id="membersList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-        <div id="noResults" class="hidden text-center py-20 text-gray-400 text-xl font-bold">عذراً، لم نجد نتائج تطابق بحثك 😕</div>
+    <main class="max-w-6xl mx-auto py-12 px-4">
+        <div id="loading" class="text-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-700 mx-auto mb-4"></div>
+            <p class="text-gray-500">جاري البحث في قاعدة البيانات العالمية...</p>
+        </div>
+
+        <div id="membersList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
+        
+        <div id="noResults" class="hidden text-center py-20">
+            <img src="https://cdn-icons-png.flaticon.com/512/6134/6134065.png" class="w-32 mx-auto mb-4 opacity-20">
+            <p class="text-gray-400 text-xl font-bold">عذراً، لم نجد طلبك.. جرب خيارات بحث أخرى</p>
+        </div>
     </main>
 
     <script>
         let allMembers = [];
-        // الرابط يقرأ من مجلد members اللي فيه بياناتك هسي
         const dbURL = "https://naseeb-project-1030a-default-rtdb.asia-southeast1.firebasedatabase.app/members.json";
 
         async function loadMembers() {
@@ -76,19 +90,13 @@
                 document.getElementById('loading').classList.add('hidden');
                 
                 if (data) {
-                    // تحويل البيانات لتعمل مع النظام العالمي الجديد
-                    if (data.name) {
-                        allMembers = [data]; // لو في مشترك واحد مباشر
-                    } else {
-                        allMembers = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-                    }
+                    allMembers = data.name ? [data] : Object.keys(data).map(key => ({ id: key, ...data[key] }));
                     displayMembers(allMembers);
                 } else {
                     document.getElementById('noResults').classList.remove('hidden');
                 }
             } catch (error) {
-                console.error("خطأ:", error);
-                document.getElementById('loading').innerText = "حدث خطأ في جلب البيانات.";
+                document.getElementById('loading').innerHTML = "<p class='text-red-500 font-bold text-lg'>فشل الاتصال بالخادم.. تأكد من الإنترنت</p>";
             }
         }
 
@@ -105,21 +113,39 @@
             noRes.classList.add('hidden');
             data.forEach(m => {
                 const card = `
-                    <div class="member-card bg-white rounded-3xl shadow-sm border overflow-hidden">
-                        <div class="h-56 relative bg-gray-200">
-                            <img src="${m.image || 'https://via.placeholder.com/400x300?text=No+Image'}" 
-                                 class="w-full h-full object-cover" 
-                                 onerror="this.src='https://via.placeholder.com/400x300?text=Image+Not+Found'">
-                            ${m.verified === true || m.verified === 'true' ? '<span class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] px-2 py-1 rounded-full">✅ موثق</span>' : ''}
-                        </div>
-                        <div class="p-5">
-                            <h3 class="font-bold text-lg text-gray-800">${m.name || 'مشترك جديد'}</h3>
-                            <div class="flex flex-wrap gap-2 mt-3 text-xs">
-                                <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full">🎂 ${m.age || '--'} سنة</span>
-                                <span class="bg-gray-50 text-gray-600 px-3 py-1 rounded-full">📍 ${m.city || 'غير محدد'}</span>
-                                <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full">💍 ${m.status || 'أعزب'}</span>
+                    <div class="member-card bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+                        <div class="h-64 relative overflow-hidden group image-container">
+                            <img src="${m.image || 'https://via.placeholder.com/400x500?text=Private+Photo'}" 
+                                 class="w-full h-full object-cover blur-image transition duration-500">
+                            
+                            <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-100 transition-opacity">
+                                <button onclick="alert('لخصوصية الأعضاء، الصور لا تظهر إلا بعد التواصل المبدئي')" class="bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full text-xs border border-white/30">🔒 اطلب رؤية الصورة</button>
                             </div>
-                            <button onclick="alert('تواصل مع الإدارة الدولية برقم: 0912345678')" class="w-full mt-5 bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition">اطلب تواصل</button>
+
+                            ${m.verified === true || m.verified === 'true' ? 
+                            '<span class="absolute top-4 right-4 bg-blue-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">✓ موثق</span>' : ''}
+                            
+                            <span class="absolute bottom-4 left-4 flex items-center gap-1 bg-green-500/80 backdrop-blur-sm text-white text-[9px] px-2 py-1 rounded-full">
+                                <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span> نشط الآن
+                            </span>
+                        </div>
+
+                        <div class="p-6 flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl text-gray-800">${m.name}</h3>
+                                <span class="text-green-600 font-bold">${m.age} سنة</span>
+                            </div>
+                            
+                            <div class="space-y-2 mb-6">
+                                <p class="text-gray-500 text-sm flex items-center gap-2">📍 ${m.city}</p>
+                                <p class="text-gray-500 text-sm flex items-center gap-2">💼 ${m.job || 'مهنة غير محددة'}</p>
+                                <p class="text-gray-400 text-xs italic">💍 ${m.status || 'أعزب'}</p>
+                            </div>
+
+                            <button onclick="alert('سيتم إرسال طلب اهتمام لـ ${m.name}. تواصل مع الإدارة برقم 0912345678')" 
+                                    class="w-full bg-green-700 text-white py-4 rounded-2xl font-bold hover:bg-green-800 transition-all shadow-md active:scale-95">
+                                ابدأ تواصل آمن
+                            </button>
                         </div>
                     </div>
                 `;
@@ -127,19 +153,28 @@
             });
         }
 
-        function applyFilters() {
+        function filterMembers() {
             const gender = document.getElementById('filterGender').value;
             const city = document.getElementById('filterCity').value;
             const age = document.getElementById('filterAge').value;
+            const name = document.getElementById('nameSearch').value.toLowerCase();
 
             const filtered = allMembers.filter(m => {
-                // الفلتر يبحث في خانة المدينة سواء كانت دولة أو مدينة
+                const matchName = m.name.toLowerCase().includes(name);
+                const matchGender = gender === 'all' || m.gender === gender;
                 const matchCity = city === 'all' || (m.city && m.city.includes(city));
-                return (gender === 'all' || m.gender === gender) &&
-                       matchCity &&
-                       (!age || parseInt(m.age) <= parseInt(age));
+                const matchAge = parseInt(m.age) <= parseInt(age);
+                return matchName && matchGender && matchCity && matchAge;
             });
             displayMembers(filtered);
+        }
+
+        function resetFilters() {
+            document.getElementById('nameSearch').value = "";
+            document.getElementById('filterGender').value = "all";
+            document.getElementById('filterCity').value = "all";
+            document.getElementById('filterAge').value = "100";
+            displayMembers(allMembers);
         }
 
         window.onload = loadMembers;
