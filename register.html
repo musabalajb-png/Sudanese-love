@@ -11,22 +11,85 @@
     </style>
 </head>
 <body class="bg-gray-100 py-10 px-4">
-    <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
+
+    <section class="max-w-6xl mx-auto mb-10">
+        <h2 class="text-center text-2xl font-bold text-gray-800 mb-8">اختر باقتك وابدأ رحلة النصيب 💍</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <div class="bg-white p-5 rounded-3xl border-2 border-gray-100 shadow-sm text-center">
+                <h3 class="font-bold text-gray-400 mb-2 text-sm">الفئة المجانية</h3>
+                <div class="text-2xl font-bold mb-4 italic">0$</div>
+                <ul class="text-right text-[11px] space-y-2 mb-6 text-gray-500">
+                    <li>✅ رسالة اهتمام واحدة يومياً</li>
+                    <li>✅ 10 هدايا (قلوب) فقط</li>
+                    <li>❌ رؤية الصور بوضوح</li>
+                    <li>❌ اتصال فيديو</li>
+                </ul>
+            </div>
+
+            <div class="bg-blue-50 p-5 rounded-3xl border-2 border-blue-200 shadow-sm text-center">
+                <h3 class="font-bold text-blue-700 mb-2 text-sm">باقة الستر</h3>
+                <div class="text-2xl font-bold mb-4 italic text-blue-800">7$</div>
+                <ul class="text-right text-[11px] space-y-2 mb-6 text-blue-700">
+                    <li>✅ 5 رسائل اهتمام يومياً</li>
+                    <li>✅ 50 هدية (قلوب/ورود)</li>
+                    <li>✅ رؤية الصور بوضوح</li>
+                    <li>❌ اتصال فيديو</li>
+                </ul>
+            </div>
+
+            <div class="bg-green-50 p-5 rounded-3xl border-2 border-green-500 shadow-md text-center relative overflow-hidden">
+                <span class="absolute top-0 right-0 bg-green-500 text-white text-[9px] px-2 py-1 rounded-bl-xl font-bold">الأكثر طلباً</span>
+                <h3 class="font-bold text-green-700 mb-2 text-sm">الباقة الذهبية</h3>
+                <div class="text-2xl font-bold mb-4 italic text-green-800">15$</div>
+                <ul class="text-right text-[11px] space-y-2 mb-6 text-green-700 font-medium">
+                    <li>✅ رسائل غير محدودة</li>
+                    <li>✅ هدايا غير محدودة</li>
+                    <li>✅ رؤية الصور بوضوح</li>
+                    <li>❌ اتصال فيديو</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-900 p-5 rounded-3xl border-2 border-yellow-500 shadow-xl text-center text-white">
+                <h3 class="font-bold text-yellow-500 mb-2 text-sm">الباقة الماسية</h3>
+                <div class="text-2xl font-bold mb-4 italic text-yellow-500">30$</div>
+                <ul class="text-right text-[11px] space-y-2 mb-6">
+                    <li>✅ كل ميزات الذهبية</li>
+                    <li>✅ اتصال فيديو مشفر</li>
+                    <li>✅ أولوية الظهور للشركاء</li>
+                    <li>✅ توثيق الحساب مجاناً</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
         <div class="bg-green-700 p-8 text-white text-center">
-            <h1 class="text-3xl font-bold">انضم لـ نصيب 💍</h1>
-            <p class="text-green-100 mt-2">رحلة البحث عن شريك الحياة تبدأ من هنا (للمسلمين حول العالم)</p>
+            <h1 class="text-3xl font-bold italic">نصيب العالمي 💍</h1>
+            <p class="text-green-100 mt-2 text-sm">سجل بياناتك بدقة لنجد لك الشريك المناسب</p>
         </div>
         
         <form action="https://formspree.io/f/mdandyav" method="POST" enctype="multipart/form-data" class="p-8 space-y-6">
             
+            <div class="mb-4">
+                <label class="block text-sm font-bold text-gray-700 mb-2">نوع الباقة المطلوبة / Selected Plan</label>
+                <select name="plan" required class="w-full border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-green-600 bg-gray-50 font-bold">
+                    <option value="Free">المجانية (0$)</option>
+                    <option value="Sattar">باقة الستر (7$)</option>
+                    <option value="Gold">الباقة الذهبية (15$)</option>
+                    <option value="Diamond">الباقة الماسية (30$)</option>
+                </select>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">البريد الإلكتروني / Email</label>
-                    <input type="email" name="email" required placeholder="example@mail.com" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none transition">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">البريد الإلكتروني</label>
+                    <input type="email" name="email" required placeholder="example@mail.com" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">الاسم المستعار / Nickname</label>
-                    <input type="text" name="name" required placeholder="مثلاً: الباحث عن الخير" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none transition">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">الاسم المستعار</label>
+                    <input type="text" name="name" required placeholder="مثلاً: الراضي بالقدر" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none">
                 </div>
             </div>
 
@@ -34,23 +97,19 @@
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">النوع / Gender</label>
                     <select name="gender" required class="w-full border border-gray-300 p-3 rounded-xl outline-none focus:ring-2 focus:ring-green-600">
-                        <option value="" disabled selected>اختر النوع</option>
                         <option value="ذكر">ذكر / Male</option>
                         <option value="أنثى">أنثى / Female</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">الدولة / Country</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">الدولة الإقامة</label>
                     <select name="city" required class="w-full border border-gray-300 p-3 rounded-xl outline-none focus:ring-2 focus:ring-green-600">
-                        <option value="" disabled selected>اختر مكان الإقامة</option>
                         <option value="السودان">السودان</option>
                         <option value="السعودية">السعودية</option>
                         <option value="الإمارات">الإمارات</option>
                         <option value="مصر">مصر</option>
-                        <option value="قطر/الكويت/البحرين">بقية دول الخليج</option>
-                        <option value="المغرب العربي">دول المغرب العربي</option>
-                        <option value="أوروبا">أوروبا / Europe</option>
-                        <option value="أمريكا/كندا">أمريكا وكندا</option>
+                        <option value="الخليج العربي">بقية دول الخليج</option>
+                        <option value="أوروبا">أوروبا / أمريكا</option>
                         <option value="أخرى">دولة أخرى</option>
                     </select>
                 </div>
@@ -58,54 +117,46 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">العمر / Age</label>
-                    <input type="number" name="age" required placeholder="25" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">العمر</label>
+                    <input type="number" name="age" required class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">المهنة / Job</label>
-                    <input type="text" name="job" required placeholder="مثلاً: مهندس" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">المهنة</label>
+                    <input type="text" name="job" required class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">الحالة / Status</label>
-                    <select name="status" required class="w-full border border-gray-300 p-3 rounded-xl outline-none focus:ring-2 focus:ring-green-600">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">الحالة</label>
+                    <select name="status" required class="w-full border border-gray-300 p-3 rounded-xl outline-none">
                         <option value="أعزب/عزباء">أعزب/عزباء</option>
                         <option value="مطلق/مطلقة">مطلق/مطلقة</option>
                         <option value="أرمل/أرملة">أرمل/أرملة</option>
-                        <option value="معدد">راغب في التعدد</option>
+                        <option value="تعدد">راغب في التعدد</option>
                     </select>
                 </div>
             </div>
 
-            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 space-y-4">
-                <h3 class="font-bold text-blue-800 flex items-center gap-2">
-                    <span>🛡️</span> التوثيق والأمان (سري للغاية)
-                </h3>
-                <p class="text-xs text-blue-600 leading-relaxed">إثبات الهوية مطلوب لضمان جدية المشتركين وحماية بنات الناس. لن يتم نشره أبداً وسيتم حذفه بعد التوثيق.</p>
-                
+            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                <h3 class="font-bold text-blue-800 flex items-center gap-2 text-sm mb-4">🛡️ التوثيق والأمان</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold text-gray-600 mb-2">صورة البروفايل (تظهر للكل)</label>
-                        <input type="file" name="image_profile" accept="image/*" required class="block w-full text-xs text-gray-500 file:bg-blue-600 file:text-white file:py-2 file:px-4 file:rounded-full file:border-0 hover:file:bg-blue-700">
+                        <label class="block text-[10px] font-bold text-gray-600 mb-2">صورة البروفايل (تظهر للكل)</label>
+                        <input type="file" name="image_profile" accept="image/*" required class="block w-full text-xs text-gray-500 file:bg-blue-600 file:text-white file:py-2 file:px-4 file:rounded-full file:border-0 cursor-pointer">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-600 mb-2">إثبات الشخصية (للإدارة فقط)</label>
-                        <input type="file" name="id_verify" accept="image/*,.pdf" required class="block w-full text-xs text-gray-500 file:bg-gray-600 file:text-white file:py-2 file:px-4 file:rounded-full file:border-0 hover:file:bg-gray-700">
+                        <label class="block text-[10px] font-bold text-gray-600 mb-2">إثبات الهوية (للإدارة فقط)</label>
+                        <input type="file" name="id_verify" accept="image/*,.pdf" required class="block w-full text-xs text-gray-500 file:bg-gray-600 file:text-white file:py-2 file:px-4 file:rounded-full file:border-0 cursor-pointer">
                     </div>
                 </div>
             </div>
 
             <div class="flex items-start gap-2 bg-yellow-50 p-4 rounded-xl border border-yellow-100">
                 <input type="checkbox" required class="mt-1">
-                <label class="text-xs text-gray-700">أقسم بالله العظيم أن بياناتي صحيحة وأن غرضي هو الزواج الشرعي الحلال، وأوافق على شروط منصة نصيب العالمية.</label>
+                <label class="text-[10px] text-gray-700 leading-tight">أقسم بالله العظيم أن بياناتي صحيحة وأن غرضي هو الزواج الشرعي الحلال، وأوافق على شروط منصة نصيب العالمية.</label>
             </div>
 
-            <button type="submit" class="w-full bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-green-800 transition transform hover:scale-[1.02]">
+            <button type="submit" class="w-full bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-green-800 transition transform hover:scale-[1.01]">
                 إرسال الطلب للمراجعة
             </button>
-            
-            <p class="text-center text-sm text-gray-500 pt-4">
-                لديك حساب بالفعل؟ <a href="members.html" class="text-green-700 font-bold hover:underline">تصفح الأعضاء</a>
-            </p>
         </form>
     </div>
 </body>
