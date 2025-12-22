@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تصفح المشتركين - نصيب</title>
+    <title>تصفح المشتركين - نصيب العالمي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
@@ -16,14 +16,14 @@
 
     <nav class="bg-white shadow-sm p-4 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="text-2xl font-bold text-green-700">💍 نصيب</div>
+            <div class="text-2xl font-bold text-green-700">💍 نصيب العالمي</div>
             <a href="index.html" class="bg-gray-100 px-4 py-2 rounded-lg text-sm font-bold text-gray-600">الرئيسية</a>
         </div>
     </nav>
 
     <section class="bg-white border-b p-6 shadow-sm">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-xl font-bold mb-4 text-gray-800">بحث عن شريك الحياة 🔍</h2>
+            <h2 class="text-xl font-bold mb-4 text-gray-800">البحث عن شريك الحياة (عالمي) 🌍</h2>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
                     <label class="block text-xs text-gray-500 mb-1">النوع</label>
@@ -34,35 +34,39 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-500 mb-1">المدينة</label>
+                    <label class="block text-xs text-gray-500 mb-1">الدولة / المنطقة</label>
                     <select id="filterCity" class="w-full border p-3 rounded-xl outline-none focus:ring-2 focus:ring-green-500">
-                        <option value="all">كل المدن</option>
-                        <option value="الخرطوم">الخرطوم</option>
-                        <option value="الجزيرة">الجزيرة</option>
-                        <option value="بورتسودان">بورتسودان</option>
-                        <option value="خارج السودان">خارج السودان</option>
+                        <option value="all">كل العالم</option>
+                        <option value="السودان">السودان</option>
+                        <option value="السعودية">السعودية</option>
+                        <option value="مصر">مصر</option>
+                        <option value="الإمارات">الإمارات</option>
+                        <option value="المغرب">المغرب</option>
+                        <option value="أوروبا">أوروبا</option>
+                        <option value="أمريكا">أمريكا</option>
+                        <option value="أخرى">دولة أخرى</option>
                     </select>
                 </div>
                 <div>
                     <label class="block text-xs text-gray-500 mb-1">العمر الأقصى</label>
-                    <input type="number" id="filterAge" placeholder="مثلاً: 35" class="w-full border p-3 rounded-xl outline-none focus:ring-2 focus:ring-green-500">
+                    <input type="number" id="filterAge" placeholder="مثلاً: 40" class="w-full border p-3 rounded-xl outline-none focus:ring-2 focus:ring-green-500">
                 </div>
                 <div class="flex items-end">
-                    <button onclick="applyFilters()" class="w-full bg-green-700 text-white font-bold py-3 rounded-xl hover:bg-green-800 transition shadow-md">تطبيق الفلتر</button>
+                    <button onclick="applyFilters()" class="w-full bg-green-700 text-white font-bold py-3 rounded-xl hover:bg-green-800 transition shadow-md">تطبيق البحث</button>
                 </div>
             </div>
         </div>
     </section>
 
     <main class="max-w-6xl mx-auto py-10 px-4">
-        <div id="loading" class="text-center py-10 text-gray-500">جاري تحميل المشتركين...</div>
+        <div id="loading" class="text-center py-10 text-gray-500">جاري تحميل المشتركين من حول العالم...</div>
         <div id="membersList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
         <div id="noResults" class="hidden text-center py-20 text-gray-400 text-xl font-bold">عذراً، لم نجد نتائج تطابق بحثك 😕</div>
     </main>
 
     <script>
         let allMembers = [];
-        // رابط قاعدة بياناتك الحقيقي
+        // الرابط يقرأ من مجلد members اللي فيه بياناتك هسي
         const dbURL = "https://naseeb-project-1030a-default-rtdb.asia-southeast1.firebasedatabase.app/members.json";
 
         async function loadMembers() {
@@ -72,18 +76,19 @@
                 document.getElementById('loading').classList.add('hidden');
                 
                 if (data) {
-                    // تحويل بيانات الكائنات من Firebase إلى مصفوفة قابلة للفلترة والعرض
-                    allMembers = Object.keys(data).map(key => ({
-                        id: key,
-                        ...data[key]
-                    }));
+                    // تحويل البيانات لتعمل مع النظام العالمي الجديد
+                    if (data.name) {
+                        allMembers = [data]; // لو في مشترك واحد مباشر
+                    } else {
+                        allMembers = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+                    }
                     displayMembers(allMembers);
                 } else {
                     document.getElementById('noResults').classList.remove('hidden');
                 }
             } catch (error) {
-                console.error("خطأ في التحميل:", error);
-                document.getElementById('loading').innerText = "حدث خطأ أثناء تحميل البيانات. تأكد من إعدادات Firebase.";
+                console.error("خطأ:", error);
+                document.getElementById('loading').innerText = "حدث خطأ في جلب البيانات.";
             }
         }
 
@@ -102,7 +107,9 @@
                 const card = `
                     <div class="member-card bg-white rounded-3xl shadow-sm border overflow-hidden">
                         <div class="h-56 relative bg-gray-200">
-                            <img src="${m.image || 'https://via.placeholder.com/400x300?text=No+Image'}" class="w-full h-full object-cover">
+                            <img src="${m.image || 'https://via.placeholder.com/400x300?text=No+Image'}" 
+                                 class="w-full h-full object-cover" 
+                                 onerror="this.src='https://via.placeholder.com/400x300?text=Image+Not+Found'">
                             ${m.verified === true || m.verified === 'true' ? '<span class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] px-2 py-1 rounded-full">✅ موثق</span>' : ''}
                         </div>
                         <div class="p-5">
@@ -112,7 +119,7 @@
                                 <span class="bg-gray-50 text-gray-600 px-3 py-1 rounded-full">📍 ${m.city || 'غير محدد'}</span>
                                 <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full">💍 ${m.status || 'أعزب'}</span>
                             </div>
-                            <button onclick="alert('تواصل مع الإدارة برقم: 0912345678 لطلب بيانات التواصل')" class="w-full mt-5 bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition">اطلب تواصل</button>
+                            <button onclick="alert('تواصل مع الإدارة الدولية برقم: 0912345678')" class="w-full mt-5 bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition">اطلب تواصل</button>
                         </div>
                     </div>
                 `;
@@ -126,8 +133,10 @@
             const age = document.getElementById('filterAge').value;
 
             const filtered = allMembers.filter(m => {
+                // الفلتر يبحث في خانة المدينة سواء كانت دولة أو مدينة
+                const matchCity = city === 'all' || (m.city && m.city.includes(city));
                 return (gender === 'all' || m.gender === gender) &&
-                       (city === 'all' || m.city === city) &&
+                       matchCity &&
                        (!age || parseInt(m.age) <= parseInt(age));
             });
             displayMembers(filtered);
