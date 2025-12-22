@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -26,7 +26,7 @@
                 <p class="text-green-100 text-sm mt-2">يرجى ملء البيانات بدقة لضمان سرعة التوثيق</p>
             </div>
 
-            <form action="https://formspree.io/f/mdandyav" method="POST" class="p-8 space-y-6">
+            <form id="registrationForm" action="https://formspree.io/f/mdandyav" method="POST" class="p-8 space-y-6">
                 
                 <input type="hidden" name="_next" value="https://naseebglobal.netlify.app/checkout.html">
                 
@@ -46,8 +46,8 @@
                         <input type="text" name="name" required placeholder="مثلاً: الراضي بالقدر" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none text-right">
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">رقم الواتساب (مع مفتاح الدولة)</label>
-                        <input type="tel" name="whatsapp" required placeholder="مثلاً: 249123456789" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none text-right">
+                        <label class="block text-sm font-bold text-gray-700 mb-2 font-bold text-green-700 text-sm">رقم الواتساب (إلزامي للتواصل) *</label>
+                        <input type="tel" name="whatsapp" required placeholder="مثلاً: 249123456789" class="w-full border-2 border-green-200 p-3 rounded-xl focus:ring-2 focus:ring-green-600 outline-none text-right font-bold">
                     </div>
                 </div>
 
@@ -116,3 +116,4 @@
 
 </body>
 </html>
+          
