@@ -8,48 +8,43 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
         body { font-family: 'Cairo', sans-serif; }
-        .member-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .member-card:hover { transform: translateY(-10px); }
-        .blur-image { filter: blur(15px); transition: filter 0.5s; }
-        .vip-badge { background: linear-gradient(45deg, #ffd700, #ffa500); }
+        .member-card { transition: all 0.3s ease; }
+        .member-card:hover { transform: translateY(-5px); }
+        .blur-image { filter: blur(15px); }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <nav class="bg-white/80 backdrop-blur-md shadow-sm p-4 sticky top-0 z-50">
+    <nav class="bg-white shadow-sm p-4 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="text-2xl font-bold text-green-700">💍 نصيب العالمي</div>
             <div class="flex items-center gap-4">
-                <span id="userStatus" class="hidden md:block text-xs bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full font-bold">باقة مجانية</span>
-                <a href="index.html" class="text-gray-500 font-bold px-2">الرئيسية</a>
+                <a href="index.html" class="text-gray-500 font-bold">الرئيسية</a>
             </div>
         </div>
     </nav>
 
     <header class="bg-white border-b p-6 shadow-sm">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <input type="text" id="nameSearch" onkeyup="filterMembers()" placeholder="ابحث بالاسم..." class="border p-3 rounded-2xl outline-none focus:ring-2 focus:ring-green-500">
-                <select id="filterGender" onchange="filterMembers()" class="border p-3 rounded-2xl outline-none">
-                    <option value="all">الكل</option>
-                    <option value="ذكر">ذكر</option>
-                    <option value="أنثى">أنثى</option>
-                </select>
-                <select id="filterCity" onchange="filterMembers()" class="border p-3 rounded-2xl outline-none">
-                    <option value="all">كل العالم</option>
-                    <option value="السودان">السودان</option>
-                    <option value="السعودية">السعودية</option>
-                    <option value="أوروبا">أوروبا</option>
-                </select>
-                <button onclick="resetFilters()" class="bg-gray-100 text-gray-600 font-bold rounded-2xl py-3 hover:bg-gray-200">إعادة ضبط</button>
-            </div>
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
+            <input type="text" id="nameSearch" onkeyup="filterMembers()" placeholder="ابحث بالاسم أو الدولة..." class="border p-3 rounded-2xl outline-none focus:ring-2 focus:ring-green-500">
+            <select id="filterGender" onchange="filterMembers()" class="border p-3 rounded-2xl outline-none">
+                <option value="all">الكل</option>
+                <option value="ذكر">ذكر</option>
+                <option value="أنثى">أنثى</option>
+            </select>
+            <select id="filterCity" onchange="filterMembers()" class="border p-3 rounded-2xl outline-none">
+                <option value="all">كل الدول</option>
+                <option value="السودان">السودان</option>
+                <option value="السعودية">السعودية</option>
+                <option value="أوروبا">أوروبا</option>
+            </select>
+            <button onclick="resetFilters()" class="bg-gray-100 text-gray-600 font-bold rounded-2xl py-3 hover:bg-gray-200">إعادة ضبط</button>
         </div>
     </header>
 
     <main class="max-w-6xl mx-auto py-10 px-4">
-        <div id="loading" class="text-center py-20 text-gray-400 font-bold italic animate-pulse">جاري فحص المتوافقين عالمياً...</div>
+        <div id="loading" class="text-center py-20 text-gray-400 font-bold animate-pulse">جاري التحميل...</div>
         <div id="membersList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
-        <div id="noResults" class="hidden text-center py-20 text-gray-400 font-bold text-xl">عذراً، لا توجد نتائج تطابق بحثك</div>
     </main>
 
     <script>
@@ -62,10 +57,10 @@
                 const data = await response.json();
                 document.getElementById('loading').classList.add('hidden');
                 if (data) {
-                    allMembers = data.name ? [data] : Object.keys(data).map(key => ({ id: key, ...data[key] }));
+                    allMembers = Object.keys(data).map(key => ({ id: key, ...data[key] }));
                     displayMembers(allMembers);
                 }
-            } catch (error) { console.error("Error:", error); }
+            } catch (error) { console.error(error); }
         }
 
         function displayMembers(data) {
@@ -73,24 +68,21 @@
             list.innerHTML = "";
             data.forEach(m => {
                 const card = `
-                    <div class="member-card bg-white rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden">
-                        <div class="h-64 relative overflow-hidden group">
+                    <div class="member-card bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="h-64 relative overflow-hidden text-center">
                             <img src="${m.image || 'https://via.placeholder.com/400x500'}" class="w-full h-full object-cover blur-image">
-                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
-                                <span class="text-white text-[10px] border border-white/30 px-3 py-1 rounded-full backdrop-blur-md">🔒 صورة خاصة</span>
-                            </div>
-                            ${m.verified ? '<span class="absolute top-4 right-4 bg-blue-500 text-white text-[10px] px-3 py-1 rounded-full font-bold">✓ موثق</span>' : ''}
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-[10px]">🔒 صورة خاصة</div>
                         </div>
                         <div class="p-6">
                             <div class="flex justify-between items-center mb-4">
                                 <h3 class="font-bold text-xl text-gray-800">${m.name}</h3>
                                 <span class="bg-green-50 text-green-700 text-xs px-2 py-1 rounded-lg font-bold">${m.age} سنة</span>
                             </div>
-                            <p class="text-gray-500 text-xs mb-4">📍 ${m.city} | 💍 ${m.status}</p>
+                            <p class="text-gray-500 text-xs mb-4">📍 ${m.city} | ${m.status}</p>
                             
                             <div class="grid grid-cols-2 gap-2 mb-3">
-                                <button onclick="handleChat('${m.name}', 'بياناتك')" class="bg-blue-50 text-blue-600 text-[10px] py-2 rounded-xl font-bold hover:bg-blue-100 transition">📄 أعجبتني البيانات</button>
-                                <button onclick="handleChat('${m.name}', 'صورتك')" class="bg-pink-50 text-pink-600 text-[10px] py-2 rounded-xl font-bold hover:bg-pink-100 transition">📸 أعجبتني الصورة</button>
+                                <button onclick="handleChat('${m.name}', 'البيانات')" class="bg-blue-50 text-blue-600 text-[10px] py-2 rounded-xl font-bold">💬 شات البيانات</button>
+                                <button onclick="handleChat('${m.name}', 'الصور')" class="bg-pink-50 text-pink-600 text-[10px] py-2 rounded-xl font-bold">🖼️ شات الصور</button>
                             </div>
 
                             <div class="flex gap-2">
@@ -104,50 +96,25 @@
             });
         }
 
-        // نظام الشات المحدود ومنع الأرقام
         function handleChat(name, type) {
-            const lastSent = localStorage.getItem('lastMsgDate');
-            const today = new Date().toLocaleDateString();
-
-            if(lastSent === today) {
-                alert("يا مدير، وصلت للحد المجاني (رسالة واحدة يومياً). اشترك في الباقة الذهبية لفتح الشات الكامل!");
-                return;
-            }
-
-            let msg = prompt(`أنت الآن ترسل رسالة مبرمجة لـ ${name}: "مرحباً، أعجبتني ${type}". \n\n* تنبيه: يمنع منعاً باتاً إرسال أرقام الهواتف أو الإيميلات، سيتم حظر الحساب تلقائياً في حال المخالفة.`);
+            let msg = prompt(`أنت الآن في شات مباشر مع ${name} بخصوص ${type}. \nاكتب رسالتك:`);
             
-            // كاشف الأرقام البسيط
-            if(msg && /[0-9]{7,}/.test(msg)) {
-                alert("⚠️ خطأ أمني: ممنوع إرسال أرقام الهواتف. التواصل يتم عبر المنصة فقط لضمان خصوصيتك.");
-                return;
-            }
-
-            if(msg !== null) {
-                alert(`تم إرسال إشعار اهتمام لـ ${name}. سيصلك الرد في صندوق الوارد حال التوافق.`);
-                localStorage.setItem('lastMsgDate', today);
+            if (msg) {
+                const contactBlocker = /[0-9]{7,}|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+                if (contactBlocker.test(msg)) {
+                    alert("⚠️ خطأ أمني: يمنع مشاركة أرقام الهواتف أو البريد الإلكتروني. التواصل يتم عبر المنصة فقط.");
+                    return;
+                }
+                alert(`تم إرسال رسالتك لـ ${name}.`);
             }
         }
 
-        // نظام الهدايا (10 مجانية)
-        let gifts = parseInt(localStorage.getItem('giftsCount') || 0);
-        function sendGift(name) {
-            if(gifts >= 10) {
-                alert("انتهى رصيد القلوب المجانية (10). اشترك لدعم شريك حياتك بالمزيد من الهدايا!");
-                return;
-            }
-            gifts++;
-            localStorage.setItem('giftsCount', gifts);
-            alert(`أرسلت ❤️ لـ ${name}. رصيدك المتبقي: ${10 - gifts}`);
-        }
-
-        // نظام اتصال الفيديو (للمتوافقين فقط)
         function startVideoCall(name) {
-            const isVip = false; // هنا نربطها بحالة الدفع لاحقاً
-            if(!isVip) {
-                alert(`🎥 ميزة اتصال الفيديو المشفر مع ${name} متاحة فقط للمشتركين في الباقة الماسية. \n\nتواصل مع الإدارة للترقية.`);
-                return;
-            }
-            alert("جاري إنشاء اتصال فيديو آمن ومحمي...");
+            alert(`🎥 اتصال الفيديو مع ${name} متاح للباقات المميزة فقط. تواصل مع الإدارة للترقية.`);
+        }
+
+        function sendGift(name) {
+            alert(`تم إرسال ❤️ لـ ${name}`);
         }
 
         function filterMembers() {
