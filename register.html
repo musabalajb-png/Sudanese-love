@@ -14,63 +14,38 @@
 
     <section class="max-w-6xl mx-auto mb-10">
         <h2 class="text-center text-2xl font-bold text-gray-800 mb-8">اختر باقتك وابدأ رحلة النصيب 💍</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
             
-            <div class="bg-white p-5 rounded-3xl border-2 border-gray-100 shadow-sm text-center">
+            <div class="bg-white p-5 rounded-3xl border-2 border-gray-100 shadow-sm">
                 <h3 class="font-bold text-gray-400 mb-2 text-sm">الفئة المجانية</h3>
-                <div class="text-2xl font-bold mb-4 italic">0$</div>
-                <ul class="text-right text-[11px] space-y-2 mb-6 text-gray-500">
-                    <li>✅ رسالة اهتمام واحدة يومياً</li>
-                    <li>✅ 10 هدايا (قلوب) فقط</li>
-                    <li>❌ رؤية الصور بوضوح</li>
-                    <li>❌ اتصال فيديو</li>
-                </ul>
+                <div class="text-2xl font-bold mb-4 italic text-gray-600">0$</div>
             </div>
 
             <div class="bg-blue-50 p-5 rounded-3xl border-2 border-blue-200 shadow-sm text-center">
                 <h3 class="font-bold text-blue-700 mb-2 text-sm">باقة الستر</h3>
                 <div class="text-2xl font-bold mb-4 italic text-blue-800">7$</div>
-                <ul class="text-right text-[11px] space-y-2 mb-6 text-blue-700">
-                    <li>✅ 5 رسائل اهتمام يومياً</li>
-                    <li>✅ 50 هدية (قلوب/ورود)</li>
-                    <li>✅ رؤية الصور بوضوح</li>
-                    <li>❌ اتصال فيديو</li>
-                </ul>
             </div>
 
             <div class="bg-green-50 p-5 rounded-3xl border-2 border-green-500 shadow-md text-center relative overflow-hidden">
                 <span class="absolute top-0 right-0 bg-green-500 text-white text-[9px] px-2 py-1 rounded-bl-xl font-bold">الأكثر طلباً</span>
                 <h3 class="font-bold text-green-700 mb-2 text-sm">الباقة الذهبية</h3>
                 <div class="text-2xl font-bold mb-4 italic text-green-800">15$</div>
-                <ul class="text-right text-[11px] space-y-2 mb-6 text-green-700 font-medium">
-                    <li>✅ رسائل غير محدودة</li>
-                    <li>✅ هدايا غير محدودة</li>
-                    <li>✅ رؤية الصور بوضوح</li>
-                    <li>❌ اتصال فيديو</li>
-                </ul>
             </div>
 
             <div class="bg-gray-900 p-5 rounded-3xl border-2 border-yellow-500 shadow-xl text-center text-white">
                 <h3 class="font-bold text-yellow-500 mb-2 text-sm">الباقة الماسية</h3>
                 <div class="text-2xl font-bold mb-4 italic text-yellow-500">30$</div>
-                <ul class="text-right text-[11px] space-y-2 mb-6">
-                    <li>✅ كل ميزات الذهبية</li>
-                    <li>✅ اتصال فيديو مشفر</li>
-                    <li>✅ أولوية الظهور للشركاء</li>
-                    <li>✅ توثيق الحساب مجاناً</li>
-                </ul>
             </div>
-
         </div>
     </section>
 
     <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
         <div class="bg-green-700 p-8 text-white text-center">
             <h1 class="text-3xl font-bold italic">نصيب العالمي 💍</h1>
-            <p class="text-green-100 mt-2 text-sm">سجل بياناتك بدقة لنجد لك الشريك المناسب</p>
+            <p class="text-green-100 mt-2 text-sm">سجل بياناتك وسنتواصل معك لتفعيل حسابك</p>
         </div>
         
-        <form action="https://formspree.io/f/mdandyav" method="POST" enctype="multipart/form-data" class="p-8 space-y-6">
+        <form action="https://formspree.io/f/mdandyav" method="POST" onsubmit="setTimeout(function(){ window.location.href = 'checkout.html'; }, 2000);" class="p-8 space-y-6">
             
             <div class="mb-4">
                 <label class="block text-sm font-bold text-gray-700 mb-2">نوع الباقة المطلوبة / Selected Plan</label>
@@ -108,8 +83,6 @@
                         <option value="السعودية">السعودية</option>
                         <option value="الإمارات">الإمارات</option>
                         <option value="مصر">مصر</option>
-                        <option value="الخليج العربي">بقية دول الخليج</option>
-                        <option value="أوروبا">أوروبا / أمريكا</option>
                         <option value="أخرى">دولة أخرى</option>
                     </select>
                 </div>
@@ -135,18 +108,11 @@
                 </div>
             </div>
 
-            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
-                <h3 class="font-bold text-blue-800 flex items-center gap-2 text-sm mb-4">🛡️ التوثيق والأمان</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-[10px] font-bold text-gray-600 mb-2">صورة البروفايل (تظهر للكل)</label>
-                        <input type="file" name="image_profile" accept="image/*" required class="block w-full text-xs text-gray-500 file:bg-blue-600 file:text-white file:py-2 file:px-4 file:rounded-full file:border-0 cursor-pointer">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold text-gray-600 mb-2">إثبات الهوية (للإدارة فقط)</label>
-                        <input type="file" name="id_verify" accept="image/*,.pdf" required class="block w-full text-xs text-gray-500 file:bg-gray-600 file:text-white file:py-2 file:px-4 file:rounded-full file:border-0 cursor-pointer">
-                    </div>
-                </div>
+            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 text-center">
+                <h3 class="font-bold text-blue-800 text-sm mb-2">🛡️ ملاحظة التوثيق</h3>
+                <p class="text-[11px] text-blue-600 leading-relaxed italic">
+                    لسلامة الجميع، سيُطلب منك إرسال (صورة الهوية + صورة البروفايل) عبر الواتساب للمدير مباشرة عند تفعيل الباقة.
+                </p>
             </div>
 
             <div class="flex items-start gap-2 bg-yellow-50 p-4 rounded-xl border border-yellow-100">
@@ -155,7 +121,7 @@
             </div>
 
             <button type="submit" class="w-full bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-green-800 transition transform hover:scale-[1.01]">
-                إرسال الطلب للمراجعة
+                إرسال الطلب والمتابعة للدفع
             </button>
         </form>
     </div>
