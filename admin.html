@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - نصيب العالمي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <div id="loginSection" class="max-w-md mx-auto mt-20 bg-white p-8 rounded-3xl shadow-xl">
+        <h2 class="text-2xl font-bold mb-6 text-center text-green-700">دخول الإدارة 🔒</h2>
+        <input type="password" id="adminPass" placeholder="أدخل كلمة السر" class="w-full border p-3 rounded-xl mb-4 outline-none focus:ring-2 focus:ring-green-500">
+        <button onclick="checkPass()" class="w-full bg-green-700 text-white py-3 rounded-xl font-bold">دخول</button>
+    </div>
+
+    <div id="adminPanel" class="hidden max-w-4xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">إدارة المشتركين ⚙️</h1>
+            <button onclick="location.reload()" class="bg-red-500 text-white px-4 py-2 rounded-lg text-sm">خروج</button>
+        </div>
+
+        <div class="bg-white p-6 rounded-3xl shadow-md mb-10 border-2 border-green-100">
+            <h2 class="text-xl font-bold mb-4 text-green-700">إضافة مشترك جديد يدوياً</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <input type="text" id="mName" placeholder="الاسم المستعار" class="border p-3 rounded-xl">
+                <input type="number" id="mAge" placeholder="العمر" class="border p-3 rounded-xl">
+                <select id="mGender" class="border p-3 rounded-xl">
+                    <option value="ذكر">ذكر</option>
+                    <option value="أنثى">أنثى</option>
+                </select>
+                <input type="text" id="mCity" placeholder="الدولة/المدينة" class="border p-3 rounded-xl">
+                <input type="text" id="mStatus" placeholder="الحالة (أعزب..)" class="border p-3 rounded-xl">
+                <input type="text" id="mJob" placeholder="المهنة" class="border p-3 rounded-xl">
+                <input type="text" id="mImage" placeholder="رابط الصورة (URL)" class="border p-3 rounded-xl">
+                <select id="mVerified" class="border p-3 rounded-xl">
+                    <option value="false">غير موثق</option>
+                    <option value="true">موثق ✓</option>
+                </select>
+                <button onclick="addNewMember()" class="bg-green-700 text-white font-bold rounded-xl py-3 hover:bg-green-800 transition">إضافة للموقع فوراً</button>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-md overflow-hidden">
+            <table class="w-full text-right border-collapse">
+                <thead class="bg-gray-50 border-b">
+                    <tr>
+                        <th class="p-4">الاسم</th>
+                        <th class="p-4">الدولة</th>
+                        <th class="p-4">الحالة</th>
+                        <th class="p-4">الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="adminMembersList">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const dbURL = "https://naseeb-project-1030a-default-rtdb.asia-southeast1.firebasedatabase.app/members";
+
+        // كلمة السر (ممكن تغيرها من هنا)
+        function checkPass() {
+            const pass = document.getElementById('adminPass').value;
+            if(pass === "mosab2025") { // كلمة السر هي mosab2025
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                loadAdminMembers();
+            } else {
+                alert("كلمة السر غلط يا مصعب!");
+            }
+        }
+
+        // جلب البيانات للوحة التحكم
+        async function loadAdminMembers() {
+            const response = await fetch(dbURL + ".json");
+            const data = await response.json();
+            const list = document.getElementById('adminMembersList');
+            list.innerHTML = "";
+
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    const m = data[key];
+                    list.innerHTML += `
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4 font-bold">${m.name} ${m.verified == 'true' || m.verified == true ? '✅' : ''}</td>
+                            <td class="p-4">${m.city}</td>
+                            <td class="p-4">${m.status}</td>
+                            <td class="p-4">
+                                <button onclick="deleteMember('${key}')" class="text-red-500 font-bold hover:underline">حذف</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+        }
+
+        // إضافة مشترك جديد لـ Firebase
+        async function addNewMember() {
+            const newMember = {
+                name: document.getElementById('mName').value,
+                age: document.getElementById('mAge').value,
+                gender: document.getElementById('mGender').value,
+                city: document.getElementById('mCity').value,
+                status: document.getElementById('mStatus').value,
+                job: document.getElementById('mJob').value,
+                image: document.getElementById('mImage').value,
+                verified: document.getElementById('mVerified').value === "true"
+            };
+
+            const response = await fetch(dbURL + ".json", {
+                method: "POST",
+                body: JSON.stringify(newMember)
+            });
+
+            if(response.ok) {
+                alert("تمت إضافة المشترك بنجاح!");
+                loadAdminMembers();
+                // تنظيف الفورم
+                document.querySelectorAll('input').forEach(i => i.value = "");
+            }
+        }
+
+        // حذف مشترك من Firebase
+        async function deleteMember(id) {
+            if(confirm("هل أنت متأكد من حذف هذا المشترك؟")) {
+                await fetch(`${dbURL}/${id}.json`, { method: "DELETE" });
+                loadAdminMembers();
+            }
+        }
+    </script>
+</body>
+</html>
