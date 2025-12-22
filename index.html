@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
@@ -71,20 +71,102 @@
 
     <section class="py-16 px-4 max-w-6xl mx-auto border-t">
         <h2 id="howTitle" class="text-3xl font-bold text-center mb-12 text-gray-800">كيف تجد شريك حياتك؟</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div class="text-center">
-                <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span class="text-3xl">📝</span>
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+            <div>
+                <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-3xl">📝</span></div>
                 <h3 id="step1T" class="font-bold text-xl mb-2">أنشئ ملفك</h3>
                 <p id="step1D" class="text-gray-600">سجل بياناتك بكل خصوصية وأمان</p>
             </div>
-            <div class="text-center">
-                <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span class="text-3xl">🔍</span>
-                </div>
+            <div>
+                <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-3xl">🔍</span></div>
                 <h3 id="step2T" class="font-bold text-xl mb-2">ابحث وتصفح</h3>
                 <p id="step2D" class="text-gray-600">تصفح ملفات المشتركين من مختلف الدول</p>
             </div>
-            <div class="text-center">
-                <div class="bg-green-100 w-20 h-20
+            <div>
+                <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-3xl">💬</span></div>
+                <h3 id="step3T" class="font-bold text-xl mb-2">تواصل بالحلال</h3>
+                <p id="step3D" class="text-gray-600">تواصل آمن تحت إشراف المنصة</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white py-12 border-t text-center">
+        <div class="mb-6">
+            <h3 id="contactTitle" class="font-bold text-gray-800 mb-4">تواصل مع الإدارة مباشرة</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://wa.me/249127910778" target="_blank" class="bg-green-500 text-white px-6 py-2 rounded-full font-bold hover:bg-green-600 transition flex items-center gap-2">
+                    <span>🟢</span> واتساب (سوداني)
+                </a>
+                <a href="https://wa.me/249911118345" target="_blank" class="bg-green-500 text-white px-6 py-2 rounded-full font-bold hover:bg-green-600 transition flex items-center gap-2">
+                    <span>🟢</span> واتساب (زين)
+                </a>
+            </div>
+        </div>
+        <p class="text-gray-500 text-sm">© 2025 Naseeb Platform - Global Islamic Marriage</p>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('langBtn');
+        const body = document.getElementById('mainBody');
+        let currentLang = 'ar';
+
+        const translations = {
+            ar: {
+                navLogo: "نصيب", navBrowse: "تصفح المشتركين",
+                title: "أهلاً بك في منصة نصيب العالمية",
+                subtitle: "نجمع القلوب بالحلال وفقاً للقيم والشريعة الإسلامية في كل أنحاء العالم",
+                regBtn: "سجل الآن مجاناً", aboutBtn: "تعرف علينا",
+                aboutTitle: "تعرف علينا",
+                aboutDesc: "منصة نصيب العالمي هي أول مبادرة إسلامية تقنية تهدف لترسيخ قيم الزواج الحلال بطريقة عصرية وآمنة. نحن هنا لنختصر عليك عناء البحث ونوفر لك بيئة تحفظ كرامتك وخصوصيتك بما يرضي الله.",
+                val1T: "ضوابط شرعية", val1D: "بياناتك الشخصية محمية تماماً ولا تظهر للعامة، هدفنا الستر والجدية في طلب الحلال.",
+                val2T: "توثيق الهوية", val2D: "كل مشترك يمر بعملية تحقق يدوية عبر الواتساب لضمان وجود أشخاص حقيقيين وجادين فقط.",
+                val3T: "رسالة عالمية", val3D: "نخدم المسلمين والباحثين عن الاستقرار في السودان، دول الخليج، وكل أنحاء العالم.",
+                howTitle: "كيف تجد شريك حياتك؟",
+                step1T: "أنشئ ملفك", step1D: "سجل بياناتك بكل خصوصية وأمان",
+                step2T: "ابحث وتصفح", step2D: "تصفح ملفات المشتركين من مختلف الدول",
+                step3T: "تواصل بالحلال", step3D: "تواصل آمن تحت إشراف المنصة",
+                contactTitle: "تواصل مع الإدارة مباشرة"
+            },
+            en: {
+                navLogo: "Naseeb", navBrowse: "Browse Members",
+                title: "Welcome to Global Naseeb Platform",
+                subtitle: "Connecting hearts through Halal according to Islamic values worldwide",
+                regBtn: "Register Now Free", aboutBtn: "About Us",
+                aboutTitle: "About Us",
+                aboutDesc: "Naseeb Global is the first Islamic technical initiative aiming to establish Halal marriage values in a modern and secure way. We provide an environment that preserves your dignity and privacy.",
+                val1T: "Islamic Guidelines", val1D: "Your personal data is fully protected. Our goal is modesty and seriousness in seeking Halal.",
+                val2T: "Identity Verification", val2D: "Every member undergoes manual verification via WhatsApp to ensure authenticity.",
+                val3T: "Global Message", val3D: "We serve Muslims seeking stability in Sudan, Gulf, and all over the world.",
+                howTitle: "How it works?",
+                step1T: "Create Profile", step1D: "Register your data with privacy and security",
+                step2T: "Search & Browse", step2D: "Browse verified profiles from different countries",
+                step3T: "Halal Connection", step3D: "Secure communication supervised by the platform",
+                contactTitle: "Contact Management Directly"
+            }
+        };
+
+        btn.onclick = () => {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            body.className = currentLang === 'ar' ? 'rtl bg-gray-50' : 'ltr bg-gray-50';
+            btn.innerText = currentLang === 'ar' ? 'English' : 'العربية';
+            const t = translations[currentLang];
+            document.getElementById('navLogo').innerText = t.navLogo;
+            document.getElementById('navBrowse').innerText = t.navBrowse;
+            document.getElementById('title').innerText = t.title;
+            document.getElementById('subtitle').innerText = t.subtitle;
+            document.getElementById('regBtn').innerText = t.regBtn;
+            document.getElementById('aboutBtn').innerText = t.aboutBtn;
+            document.getElementById('aboutTitle').innerText = t.aboutTitle;
+            document.getElementById('aboutDesc').innerHTML = t.aboutDesc;
+            document.getElementById('val1T').innerText = t.val1T; document.getElementById('val1D').innerText = t.val1D;
+            document.getElementById('val2T').innerText = t.val2T; document.getElementById('val2D').innerText = t.val2D;
+            document.getElementById('val3T').innerText = t.val3T; document.getElementById('val3D').innerText = t.val3D;
+            document.getElementById('howTitle').innerText = t.howTitle;
+            document.getElementById('step1T').innerText = t.step1T; document.getElementById('step1D').innerText = t.step1D;
+            document.getElementById('step2T').innerText = t.step2T; document.getElementById('step2D').innerText = t.step2D;
+            document.getElementById('step3T').innerText = t.step3T; document.getElementById('step3D').innerText = t.step3D;
+            document.getElementById('contactTitle').innerText = t.contactTitle;
+        };
+    </script>
+</body>
+</html>
