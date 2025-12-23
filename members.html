@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>تصفح الأعضاء - نصيب العالمي</title>
+    <meta name="description" content="تصفح قائمة المشتركين والمشتركات الموثقين في منصة نصيب العالمي. ابحث عن شريك حياتك من السودان وكل دول العالم.">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -64,8 +67,11 @@
         </div>
     </nav>
 
-    <header class="bg-white border-b border-gray-100 py-8">
+    <header class="bg-white border-b border-gray-100 py-8 text-center">
         <div class="container mx-auto px-6">
+            <h1 class="text-2xl font-bold text-slate-800 mb-2">تصفح طلبات الزواج</h1>
+            <p class="text-gray-500 text-sm mb-6">يوجد لدينا الآن <span id="memberCount" class="text-green-600 font-bold">...</span> مشترك موثق</p>
+            
             <div class="max-w-4xl mx-auto space-y-6">
                 <div class="relative">
                     <i class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -73,9 +79,9 @@
                 </div>
                 
                 <div class="flex flex-wrap justify-center gap-2">
-                    <button onclick="filterByGender('all')" class="filter-btn active bg-green-600 text-white px-6 py-2 rounded-full text-xs font-bold shadow-sm">الكل</button>
-                    <button onclick="filterByGender('ذكر')" class="filter-btn bg-white border text-gray-600 px-6 py-2 rounded-full text-xs font-bold hover:bg-blue-50">ذكور</button>
-                    <button onclick="filterByGender('أنثى')" class="filter-btn bg-white border text-gray-600 px-6 py-2 rounded-full text-xs font-bold hover:bg-pink-50">إناث</button>
+                    <button id="filter-all" onclick="filterByGender('all')" class="filter-btn active bg-green-600 text-white px-6 py-2 rounded-full text-xs font-bold shadow-sm">الكل</button>
+                    <button id="filter-male" onclick="filterByGender('ذكر')" class="filter-btn bg-white border text-gray-600 px-6 py-2 rounded-full text-xs font-bold hover:bg-blue-50">ذكور</button>
+                    <button id="filter-female" onclick="filterByGender('أنثى')" class="filter-btn bg-white border text-gray-600 px-6 py-2 rounded-full text-xs font-bold hover:bg-pink-50">إناث</button>
                 </div>
             </div>
         </div>
@@ -92,12 +98,11 @@
     </main>
 
     <script>
-        // رابط الشيت الخاص بك
         const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv";
         
         let allMembers = [];
         let isLoggedIn = localStorage.getItem('naseeb_logged') === 'true';
-        let loggedUserPlan = localStorage.getItem('userPlan') || 'مجانية';
+        let loggedUserPlan = (localStorage.getItem('userPlan') || 'مجانية').trim();
 
         async function loadMembers() {
             try {
@@ -108,22 +113,17 @@
                 document.getElementById('loading').style.display = 'none';
                 list.innerHTML = "";
                 
+                // تحديث العداد
+                document.getElementById('memberCount').innerText = rows.length;
+                
                 rows.forEach((row, index) => {
                     const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
                     if(cols.length < 5) return;
 
-                    // الترتيب المتوقع: [الاسم، العمر، النوع، المهنة، المدينة، الباقة، الصورة، الحالة، توثيق، كلمة_السر]
                     const member = {
-                        name: cols[0],
-                        age: cols[1],
-                        gender: cols[2],
-                        job: cols[3],
-                        city: cols[4],
-                        plan: cols[5] || 'عضوية عادية',
-                        img: cols[6],
-                        status: cols[7],
-                        isVerified: cols[8],
-                        password: cols[9]
+                        name: cols[0], age: cols[1], gender: cols[2], job: cols[3],
+                        city: cols[4], plan: cols[5] || 'عضوية عادية', img: cols[6],
+                        status: cols[7], isVerified: cols[8], password: cols[9]
                     };
 
                     allMembers.push(member);
@@ -132,8 +132,9 @@
                     if(member.plan.includes("ماسية")) planClass = "badge-diamond";
                     else if(member.plan.includes("ذهبية") || member.plan.includes("الستر")) planClass = "badge-premium";
 
-                    // منطق فك التغبيش: يجب أن يكون مسجلاً وباقته ليست "مجانية"
-                    const canSeePhotos = isLoggedIn && (loggedUserPlan !== 'مجانية' && loggedUserPlan !== 'المجانية');
+                    // تعديل الربط المرن (ملاحظة 2)
+                    const isPaidPlan = /الستر|ذهبية|ماسية|VIP/i.test(loggedUserPlan);
+                    const canSeePhotos = isLoggedIn && isPaidPlan;
                     const imageClass = canSeePhotos ? 'unblur' : 'blur-image';
 
                     const card = `
@@ -179,7 +180,6 @@
         function checkLogin() {
             const user = document.getElementById('loginUser').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
-            
             const found = allMembers.find(m => m.name === user && m.password === pass);
             
             if(found) {
@@ -226,12 +226,13 @@
         }
 
         function filterByGender(gender) {
-            // تحديث شكل الأزرار
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('bg-green-600', 'text-white');
                 btn.classList.add('bg-white', 'text-gray-600');
             });
-            event.target.classList.add('bg-green-600', 'text-white');
+            
+            const btnId = gender === 'all' ? 'filter-all' : (gender === 'ذكر' ? 'filter-male' : 'filter-female');
+            document.getElementById(btnId).classList.add('bg-green-600', 'text-white');
 
             document.querySelectorAll('.member-card').forEach(card => {
                 if(gender === 'all' || card.getAttribute('data-gender') === gender) {
