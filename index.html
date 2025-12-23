@@ -3,12 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="mainTitle">نصيب العالمي | المنصة الأولى للستر والحلال</title>
+    
+    <title id="mainTitle">نصيب العالمي | المنصة السودانية الأولى للستر والزواج الحلال</title>
+    <meta name="description" content="نصيب العالمي هي المنصة الرائدة في السودان لتوفيق الرأسين بالحلال. نبحث لك عن شريك العمر بمعايير إسلامية وخصوصية تامة. انضم لآلاف المشتركين في الخرطوم والولايات.">
+    <meta name="keywords" content="زواج سوداني, نصيب, خطابة سودانية, زواج حلال السودان, ستر، بنات السودان للزواج, مغتربين السودان، الخرطوم، زواج شرعي">
+    <link rel="canonical" href="https://musabalajb-png.github.io/Sudanese-love/">
+    
+    <meta property="og:title" content="نصيب العالمي | منصة الزواج السوداني الموثوقة">
+    <meta property="og:description" content="ابحث عن نصيبك الآن في بيئة آمنة تضمن لك الخصوصية والجدية.">
+    <meta property="og:image" content="https://musabalajb-png.github.io/Sudanese-love/logo.png">
+    <meta property="og:type" content="website">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "نصيب العالمي",
+      "description": "خدمات التوفيق والزواج السوداني الشرعي",
+      "areaServed": "Sudan",
+      "provider": {
+        "@type": "Organization",
+        "name": "Naseeb Global"
+      }
+    }
+    </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -29,8 +52,6 @@
         .form-input { @apply w-full bg-slate-50 border border-transparent rounded-xl p-3 text-sm focus:border-green-500 focus:bg-white focus:ring-4 focus:ring-green-500/10 outline-none transition-all; }
         .form-label { @apply block text-[10px] font-bold text-slate-600 mb-1 px-1; }
         #loadingOverlay { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; }
-        
-        /* Toast Notification Styles */
         .toast-active { transform: translateY(0) !important; opacity: 1 !important; }
     </style>
 </head>
@@ -50,7 +71,7 @@
         <div class="container mx-auto flex justify-between items-center px-4">
             <div class="flex items-center gap-2 group cursor-pointer" onclick="window.scrollTo(0,0)">
                 <span class="text-3xl group-hover:rotate-12 transition">💍</span>
-                <span class="font-bold text-green-800 text-xl tracking-tight" data-ar="نصيب العالمي" data-en="Naseeb Global">نصيب العالمي</span>
+                <span class="font-black text-green-800 text-xl tracking-tight" data-ar="نصيب العالمي" data-en="Naseeb Global">نصيب العالمي</span>
             </div>
             <div class="flex items-center gap-4">
                 <div id="userSection" class="hidden flex items-center gap-3 bg-green-50/50 px-4 py-2 rounded-2xl border border-green-100 shadow-inner"></div>
@@ -63,7 +84,7 @@
     <header class="hero-gradient text-white py-32 px-6 relative overflow-hidden">
         <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');"></div>
         <div class="container mx-auto relative z-10 text-center">
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight" data-ar="مُحيطك للستر والحلال" data-en="Your Secure Path to Halal">مُحيطك للستر والحلال <br><span class="text-green-300 font-light text-3xl md:text-5xl" data-ar="بمعايير إسلامية وخصوصية فائقة" data-en="With Islamic Standards">بمعايير إسلامية وخصوصية فائقة</span></h1>
+            <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight" data-ar="مُحيطك للستر والحلال" data-en="Your Secure Path to Halal">مُحيطك للستر والحلال <br><span class="text-green-300 font-light text-3xl md:text-5xl" data-ar="بمعايير إسلامية وخصوصية فائقة" data-en="With Islamic Standards">بمعايير إسلامية وخصوصية فائقة</span></h1>
             <div class="flex flex-wrap justify-center gap-4">
                 <button onclick="toggleRegModal(true)" class="bg-white text-green-800 px-14 py-4 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-white/20 transition transform hover:-translate-y-1" data-ar="ابدأ رحلتك الآن" data-en="Start Journey">ابدأ رحلتك الآن</button>
             </div>
@@ -72,6 +93,7 @@
 
     <section id="pricing" class="py-24 bg-slate-50 px-6">
         <div class="container mx-auto max-w-6xl">
+            <h2 class="text-center text-3xl font-black text-slate-800 mb-16" data-ar="اختر باقة الستر المناسبة لك" data-en="Choose Your Plan">اختر باقة الستر المناسبة لك</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 <div class="bg-white p-10 rounded-[3rem] shadow-xl shadow-slate-200/50 border border-slate-100 text-center hover:shadow-2xl transition-all duration-500">
                     <div class="w-16 h-16 bg-green-50 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">🌿</div>
@@ -158,16 +180,14 @@
     </div>
 
     <script>
-        // --- الإعدادات الأمنية والبرمجية المتقدمة ---
         const CONFIG = {
             sheetUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv",
             imgbbKey: "847040441499990666014e2d31221b21",
             lang: localStorage.getItem('app_lang') || 'ar',
             adminPhone: "249127910778",
-            sessionExpiry: 3600000 // ساعة واحدة
+            sessionExpiry: 3600000 
         };
 
-        // --- نظام الحماية ضد العبث ---
         function secureLocalStorage() {
             const originalSetItem = localStorage.setItem;
             localStorage.setItem = function(key, value) {
@@ -182,7 +202,6 @@
         }
         secureLocalStorage();
 
-        // --- وظائف الواجهة ---
         function toggleModal(show) { toggleEl('loginModal', show); }
         function toggleRegModal(show) { toggleEl('regModal', show); }
         function toggleEl(id, show) {
@@ -197,56 +216,37 @@
             document.getElementById('filePlaceholder').classList.add('border-green-500', 'bg-green-50');
         }
 
-        // --- نظام الرفع الآمن ---
         async function secureSubmit() {
             const fileInput = document.getElementById('regPhoto');
             const overlay = document.getElementById('loadingOverlay');
-            
-            if (!fileInput.files[0]) {
-                showSimpleToast("يرجى رفع الصورة لإتمام التسجيل", "error");
-                return;
-            }
-
+            if (!fileInput.files[0]) { showSimpleToast("يرجى رفع الصورة لإتمام التسجيل", "error"); return; }
             overlay.style.display = 'flex';
-            document.getElementById('loadingText').innerText = "جاري تشفير الصور...";
-
             try {
                 const formData = new FormData();
                 formData.append("image", fileInput.files[0]);
                 const res = await fetch(`https://api.imgbb.com/1/upload?key=${CONFIG.imgbbKey}`, { method: "POST", body: formData });
                 const result = await res.json();
-                
                 if (result.success) {
                     const photoUrl = result.data.url;
-                    const msg = `🛡️ طلب تسجيل جديد موثق:\n👤 الاسم: ${document.getElementById('regName').value}\n🎂 العمر: ${document.getElementById('regAge').value}\n📏 الطول: ${document.getElementById('regHeight').value}\n🔑 السر: ${document.getElementById('regPass').value}\n🖼️ الصورة: ${photoUrl}`;
-                    
-                    document.getElementById('loadingText').innerText = "تم التوثيق.. جاري التحويل";
+                    const msg = `🛡️ طلب تسجيل جديد:\n👤 الاسم: ${document.getElementById('regName').value}\n🎂 العمر: ${document.getElementById('regAge').value}\n📏 الطول: ${document.getElementById('regHeight').value}\n🔑 السر: ${document.getElementById('regPass').value}\n🖼️ الصورة: ${photoUrl}`;
                     setTimeout(() => {
                         window.open(`https://wa.me/${CONFIG.adminPhone}?text=${encodeURIComponent(msg)}`, '_blank');
                         overlay.style.display = 'none';
                         location.reload();
                     }, 1000);
-                } else {
-                    throw new Error();
                 }
-            } catch (e) {
-                overlay.style.display = 'none';
-                showSimpleToast("عذراً، حدث خطأ في الرفع. حاول مجدداً", "error");
-            }
+            } catch (e) { overlay.style.display = 'none'; showSimpleToast("حدث خطأ، حاول مجدداً", "error"); }
         }
 
-        // --- تسجيل الدخول مع فحص الجلسة ---
         async function handleLogin() {
             const user = document.getElementById('loginName').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
             if(!user || !pass) return;
-
             document.getElementById('submitLogin').disabled = true;
             try {
-                const res = await fetch(CONFIG.sheetUrl + "?t=" + Date.now()); // ضد الكاش
+                const res = await fetch(CONFIG.sheetUrl + "?t=" + Date.now());
                 const text = await res.text();
                 const rows = text.split('\n').slice(1);
-                
                 let found = false;
                 for(let row of rows) {
                     const cols = row.split(',').map(c => c.trim().replace(/^"|"$/g, ''));
@@ -258,29 +258,23 @@
                         return;
                     }
                 }
-                showSimpleToast("بيانات الدخول غير مطابقة للسجلات", "error");
-            } catch(e) {
-                showSimpleToast("خطأ في الاتصال بالخادم الداخلي", "error");
-            }
+                showSimpleToast("البيانات غير صحيحة", "error");
+            } catch(e) { showSimpleToast("خطأ في الخادم", "error"); }
             document.getElementById('submitLogin').disabled = false;
         }
 
         function safeRedirect(plan) {
-            const msg = `مرحباً، أود الاستفسار عن تفعيل ${plan} في نصيب العالمي.`;
+            const msg = `أريد تفعيل ${plan} في نصيب العالمي.`;
             window.open(`https://wa.me/${CONFIG.adminPhone}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // --- نظام التنبيهات (Toast) المطور ---
         function showSimpleToast(text, type = "success") {
             const toast = document.createElement('div');
             toast.className = `fixed bottom-8 left-1/2 -translate-x-1/2 px-8 py-4 rounded-2xl shadow-2xl z-[200] transition-all duration-500 transform translate-y-20 opacity-0 font-bold text-sm flex items-center gap-3 ${type === 'success' ? 'bg-white text-green-800' : 'bg-red-600 text-white'}`;
             toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i> ${text}`;
             document.body.appendChild(toast);
             setTimeout(() => toast.classList.add('toast-active'), 100);
-            setTimeout(() => {
-                toast.classList.remove('toast-active');
-                setTimeout(() => toast.remove(), 500);
-            }, 3500);
+            setTimeout(() => { toast.classList.remove('toast-active'); setTimeout(() => toast.remove(), 500); }, 3500);
         }
 
         function toggleLang() {
@@ -290,35 +284,17 @@
         }
 
         window.onload = () => {
-            // فحص انتهاء الجلسة
             const expiry = localStorage.getItem('session_expiry');
-            if (expiry && Date.now() > expiry) {
-                localStorage.clear();
-                location.reload();
-            }
-
+            if (expiry && Date.now() > expiry) { localStorage.clear(); location.reload(); }
             const html = document.getElementById('mainHtml');
             html.dir = CONFIG.lang === 'ar' ? 'rtl' : 'ltr';
             document.querySelectorAll('[data-ar]').forEach(el => el.innerText = el.getAttribute(`data-${CONFIG.lang}`));
-            
             if(localStorage.getItem('naseeb_logged') === 'true') {
                 document.getElementById('loginBtnNav').classList.add('hidden');
                 const sec = document.getElementById('userSection');
                 sec.classList.remove('hidden');
-                sec.innerHTML = `
-                    <div class="flex flex-col text-[10px] items-start">
-                        <span class="font-black text-green-900">🛡️ ${localStorage.getItem('userName')}</span>
-                        <div class="flex gap-3 mt-1">
-                            <span class="text-green-600"><i class="fas fa-shield-alt"></i> موثق</span>
-                            <button onclick="localStorage.clear(); location.reload();" class="text-slate-400 hover:text-red-600"><i class="fas fa-sign-out-alt"></i></button>
-                        </div>
-                    </div>`;
+                sec.innerHTML = `<span class="font-black text-green-900 text-xs">🛡️ ${localStorage.getItem('userName')}</span><button onclick="localStorage.clear(); location.reload();" class="text-slate-400 ml-2"><i class="fas fa-sign-out-alt"></i></button>`;
             }
-
-            // إشعار ترحيبي عشوائي
-            setTimeout(() => {
-                if(!localStorage.getItem('naseeb_logged')) showSimpleToast("أهلاً بك في نصيب العالمي، طريقك الآمن للستر", "success");
-            }, 2000);
         };
     </script>
 </body>
