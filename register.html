@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل عضوية جديدة - نصيب العالمي</title>
+    
+    <title>تسجيل عضوية جديدة | نصيب العالمي - ستر الحلال</title>
+    <meta name="description" content="انضم الآن إلى منصة نصيب العالمي. سجل بياناتك وابحث عن شريك حياتك في سرية تامة ووفق الضوابط الشرعية.">
+    <meta name="keywords" content="تسجيل زواج، خطابة سودانية، طلب زواج سوداني، استمارة نصيب العالمي">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
@@ -15,13 +19,29 @@
         input:focus, select:focus { border-color: #15803d !important; box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.1) !important; }
         .bank-card { background: linear-gradient(135deg, #006a4d 0%, #004d38 100%); border-radius: 1.5rem; }
         .step-shadow { box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.08); }
+        
+        /* Modal Style للمعاينة */
+        #previewModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+        #previewModal.active { display: flex; }
     </style>
 </head>
 <body class="min-h-screen pb-12">
 
+    <div id="previewModal">
+        <div class="bg-white w-full max-w-lg rounded-[2.5rem] p-8 max-h-[90vh] overflow-y-auto">
+            <h3 class="text-xl font-bold text-green-700 mb-4 border-b pb-2">راجع بياناتك قبل التوثيق 🔍</h3>
+            <div id="previewContent" class="space-y-3 text-sm text-gray-700">
+                </div>
+            <div class="flex gap-3 mt-8">
+                <button onclick="closePreview()" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">تعديل ✍️</button>
+                <button onclick="finalSubmit()" class="flex-1 py-3 bg-green-700 text-white rounded-xl font-bold shadow-lg">تأكيد وإرسال ✅</button>
+            </div>
+        </div>
+    </div>
+
     <nav class="bg-white/80 backdrop-blur-md shadow-sm p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center px-4">
-            <h1 class="text-2xl font-bold text-green-700">💍 نصيب العالمي</h1>
+            <h1 class="text-2xl font-bold text-green-700 flex items-center gap-2"><span>💍</span> نصيب العالمي</h1>
             <a href="index.html" class="text-gray-500 font-bold hover:text-green-700 text-sm transition">العودة للرئيسية</a>
         </div>
     </nav>
@@ -39,9 +59,9 @@
                     <label class="block text-sm font-bold text-gray-700 mb-3 text-center">اختر نوع العضوية المطلوبة *</label>
                     <select id="selectedPlan" name="plan" required class="w-full p-4 rounded-2xl outline-none bg-white font-bold text-green-800 cursor-pointer text-center">
                         <option value="" disabled selected>اضغط للاختيار...</option>
-                        <option value="الستر">باقة الستر (15,000 SDG)</option>
-                        <option value="الذهبية">الباقة الذهبية (35,000 SDG)</option>
-                        <option value="الماسية">الباقة الماسية (75,000 SDG)</option>
+                        <option value="باقة الستر">باقة الستر (15,000 SDG)</option>
+                        <option value="الباقة الذهبية">الباقة الذهبية (35,000 SDG)</option>
+                        <option value="الباقة الماسية">الباقة الماسية (75,000 SDG)</option>
                     </select>
                 </div>
 
@@ -109,8 +129,13 @@
                     <input type="password" name="password" id="userPassword" required placeholder="ستحتاجها لتعديل بياناتك لاحقاً" class="w-full p-4 rounded-2xl border-none">
                 </div>
 
-                <button type="submit" id="submitBtn" class="w-full bg-green-700 text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-green-800 transition-all flex items-center justify-center gap-3">
-                    <span id="btnText">إرسال البيانات والتوثيق</span>
+                <div class="flex items-start gap-3 p-4 bg-gray-50 rounded-2xl">
+                    <input type="checkbox" required class="mt-1 w-4 h-4 text-green-600">
+                    <p class="text-[10px] text-gray-500 leading-relaxed">أقر بأن جميع البيانات صحيحة وأتحمل المسؤولية، كما أوافق على شروط منصة نصيب العالمي في الحفاظ على خصوصية الأعضاء والهدف من المنصة هو الستر والحلال فقط.</p>
+                </div>
+
+                <button type="button" onclick="showPreview()" id="submitBtn" class="w-full bg-green-700 text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-green-800 transition-all flex items-center justify-center gap-3">
+                    <span id="btnText">مراجعة وإرسال البيانات 🚀</span>
                     <span id="loader" class="hidden animate-spin border-2 border-white/30 border-t-white rounded-full w-5 h-5"></span>
                 </button>
                 <p id="statusMsg" class="text-center text-xs font-bold opacity-0 transition-opacity"></p>
@@ -128,7 +153,6 @@
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
 
-        // إظهار قسم الدفع
         document.getElementById('selectedPlan').addEventListener('change', function() {
             document.getElementById('paymentSection').style.display = 'block';
         });
@@ -139,18 +163,47 @@
         }
 
         async function uploadToImgBB(file) {
-            if (!file) return null;
+            if (!file) return "https://via.placeholder.com/400x500?text=No+Image";
             const formData = new FormData();
             formData.append('image', file);
-            const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                method: 'POST', body: formData
-            });
-            const data = await response.json();
-            return data.success ? data.data.url : null;
+            try {
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                    method: 'POST', body: formData
+                });
+                const data = await response.json();
+                return data.success ? data.data.url : null;
+            } catch (e) { return null; }
         }
 
-        form.addEventListener("submit", async function(e) {
-            e.preventDefault();
+        // وظائف المعاينة (Preview)
+        function showPreview() {
+            if(!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            const content = document.getElementById('previewContent');
+            const data = new FormData(form);
+            let html = "";
+            const labels = {
+                'name': 'الاسم المستعار', 'plan': 'الباقة المختارة', 'origin': 'الأصل/القبيلة',
+                'city': 'مكان الإقامة', 'age': 'العمر', 'status': 'الحالة الاجتماعية'
+            };
+            
+            for (let [key, value] of data.entries()) {
+                if(labels[key]) {
+                    html += `<div class="flex justify-between border-b py-1"><strong>${labels[key]}:</strong> <span>${value}</span></div>`;
+                }
+            }
+            content.innerHTML = html;
+            document.getElementById('previewModal').classList.add('active');
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').classList.remove('active');
+        }
+
+        async function finalSubmit() {
+            closePreview();
             const btn = document.getElementById('submitBtn');
             const loader = document.getElementById('loader');
             const status = document.getElementById('statusMsg');
@@ -158,21 +211,20 @@
             btn.disabled = true;
             loader.classList.remove('hidden');
             status.style.opacity = "1";
-            status.innerText = "⏳ جاري المعالجة والرفع...";
+            status.innerText = "⏳ جاري رفع الصور والبيانات...";
             status.className = "text-center text-xs font-bold mt-4 text-blue-600";
 
             try {
-                // 1. رفع الصورة الشخصية
+                // 1. الرفع
                 const profileUrl = await uploadToImgBB(document.getElementById('imageInput').files[0]);
                 document.getElementById('imageUrl').value = profileUrl;
 
-                // 2. رفع صورة الإيصال (اختياري حسب الباقة)
                 const receiptUrl = await uploadToImgBB(document.getElementById('receiptInput').files[0]);
                 document.getElementById('receiptUrl').value = receiptUrl;
 
                 document.getElementById('whatsapp_full').value = phoneInput.getNumber();
 
-                // 3. إرسال لـ Formspree
+                // 2. إرسال لـ Formspree
                 const response = await fetch(form.action, {
                     method: 'POST',
                     body: new FormData(form),
@@ -180,26 +232,27 @@
                 });
 
                 if (response.ok) {
-                    // 4. حفظ الجلسة محلياً (Login Simulation)
-                    localStorage.setItem('naseeb_user', form.name.value);
+                    // 3. حفظ الجلسة محلياً (التكامل مع index.html)
+                    localStorage.setItem('userName', form.name.value);
+                    localStorage.setItem('userPlan', form.plan.value);
                     localStorage.setItem('naseeb_logged', 'true');
 
-                    status.innerText = "✅ تم الإرسال! جاري توثيق الطلب عبر واتساب...";
+                    status.innerText = "✅ تم الإرسال بنجاح! جاري التوجه للواتساب...";
                     status.className = "text-center text-xs font-bold mt-4 text-green-600";
                     
-                    const waMsg = `طلب تسجيل جديد في نصيب العالمي\n👤 الاسم: ${form.name.value}\n📍 الإقامة: ${form.city.value}\n💰 الباقة: ${form.plan.value}\n🖼️ الصورة: ${profileUrl}\n🧾 الإيصال: ${receiptUrl || 'لا يوجد'}`;
+                    const waMsg = `طلب توثيق جديد:\n👤 الاسم: ${form.name.value}\n📍 الإقامة: ${form.city.value}\n💰 الباقة: ${form.plan.value}\n🖼️ الصورة الشخصية: ${profileUrl}\n🧾 إيصال الدفع: ${receiptUrl}`;
                     
                     window.open(`https://wa.me/249127910778?text=${encodeURIComponent(waMsg)}`, '_blank');
                     
-                    setTimeout(() => window.location.href = "index.html", 4000);
+                    setTimeout(() => window.location.href = "index.html", 3000);
                 }
             } catch (err) {
-                status.innerText = "❌ فشل الإرسال، تأكد من الاتصال وحاول مجدداً";
+                status.innerText = "❌ حدث خطأ، تأكد من الإنترنت وحاول ثانية";
                 status.className = "text-center text-xs font-bold mt-4 text-red-600";
                 btn.disabled = false;
                 loader.classList.add('hidden');
             }
-        });
+        }
     </script>
 </body>
 </html>
