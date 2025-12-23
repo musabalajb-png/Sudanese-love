@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نصيب العالمي - منصة الزواج الإسلامي الأولى</title>
-    <meta name="description" content="منصة نصيب العالمية لستر الحلال - نجمع القلوب بالحلال وفق الشريعة الإسلامية">
+    <meta name="description" content="نصيب العالمي لستر الحلال - المنصة الأوثق للسودانيين والمسلمين حول العالم لإيجاد شريك الحياة وفق الشريعة الإسلامية.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -20,6 +20,8 @@
         .pricing-card:hover { border-color: #10b981; transform: scale(1.02); }
         #regNotification { transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
         .floating-wa { position: fixed; bottom: 30px; left: 30px; z-index: 100; }
+        .faq-card { transition: 0.3s; cursor: pointer; }
+        .faq-card:hover { background-color: #f0fdf4; }
     </style>
 </head>
 <body id="mainBody" class="rtl bg-gray-50">
@@ -33,17 +35,21 @@
             <span>💍</span> <span id="navLogo">نصيب العالمي</span>
         </div>
         <div class="flex items-center gap-3">
+            <div id="userInfo" class="hidden flex items-center gap-2 bg-green-50 px-3 py-1 rounded-full border border-green-100">
+                <span id="userNameDisplay" class="text-xs font-bold text-green-700"></span>
+                <button onclick="logout()" class="text-[10px] bg-red-100 text-red-600 px-2 py-1 rounded-md">خروج</button>
+            </div>
             <a href="members.html" id="navBrowse" class="hidden md:block text-gray-600 font-bold hover:text-green-700 transition text-sm">تصفح المشتركين</a>
-            <button onclick="window.location.href='members.html?login=true'" id="loginBtnNav" class="bg-green-600 text-white px-5 py-2 rounded-full text-sm font-bold btn-hover transition">دخول</button>
+            <button id="loginBtnNav" onclick="window.location.href='members.html?login=true'" class="bg-green-600 text-white px-5 py-2 rounded-full text-sm font-bold btn-hover transition">دخول</button>
             <button id="langBtn" class="border-2 border-slate-200 text-gray-500 px-4 py-1 rounded-full text-xs font-bold hover:border-green-700 hover:text-green-700 transition">English</button>
         </div>
     </nav>
 
-    <header class="hero-section h-[90vh] flex items-center justify-center text-white px-6 text-center">
+    <header class="hero-section h-[85vh] flex items-center justify-center text-white px-6 text-center">
         <div class="max-w-3xl">
-            <span id="heroTag" class="bg-green-600/40 backdrop-blur-sm text-white px-4 py-1 rounded-full text-[10px] font-bold mb-6 inline-block border border-white/20 uppercase tracking-widest">🇸🇩 منصة عالمية لستر الحلال</span>
+            <span id="heroTag" class="bg-green-600/40 backdrop-blur-sm text-white px-4 py-1 rounded-full text-[10px] font-bold mb-6 inline-block border border-white/20">🇸🇩 منصة عالمية لستر الحلال</span>
             <h1 id="title" class="text-4xl md:text-7xl font-bold mb-6 leading-tight">أهلاً بك في منصة نصيب العالمية</h1>
-            <p id="subtitle" class="text-lg md:text-xl mb-10 opacity-90 font-light leading-relaxed">نجمع القلوب بالحلال وفقاً للقيم والشريعة الإسلامية في كل أنحاء العالم</p>
+            <p id="subtitle" class="text-lg md:text-xl mb-10 opacity-90 font-light">نجمع القلوب بالحلال وفقاً للقيم والشريعة الإسلامية في كل أنحاء العالم</p>
             <div class="flex flex-col md:flex-row gap-4 justify-center">
                 <a href="register.html" id="regBtn" class="bg-green-600 text-white font-bold py-5 px-12 rounded-2xl text-lg shadow-xl btn-hover transition">ابدأ التسجيل الآن ✍️</a>
                 <a href="members.html" id="browseBtn" class="bg-white/10 backdrop-blur-md text-white border border-white/30 font-bold py-5 px-12 rounded-2xl text-lg hover:bg-white/20 transition">تصفح الأعضاء</a>
@@ -60,21 +66,21 @@
         </div>
     </section>
 
-    <section class="py-24 bg-gray-50">
+    <section class="py-24 bg-white">
         <div class="container mx-auto px-6 text-center">
             <h2 id="priceTitle" class="text-3xl font-bold text-slate-800 mb-4">باقات الاشتراك</h2>
             <p id="priceSub" class="text-gray-500 mb-12">اختر الباقة المناسبة لرحلة بحثك عن شريك حياتك</p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <div class="pricing-card bg-white p-8 rounded-[2.5rem] border-2 border-transparent shadow-lg transition">
+                <div class="pricing-card bg-white p-8 rounded-[2.5rem] border-2 border-gray-100 shadow-sm transition">
                     <h3 class="text-xl font-bold mb-4">باقة الستر</h3>
                     <div class="text-3xl font-bold text-green-600 mb-6">SDG 15,000</div>
                     <ul class="text-right text-sm space-y-3 mb-8 text-gray-600">
                         <li><i class="fas fa-check text-green-500 ml-2"></i> رؤية جميع الأعضاء</li>
                         <li><i class="fas fa-check text-green-500 ml-2"></i> طلب تواصل (3 أعضاء)</li>
                     </ul>
-                    <a href="register.html" class="block w-full py-3 rounded-xl bg-slate-100 font-bold hover:bg-green-600 hover:text-white transition">اشترك الآن</a>
+                    <a href="register.html" class="block w-full py-3 rounded-xl bg-slate-50 font-bold hover:bg-green-600 hover:text-white transition">اشترك الآن</a>
                 </div>
-                <div class="pricing-card bg-white p-8 rounded-[2.5rem] border-2 border-green-500 shadow-xl relative scale-105">
+                <div class="pricing-card bg-white p-8 rounded-[2.5rem] border-2 border-green-500 shadow-xl relative scale-105 z-10">
                     <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-xs">الأكثر طلباً</span>
                     <h3 class="text-xl font-bold mb-4">الباقة الذهبية</h3>
                     <div class="text-3xl font-bold text-green-600 mb-6">SDG 35,000</div>
@@ -85,7 +91,7 @@
                     </ul>
                     <a href="register.html" class="block w-full py-3 rounded-xl bg-green-600 text-white font-bold btn-hover">اشترك الآن</a>
                 </div>
-                <div class="pricing-card bg-white p-8 rounded-[2.5rem] border-2 border-transparent shadow-lg transition">
+                <div class="pricing-card bg-white p-8 rounded-[2.5rem] border-2 border-gray-100 shadow-sm transition">
                     <h3 class="text-xl font-bold mb-4">الباقة الماسية</h3>
                     <div class="text-3xl font-bold text-green-600 mb-6">SDG 75,000</div>
                     <ul class="text-right text-sm space-y-3 mb-8 text-gray-600">
@@ -93,7 +99,23 @@
                         <li><i class="fas fa-check text-green-500 ml-2"></i> مستشار زواج خاص</li>
                         <li><i class="fas fa-check text-green-500 ml-2"></i> توثيق حسابك فوراً</li>
                     </ul>
-                    <a href="register.html" class="block w-full py-3 rounded-xl bg-slate-100 font-bold hover:bg-green-600 hover:text-white transition">اشترك الآن</a>
+                    <a href="register.html" class="block w-full py-3 rounded-xl bg-slate-50 font-bold hover:bg-green-600 hover:text-white transition">اشترك الآن</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h2 class="text-3xl font-bold text-center mb-12">أسئلة شائعة 💡</h2>
+            <div class="space-y-4">
+                <div class="faq-card bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h4 class="font-bold text-green-700">هل صوري الشخصية آمنة؟</h4>
+                    <p class="text-sm text-gray-600 mt-2">نعم، الصور تظل مخفية (Blurred) تماماً ولا تظهر إلا للمشتركين الموثقين في الباقات المدفوعة لضمان الجدية.</p>
+                </div>
+                <div class="faq-card bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h4 class="font-bold text-green-700">كيف يتم دفع رسوم الاشتراك؟</h4>
+                    <p class="text-sm text-gray-600 mt-2">يمكنك الدفع عبر تطبيق (بنكك - BOK) ورفع صورة الإيصال في إستمارة التسجيل ليتم تفعيل حسابك فوراً.</p>
                 </div>
             </div>
         </div>
@@ -143,26 +165,30 @@
             }
         };
 
+        // وظيفة تحديث الجلسة
+        function updateSessionUI() {
+            const isLoggedIn = localStorage.getItem('naseeb_logged') === 'true';
+            const user = localStorage.getItem('userName');
+            if (isLoggedIn && user) {
+                document.getElementById('loginBtnNav').classList.add('hidden');
+                document.getElementById('userInfo').classList.remove('hidden');
+                document.getElementById('userNameDisplay').innerText = user;
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            location.reload();
+        }
+
         btn.onclick = () => {
             currentLang = currentLang === 'ar' ? 'en' : 'ar';
             body.className = currentLang === 'ar' ? 'rtl bg-gray-50' : 'ltr bg-gray-50';
             btn.innerText = currentLang === 'ar' ? 'English' : 'العربية';
             const t = translations[currentLang];
-            document.getElementById('navLogo').innerText = t.navLogo;
-            document.getElementById('navBrowse').innerText = t.navBrowse;
-            document.getElementById('loginBtnNav').innerText = t.loginBtnNav;
-            document.getElementById('heroTag').innerText = t.heroTag;
-            document.getElementById('title').innerText = t.title;
-            document.getElementById('subtitle').innerText = t.subtitle;
-            document.getElementById('regBtn').innerText = t.regBtn;
-            document.getElementById('browseBtn').innerText = t.browseBtn;
-            document.getElementById('stat1').innerText = t.stat1;
-            document.getElementById('stat2').innerText = t.stat2;
-            document.getElementById('stat3').innerText = t.stat3;
-            document.getElementById('stat4').innerText = t.stat4;
-            document.getElementById('priceTitle').innerText = t.priceTitle;
-            document.getElementById('priceSub').innerText = t.priceSub;
-            document.getElementById('footerTitle').innerText = t.footerTitle;
+            document.querySelectorAll('[id]').forEach(el => {
+                if (t[el.id]) el.innerText = t[el.id];
+            });
         };
 
         const randomUsers = [
@@ -178,7 +204,11 @@
             document.getElementById('regNotification').classList.remove('translate-y-40');
             setTimeout(() => { document.getElementById('regNotification').classList.add('translate-y-40'); }, 5000);
         }
-        setTimeout(() => { showNotification(); setInterval(showNotification, 15000); }, 3000);
+
+        window.onload = () => {
+            updateSessionUI();
+            setTimeout(() => { showNotification(); setInterval(showNotification, 15000); }, 3000);
+        };
     </script>
 </body>
 </html>
