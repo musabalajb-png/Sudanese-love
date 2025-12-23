@@ -1,214 +1,167 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>نصيب العالمي | منصة الزواج الإسلامي الأولى للسودانيين</title>
-    <meta name="description" content="نصيب العالمي لستر الحلال - المنصة الأوثق للسودانيين والمسلمين حول العالم لإيجاد شريك الحياة وفق الشريعة الإسلامية. توثيق كامل، خصوصية تامة، وباقات تناسب الجميع.">
-    <meta name="keywords" content="زواج سوداني، نصيب العالمي، خطابة سودانية، زواج الحلال، زواج مغتربين، سودانيين في الخارج، طلبات زواج، ستر الحلال">
-    <meta name="author" content="نصيب العالمي">
-
-    <meta property="og:title" content="نصيب العالمي - نجمع القلوب بالحلال">
-    <meta property="og:description" content="سجل الآن وابحث عن شريك حياتك في بيئة آمنة وموثوقة وفق القيم الإسلامية.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?q=80">
-    <meta property="og:url" content="https://naseeb-global.com">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "نصيب العالمي للزواج",
-      "description": "منصة زواج إسلامية مخصصة للسودانيين حول العالم",
-      "provider": {
-        "@type": "Organization",
-        "name": "نصيب العالمي"
-      },
-      "areaServed": "Global",
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "باقات الزواج",
-        "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "باقة الستر" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "الباقة الذهبية" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "الباقة الماسية" } }
-        ]
-      }
-    }
-    </script>
+    <title>نصيب العالمي | المنصة الأولى للستر والحلال بالسودان</title>
+    <meta name="description" content="منصة نصيب العالمي تساعدك في إيجاد شريك حياتك بخصوصية تامة ووفق الشريعة الإسلامية. آلاف المشتركين الموثقين في انتظارك.">
+    <meta name="keywords" content="زواج سوداني، نصيب العالمي، خطابة سودانية، الستر والحلال، باقة الستر">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        body { font-family: 'Cairo', sans-serif; transition: all 0.3s ease; scroll-behavior: smooth; }
-        .rtl { direction: rtl; } .ltr { direction: ltr; }
-        .hero-section {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
-                              url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover; background-position: center;
+        body { font-family: 'Cairo', sans-serif; background: #fafafa; overflow-x: hidden; }
+        .hero-gradient { background: linear-gradient(135deg, #15803d 0%, #166534 100%); }
+        .card-hover { transition: all 0.3s ease; border: 1px solid #f1f5f9; }
+        .card-hover:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .faq-answer { display: none; }
+        .faq-item.active .faq-answer { display: block; }
+        .faq-item.active i { transform: rotate(180deg); }
+        
+        /* تأثير النبض للأزرار المهمة */
+        .pulse-btn { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(21, 128, 61, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0); }
         }
-        .btn-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(22, 163, 74, 0.5); }
-        .pricing-card:hover { border-color: #10b981; transform: scale(1.02); }
-        #regNotification { transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
-        .floating-wa { position: fixed; bottom: 30px; left: 30px; z-index: 100; }
-        .faq-card { transition: 0.3s; cursor: pointer; }
-        .faq-card:hover { background-color: #f0fdf4; }
     </style>
 </head>
-<body id="mainBody" class="rtl bg-gray-50">
+<body>
 
-    <a href="https://wa.me/249127910778" class="floating-wa bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition btn-hover">
-        <i class="fab fa-whatsapp text-3xl"></i>
-    </a>
-
-    <nav class="bg-white/90 backdrop-blur-md shadow-sm p-4 flex justify-between items-center sticky top-0 z-50">
-        <div class="text-2xl font-bold text-green-700 flex items-center gap-2">
-            <span>💍</span> <span id="navLogo">نصيب العالمي</span>
-        </div>
-        <div class="flex items-center gap-3">
-            <div id="userInfo" class="hidden flex items-center gap-2 bg-green-50 px-3 py-1 rounded-full border border-green-100">
-                <span id="userNameDisplay" class="text-xs font-bold text-green-700"></span>
-                <button onclick="logout()" class="text-[10px] bg-red-100 text-red-600 px-2 py-1 rounded-md">خروج</button>
+    <nav class="bg-white/90 backdrop-blur-md shadow-sm p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <div class="flex items-center gap-2">
+                <span class="text-3xl">💍</span>
+                <span class="font-bold text-green-700 text-xl">نصيب العالمي</span>
             </div>
-            <a href="members.html" id="navBrowse" class="hidden md:block text-gray-600 font-bold hover:text-green-700 transition text-sm">تصفح المشتركين</a>
-            <button id="loginBtnNav" onclick="window.location.href='members.html?login=true'" class="bg-green-600 text-white px-5 py-2 rounded-full text-sm font-bold btn-hover transition">دخول</button>
-            <button id="langBtn" class="border-2 border-slate-200 text-gray-500 px-4 py-1 rounded-full text-xs font-bold hover:border-green-700 hover:text-green-700 transition">English</button>
+            <div class="flex items-center gap-4">
+                <div id="userSection" class="hidden flex items-center gap-3 bg-green-50 px-4 py-2 rounded-full border border-green-100">
+                    </div>
+                <a href="members.html" class="text-gray-600 font-bold hover:text-green-700 text-sm transition">تصفح الأعضاء</a>
+                <a id="loginBtnNav" href="register.html" class="bg-green-700 text-white px-6 py-2 rounded-full text-sm font-bold pulse-btn">ابدأ الآن</a>
+            </div>
         </div>
     </nav>
 
-    <header class="hero-section h-[85vh] flex items-center justify-center text-white px-6 text-center">
-        <div class="max-w-3xl">
-            <span id="heroTag" class="bg-green-600/40 backdrop-blur-sm text-white px-4 py-1 rounded-full text-[10px] font-bold mb-6 inline-block border border-white/20">🇸🇩 منصة عالمية لستر الحلال</span>
-            <h1 id="title" class="text-4xl md:text-7xl font-bold mb-6 leading-tight">أهلاً بك في منصة نصيب العالمية</h1>
-            <p id="subtitle" class="text-lg md:text-xl mb-10 opacity-90 font-light">نجمع القلوب بالحلال وفقاً للقيم والشريعة الإسلامية في كل أنحاء العالم</p>
-            <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="register.html" id="regBtn" class="bg-green-600 text-white font-bold py-5 px-12 rounded-2xl text-lg shadow-xl btn-hover transition">ابدأ التسجيل الآن ✍️</a>
-                <a href="members.html" id="browseBtn" class="bg-white/10 backdrop-blur-md text-white border border-white/30 font-bold py-5 px-12 rounded-2xl text-lg hover:bg-white/20 transition">تصفح الأعضاء</a>
+    <header class="hero-gradient text-white py-20 px-6 relative overflow-hidden">
+        <div class="container mx-auto text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">طريقك للستر والحلال <br><span class="text-green-300">يبدأ من هنا</span></h1>
+            <p class="text-lg opacity-90 mb-10 max-w-2xl mx-auto">نصيب العالمي هي المنصة الأكثر أماناً وموثوقية لربط القلوب في السودان وخارجه بخصوصية تامة.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="register.html" class="bg-white text-green-800 px-10 py-4 rounded-2xl font-bold text-lg shadow-xl hover:bg-gray-100 transition">سجل الآن مجاناً</a>
+                <a href="members.html" class="bg-green-600 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl hover:bg-green-500 transition border border-green-400">تصفح طلبات الزواج</a>
+            </div>
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-80">
+                <div><div class="text-3xl font-bold">5000+</div><div class="text-xs">مشترك موثق</div></div>
+                <div><div class="text-3xl font-bold">1200+</div><div class="text-xs">حالة زواج ناجحة</div></div>
+                <div><div class="text-3xl font-bold">100%</div><div class="text-xs">خصوصية تامة</div></div>
+                <div><div class="text-3xl font-bold">24/7</div><div class="text-xs">دعم فني</div></div>
             </div>
         </div>
     </header>
 
-    <section class="py-12 bg-green-700 text-white">
-        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div><h3 class="text-3xl font-bold">5000+</h3><p id="stat1" class="text-sm opacity-80">مشترك موثق</p></div>
-            <div><h3 class="text-3xl font-bold">1200+</h3><p id="stat2" class="text-sm opacity-80">حالة توفيق</p></div>
-            <div><h3 class="text-3xl font-bold">24/7</h3><p id="stat3" class="text-sm opacity-80">دعم متواصل</p></div>
-            <div><h3 class="text-3xl font-bold">100%</h3><p id="stat4" class="text-sm opacity-80">خصوصية تامة</p></div>
-        </div>
-    </section>
-
-    <section class="py-24 bg-white">
-        <div class="container mx-auto px-6 text-center">
-            <h2 id="priceTitle" class="text-3xl font-bold text-slate-800 mb-4">باقات الاشتراك</h2>
-            <p id="priceSub" class="text-gray-500 mb-12">اختر الباقة المناسبة لرحلة بحثك عن شريك حياتك</p>
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">اختر الباقة المناسبة لك</h2>
+                <p class="text-gray-500">نوفر لك خيارات متنوعة تناسب احتياجاتك وتضمن لك الجدية</p>
+            </div>
+            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <div class="pricing-card bg-white p-8 rounded-[2.5rem] border-2 border-gray-100 shadow-sm transition">
-                    <h3 class="text-xl font-bold mb-4">باقة الستر</h3>
-                    <div class="text-3xl font-bold text-green-600 mb-6">SDG 15,000</div>
-                    <ul class="text-right text-sm space-y-3 mb-8 text-gray-600">
-                        <li><i class="fas fa-check text-green-500 ml-2"></i> رؤية جميع الأعضاء</li>
-                        <li><i class="fas fa-check text-green-500 ml-2"></i> طلب تواصل (3 أعضاء)</li>
-                    </ul>
-                    <a href="register.html" class="block w-full py-3 rounded-xl bg-slate-50 font-bold hover:bg-green-600 hover:text-white transition">اشترك الآن</a>
-                </div>
-                <div class="pricing-card bg-white p-8 rounded-[2.5rem] border-2 border-green-500 shadow-xl relative scale-105 z-10">
-                    <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-xs">الأكثر طلباً</span>
-                    <h3 class="text-xl font-bold mb-4">الباقة الذهبية</h3>
-                    <div class="text-3xl font-bold text-green-600 mb-6">SDG 35,000</div>
-                    <ul class="text-right text-sm space-y-3 mb-8 text-gray-600">
+                <div class="card-hover p-8 rounded-[2.5rem] bg-white text-center">
+                    <div class="text-4xl mb-4">🌱</div>
+                    <h3 class="text-xl font-bold mb-2">باقة الستر</h3>
+                    <div class="text-3xl font-bold text-green-700 mb-6">15,000 <span class="text-sm">SDG</span></div>
+                    <ul class="text-gray-600 text-sm space-y-4 mb-8">
+                        <li><i class="fas fa-check text-green-500 ml-2"></i> توثيق رسمي للحساب</li>
                         <li><i class="fas fa-check text-green-500 ml-2"></i> فك تغبيش الصور</li>
-                        <li><i class="fas fa-check text-green-500 ml-2"></i> طلب تواصل (10 أعضاء)</li>
-                        <li><i class="fas fa-check text-green-500 ml-2"></i> أولوية في الظهور</li>
+                        <li><i class="fas fa-check text-green-500 ml-2"></i> ظهور في قائمة البحث</li>
                     </ul>
-                    <a href="register.html" class="block w-full py-3 rounded-xl bg-green-600 text-white font-bold btn-hover">اشترك الآن</a>
+                    <a href="register.html?plan=ستر" class="block w-full py-4 rounded-xl bg-slate-100 font-bold hover:bg-green-700 hover:text-white transition">اختيار الباقة</a>
                 </div>
-                <div class="pricing-card bg-white p-8 rounded-[2.5rem] border-2 border-gray-100 shadow-sm transition">
-                    <h3 class="text-xl font-bold mb-4">الباقة الماسية</h3>
-                    <div class="text-3xl font-bold text-green-600 mb-6">SDG 75,000</div>
-                    <ul class="text-right text-sm space-y-3 mb-8 text-gray-600">
-                        <li><i class="fas fa-check text-green-500 ml-2"></i> تواصل غير محدود</li>
-                        <li><i class="fas fa-check text-green-500 ml-2"></i> مستشار زواج خاص</li>
-                        <li><i class="fas fa-check text-green-500 ml-2"></i> توثيق حسابك فوراً</li>
+
+                <div class="card-hover p-8 rounded-[2.5rem] bg-green-50 border-2 border-green-200 text-center relative">
+                    <span class="absolute -top-4 right-1/2 translate-x-1/2 bg-yellow-400 text-xs font-bold px-4 py-1 rounded-full">الأكثر طلباً</span>
+                    <div class="text-4xl mb-4">⭐</div>
+                    <h3 class="text-xl font-bold mb-2 text-green-900">الباقة الذهبية</h3>
+                    <div class="text-3xl font-bold text-green-700 mb-6">35,000 <span class="text-sm">SDG</span></div>
+                    <ul class="text-gray-800 text-sm space-y-4 mb-8">
+                        <li><i class="fas fa-check text-green-500 ml-2"></i> كل مميزات باقة الستر</li>
+                        <li><i class="fas fa-check text-green-500 ml-2"></i> أولوية في الترشيح</li>
+                        <li><i class="fas fa-check text-green-500 ml-2"></i> دعم فني خاص بالواتساب</li>
                     </ul>
-                    <a href="register.html" class="block w-full py-3 rounded-xl bg-slate-50 font-bold hover:bg-green-600 hover:text-white transition">اشترك الآن</a>
+                    <a href="register.html?plan=ذهبية" class="block w-full py-4 rounded-xl bg-green-700 text-white font-bold hover:bg-green-800 shadow-lg transition">اختيار الباقة</a>
+                </div>
+
+                <div class="card-hover p-8 rounded-[2.5rem] bg-slate-900 text-white text-center">
+                    <div class="text-4xl mb-4">💎</div>
+                    <h3 class="text-xl font-bold mb-2">الباقة الماسية</h3>
+                    <div class="text-3xl font-bold text-green-400 mb-6">75,000 <span class="text-sm">SDG</span></div>
+                    <ul class="text-gray-300 text-sm space-y-4 mb-8">
+                        <li><i class="fas fa-check text-green-400 ml-2"></i> بحث مخصص عبر الإدارة</li>
+                        <li><i class="fas fa-check text-green-400 ml-2"></i> سرية تامة (VIP)</li>
+                        <li><i class="fas fa-check text-green-400 ml-2"></i> مرافقة حتى إتمام العقد</li>
+                    </ul>
+                    <a href="register.html?plan=ماسية" class="block w-full py-4 rounded-xl bg-green-600 text-white font-bold hover:bg-green-500 transition">اختيار الباقة</a>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6 max-w-4xl">
-            <h2 class="text-3xl font-bold text-center mb-12">أسئلة شائعة 💡</h2>
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-3xl font-bold text-center mb-12">الأسئلة الشائعة</h2>
             <div class="space-y-4">
-                <div class="faq-card bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h4 class="font-bold text-green-700">هل صوري الشخصية آمنة؟</h4>
-                    <p class="text-sm text-gray-600 mt-2">نعم، الصور تظل مخفية (Blurred) تماماً ولا تظهر إلا للمشتركين الموثقين في الباقات المدفوعة لضمان الخصوصية والجدية.</p>
+                <div class="faq-item bg-white p-6 rounded-2xl cursor-pointer shadow-sm active" onclick="this.classList.toggle('active')">
+                    <div class="flex justify-between items-center font-bold text-slate-700">
+                        <span>هل بياناتي وصوري آمنة؟</span>
+                        <i class="fas fa-chevron-down text-xs transition"></i>
+                    </div>
+                    <p class="faq-answer mt-4 text-gray-500 text-sm leading-relaxed">بكل تأكيد، صورك تظهر مغبشة (Blurred) ولا يراها إلا المشتركون الجادون الموثقون فقط، ولا يمكن تحميلها من الموقع.</p>
                 </div>
-                <div class="faq-card bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h4 class="font-bold text-green-700">كيف يتم دفع رسوم الاشتراك؟</h4>
-                    <p class="text-sm text-gray-600 mt-2">يمكنك الدفع عبر تطبيق (بنكك - BOK) ورفع صورة الإيصال في إستمارة التسجيل ليتم تفعيل حسابك من قبل الإدارة فوراً.</p>
+                <div class="faq-item bg-white p-6 rounded-2xl cursor-pointer shadow-sm" onclick="this.classList.toggle('active')">
+                    <div class="flex justify-between items-center font-bold text-slate-700">
+                        <span>كيف يتم توثيق الحساب؟</span>
+                        <i class="fas fa-chevron-down text-xs transition"></i>
+                    </div>
+                    <p class="faq-answer mt-4 text-gray-500 text-sm leading-relaxed">بعد دفع رسوم الباقة وإرفاق الإيصال، تقوم الإدارة بمراجعة طلبك والتواصل معك عبر الواتساب لتفعيل الحساب رسمياً.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-slate-900 text-white py-16 text-center">
-        <div class="container mx-auto px-6">
-            <h2 class="text-2xl font-bold mb-8" id="footerTitle">تابعونا على مواقع التواصل</h2>
-            <div class="flex justify-center gap-6 mb-12">
-                <a href="#" class="text-3xl hover:text-green-500 transition" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="text-3xl hover:text-green-500 transition" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a href="#" class="text-3xl hover:text-green-500 transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://wa.me/249127910778" class="text-3xl hover:text-green-500 transition" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <footer class="bg-white border-t py-12">
+        <div class="container mx-auto px-6 text-center">
+            <div class="text-2xl font-bold text-green-700 mb-4">💍 نصيب العالمي</div>
+            <p class="text-gray-400 text-sm mb-6">المنصة الأولى والآمنة للزواج الشرعي في السودان.</p>
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="#" class="text-gray-400 hover:text-green-600"><i class="fab fa-facebook text-xl"></i></a>
+                <a href="https://wa.me/249127910778" class="text-gray-400 hover:text-green-600"><i class="fab fa-whatsapp text-xl"></i></a>
             </div>
-            <p class="text-gray-500 text-sm">© 2025 نصيب العالمي - جميع الحقوق محفوظة</p>
+            <p class="text-[10px] text-gray-300">جميع الحقوق محفوظة © 2025 - نصيب العالمي</p>
         </div>
     </footer>
 
-    <div id="regNotification" class="fixed bottom-6 right-6 bg-white/95 backdrop-blur-md border border-green-100 p-4 rounded-2xl shadow-2xl flex items-center gap-4 transform translate-y-40 z-[60] max-w-xs text-right">
-        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">💍</div>
-        <div><p id="notifText" class="text-xs font-bold text-slate-800"></p><p class="text-[10px] text-gray-400 mt-1" id="notifTime">منذ قليل</p></div>
-    </div>
-
     <script>
-        const btn = document.getElementById('langBtn');
-        const body = document.getElementById('mainBody');
-        let currentLang = 'ar';
-
-        const translations = {
-            ar: {
-                navLogo: "نصيب العالمي", navBrowse: "تصفح المشتركين", loginBtnNav: "دخول",
-                heroTag: "🇸🇩 منصة عالمية لستر الحلال", title: "أهلاً بك في منصة نصيب العالمية",
-                subtitle: "نجمع القلوب بالحلال وفقاً للقيم والشريعة الإسلامية في كل أنحاء العالم",
-                regBtn: "ابدأ التسجيل الآن ✍️", browseBtn: "تصفح الأعضاء",
-                stat1: "مشترك موثق", stat2: "حالة توفيق", stat3: "دعم متواصل", stat4: "خصوصية تامة",
-                priceTitle: "باقات الاشتراك", priceSub: "اختر الباقة المناسبة لرحلة بحثك",
-                footerTitle: "تابعونا على مواقع التواصل", notifAction: "سجل الآن"
-            },
-            en: {
-                navLogo: "Naseeb Global", navBrowse: "Browse Members", loginBtnNav: "Login",
-                heroTag: "🇸🇩 Global Halal Platform", title: "Welcome to Global Naseeb Platform",
-                subtitle: "Connecting hearts through Halal according to Islamic values worldwide",
-                regBtn: "Register Now ✍️", browseBtn: "Browse Members",
-                stat1: "Verified Members", stat2: "Successful Matches", stat3: "24/7 Support", stat4: "Full Privacy",
-                priceTitle: "Subscription Plans", priceSub: "Choose the right plan for your journey",
-                footerTitle: "Follow Us On Social Media", notifAction: "Registered now"
-            }
-        };
-
+        // 1. مزامنة الجلسة والتحديث التلقائي للهيدر
         function updateSessionUI() {
             const isLoggedIn = localStorage.getItem('naseeb_logged') === 'true';
-            const user = localStorage.getItem('userName');
-            if (isLoggedIn && user) {
-                const loginBtn = document.getElementById('loginBtnNav');
+            const userName = localStorage.getItem('userName');
+            const loginBtn = document.getElementById('loginBtnNav');
+            const userSection = document.getElementById('userSection');
+
+            if(isLoggedIn && userName) {
                 if(loginBtn) loginBtn.classList.add('hidden');
-                const userInfo = document.getElementById('userInfo');
-                if(userInfo) {
-                    userInfo.classList.remove('hidden');
-                    document.getElementById('userNameDisplay').innerText = user;
+                if(userSection) {
+                    userSection.classList.remove('hidden');
+                    userSection.innerHTML = `
+                        <span class="text-xs font-bold text-green-700">مرحباً، ${userName}</span>
+                        <button onclick="logout()" class="text-[10px] bg-red-100 text-red-600 px-2 py-1 rounded-md">خروج</button>
+                    `;
                 }
             }
         }
@@ -218,39 +171,45 @@
             location.reload();
         }
 
-        btn.onclick = () => {
-            currentLang = currentLang === 'ar' ? 'en' : 'ar';
-            body.className = currentLang === 'ar' ? 'rtl bg-gray-50' : 'ltr bg-gray-50';
-            btn.innerText = currentLang === 'ar' ? 'English' : 'العربية';
-            const t = translations[currentLang];
+        // 2. نظام التنبيهات الحية (لزيادة الثقة)
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-5 right-5 bg-white border-r-4 border-green-600 shadow-2xl p-4 rounded-xl z-[100] transition-all transform translate-y-20 opacity-0 text-xs font-bold flex items-center gap-3";
+            toast.style.boxShadow = "0 10px 30px rgba(0,0,0,0.1)";
+            toast.innerHTML = `
+                <div class="bg-green-100 p-2 rounded-full text-green-600"><i class="fas fa-bell"></i></div>
+                <div>${msg}</div>
+            `;
+            document.body.appendChild(toast);
             
-            // تحديث النصوص بناءً على المعرفات
-            const elementsToTranslate = ['navLogo', 'navBrowse', 'loginBtnNav', 'heroTag', 'title', 'subtitle', 'regBtn', 'browseBtn', 'stat1', 'stat2', 'stat3', 'stat4', 'priceTitle', 'priceSub', 'footerTitle'];
-            elementsToTranslate.forEach(id => {
-                const el = document.getElementById(id);
-                if (el && t[id]) el.innerText = t[id];
-            });
-        };
+            // انيميشن الظهور
+            setTimeout(() => {
+                toast.classList.remove('translate-y-20', 'opacity-0');
+            }, 100);
 
-        const randomUsers = [
-            { name: "أحمد م.", city: "الخرطوم", plan: "الباقة الماسية" },
-            { name: "سارة ع.", city: "الرياض", plan: "باقة الستر" },
-            { name: "محمد إ.", city: "دبي", plan: "الباقة الذهبية" },
-            { name: "فاطمة ح.", city: "مدني", plan: "باقة الستر" }
-        ];
-
-        function showNotification() {
-            const user = randomUsers[Math.floor(Math.random() * randomUsers.length)];
-            const t = translations[currentLang];
-            const msg = currentLang === 'ar' ? `سجل الآن <span class="text-green-600">${user.name}</span> من ${user.city}` : `New member <span class="text-green-600">${user.name}</span> from ${user.city}`;
-            document.getElementById('notifText').innerHTML = msg;
-            document.getElementById('regNotification').classList.remove('translate-y-40');
-            setTimeout(() => { document.getElementById('regNotification').classList.add('translate-y-40'); }, 5000);
+            // الاختفاء بعد 5 ثواني
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                setTimeout(() => toast.remove(), 500);
+            }, 5000);
         }
 
+        // 3. تشغيل الوظائف عند التحميل
         window.onload = () => {
             updateSessionUI();
-            setTimeout(() => { showNotification(); setInterval(showNotification, 18000); }, 4000);
+            
+            // تنبيهات وهمية لزيادة حماس الزوار
+            const notifications = [
+                "انضم الآن أحمد من أمدرمان لباقة الستر",
+                "مشتركة جديدة من الخرطوم (باقة ذهبية)",
+                "تم توثيق 5 طلبات جديدة خلال الساعة الماضية",
+                "مبروك! حالة زواج جديدة تمت عبر المنصة"
+            ];
+
+            setInterval(() => {
+                const randomMsg = notifications[Math.floor(Math.random() * notifications.length)];
+                showToast(randomMsg);
+            }, 25000); // كل 25 ثانية
         };
     </script>
 </body>
