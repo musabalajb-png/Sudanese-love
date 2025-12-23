@@ -3,40 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نصيب العالمي | منصة التفاعل الآمنة</title>
+    
+    <title>نصيب العالمي | منصة التعارف والزواج السوداني الأولى</title>
+    <meta name="description" content="نصيب العالمي هي المنصة الأولى للستر والحلال في السودان. ابحث عن شريك العمر في بيئة آمنة تضمن الخصوصية والمعايير الإسلامية.">
+    <meta name="keywords" content="زواج سوداني, نصيب, خطابة سودانية, زواج حلال, ستر, زواج الخرطوم, بنات السودان للزواج, مغتربين السودان">
+    <meta name="author" content="المصعب - نصيب العالمي">
+    
+    <meta property="og:title" content="نصيب العالمي | ابحث عن نصيبك الآن">
+    <meta property="og:description" content="منصة آمنة وموثوقة للزواج السوداني. خصوصية تامة لكل الأعضاء.">
+    <meta property="og:image" content="https://musabalajb-png.github.io/Sudanese-love/logo.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         :root { --primary-green: #16a34a; --heart-pink: rgba(255, 182, 193, 0.4); }
         body { font-family: 'Cairo', sans-serif; background: #f0f4f8; overflow-x: hidden; margin: 0; user-select: none; }
         
-        /* الخلفية المتحركة */
         .bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, #fff5f5, #f0fdf4, #f5f3ff, #fff9db); background-size: 400% 400%; animation: gradientBG 15s ease infinite; z-index: -2; }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
-        /* القلوب العائمة */
         .heart-bg { position: fixed; color: var(--heart-pink); font-size: 20px; pointer-events: none; z-index: -1; animation: fall linear infinite; }
         @keyframes fall { from { transform: translateY(-10vh) rotate(0deg); opacity: 1; } to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
 
-        /* كروت المشتركين */
         .member-card { border-radius: 2.5rem; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); transition: 0.4s; position: relative; border: 1.5px solid rgba(255, 255, 255, 0.5); overflow: hidden; display: flex; flex-direction: column; }
         .member-card:hover { transform: scale(1.03) translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         .img-box { width: 100%; padding-top: 115%; position: relative; overflow: hidden; background: #f1f5f9; }
-        .img-box img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; transition: 0.5s; }
-        .blur-effect { filter: blur(25px); transform: scale(1.1); }
+        .img-box img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; transition: 0.8s; }
         
-        /* الأنيميشن */
-        .gift-anim { position: absolute; font-size: 2.5rem; animation: floatUp 1.5s ease-out forwards; z-index: 50; pointer-events: none; }
-        @keyframes floatUp { 0% { bottom: 20%; opacity: 1; } 100% { bottom: 85%; opacity: 0; transform: scale(2.5); } }
+        .blur-effect { filter: blur(25px); transform: scale(1.2); pointer-events: none; }
+        .premium-badge { position: absolute; top: 10px; right: 10px; background: linear-gradient(to left, #fbbf24, #f59e0b); color: white; padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 900; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
+        .blur-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; z-index: 5; backdrop-filter: blur(2px); }
+        .blur-text { background: white; padding: 6px 15px; border-radius: 50px; font-size: 11px; font-weight: 900; color: #16a34a; box-shadow: 0 10px 20px rgba(0,0,0,0.2); cursor: pointer; border: 2px solid #16a34a; }
+
+        .online-dot { position: absolute; bottom: 10px; left: 10px; width: 12px; height: 12px; background: #22c55e; border-radius: 50%; border: 2px solid white; z-index: 10; }
+        .dot-pulse { animation: dot-pulse 2s infinite; }
+        @keyframes dot-pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); } 70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+
+        .stat-badge { background: rgba(22, 163, 74, 0.1); color: #16a34a; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: bold; border: 1px solid rgba(22, 163, 74, 0.2); }
+
         #notificationPanel { position: fixed; bottom: 90px; left: 20px; right: 20px; max-width: 350px; max-height: 450px; background: white; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.25); z-index: 2000; overflow-y: auto; display: none; border: 3px solid #ef4444; }
-        
-        /* الموسيقى */
         .music-btn { position: fixed; bottom: 25px; left: 25px; width: 55px; height: 55px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 1000; cursor: pointer; color: var(--primary-green); transition: 0.3s; }
-        .music-btn:active { transform: scale(0.9); }
-        .music-playing { animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(22, 163, 74, 0); } 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); } }
     </style>
 </head>
 <body class="pb-24">
@@ -61,206 +69,172 @@
         <span id="notifBadge" class="absolute -top-1 -left-1 bg-yellow-400 text-red-700 text-[12px] w-7 h-7 rounded-full flex items-center justify-center font-black border-2 border-white hidden">0</span>
     </button>
 
-    <div id="notificationPanel" class="p-5 animate-bounce-in">
-        <div class="flex justify-between items-center mb-4 border-b pb-3">
-            <h4 class="font-bold text-slate-800 flex items-center gap-2">
-                <i class="fas fa-envelope-open-heart text-red-500"></i> إعجابات وصلتني
-            </h4>
-            <button onclick="toggleNotifications()" class="w-8 h-8 bg-slate-100 rounded-full text-slate-400"><i class="fas fa-times"></i></button>
+    <div id="notificationPanel" class="p-5">
+        <div class="flex justify-between items-center mb-4 border-b pb-3 text-slate-800">
+            <h4 class="font-bold">إعجابات وصلتني</h4>
+            <button onclick="toggleNotifications()"><i class="fas fa-times"></i></button>
         </div>
-        <div id="notifList" class="space-y-4">
-            <p class="text-center text-slate-400 py-10 text-sm">جاري تحديث صندوق الرسائل...</p>
-        </div>
+        <div id="notifList"></div>
     </div>
 
     <nav class="bg-white/80 backdrop-blur-lg shadow-sm p-4 sticky top-0 z-50 border-b border-white/30">
         <div class="container mx-auto flex justify-between items-center px-2">
             <div class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-green-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-green-200">
-                    <i class="fas fa-ring"></i>
-                </div>
+                <div class="w-10 h-10 bg-green-600 rounded-2xl flex items-center justify-center text-white shadow-lg"><i class="fas fa-ring"></i></div>
                 <span class="font-black text-green-700 text-2xl tracking-tighter">نصيب</span>
             </div>
-            <div class="flex items-center gap-2">
-                <div class="bg-red-50 text-red-600 px-3 py-2 rounded-2xl text-[12px] font-bold border border-red-100 flex items-center gap-1">
-                    <span>🌹</span> <span id="roseCount">0</span>
-                </div>
-                <div class="bg-blue-50 text-blue-600 px-3 py-2 rounded-2xl text-[12px] font-bold border border-blue-100 flex items-center gap-1">
-                    <span>💌</span> <span id="msgCount">0</span>
-                </div>
+            <div class="flex items-center gap-3">
+                <div class="stat-badge hidden md:block">نشط الآن: <span id="onlineCount">0</span></div>
                 <button onclick="logout()" class="w-10 h-10 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition-all"><i class="fas fa-sign-out-alt"></i></button>
             </div>
         </div>
     </nav>
 
     <div class="container mx-auto p-5">
-        <div class="bg-white/60 backdrop-blur-2xl rounded-[2rem] p-4 shadow-xl shadow-slate-200/50 flex items-center gap-3 mb-8 border border-white">
-            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-slate-400 shadow-sm">
-                <i class="fas fa-search"></i>
-            </div>
-            <input type="text" id="searchInput" onkeyup="filterMembers()" placeholder="ابحث عن شريك العمر (الاسم أو المدينة)..." class="w-full bg-transparent outline-none text-md font-bold text-slate-700 placeholder:text-slate-300">
+        <div class="bg-white/60 backdrop-blur-2xl rounded-[2rem] p-4 shadow-xl flex items-center gap-3 mb-8 border border-white">
+            <i class="fas fa-search text-slate-400 mr-2"></i>
+            <input type="text" id="searchInput" onkeyup="filterMembers()" placeholder="ابحث عن شريك العمر بالاسم أو المدينة..." class="w-full bg-transparent outline-none font-bold text-slate-700">
         </div>
 
+        <div id="suggestionSection" class="hidden mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center text-white shadow-lg shadow-amber-200"><i class="fas fa-star text-xs"></i></div>
+                    <h3 class="font-black text-slate-700" id="suggestTitle">مقترح لك من منطقتك</h3>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6" id="suggestGrid"></div>
+            <hr class="mt-10 border-slate-200 opacity-50">
+        </div>
+
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-green-200"><i class="fas fa-users text-xs"></i></div>
+                <h3 class="font-black text-slate-700">اكتشف شريك حياتك</h3>
+            </div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="totalCountDisplay">جاري الحساب...</span>
+        </div>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6" id="membersGrid"></div>
     </div>
 
-    <div id="chatBox" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-xl z-[3000] flex items-center justify-center p-6">
-        <div class="bg-white w-full max-w-sm rounded-[3.5rem] p-8 shadow-2xl relative border-t-[12px] border-green-600 text-center animate-scale-up">
-            <div id="chatAvatar" class="w-24 h-24 rounded-full mx-auto mb-5 border-4 border-green-50 overflow-hidden shadow-2xl ring-8 ring-green-500/10"></div>
-            <h3 id="targetName" class="font-black text-2xl mb-2 text-slate-800"></h3>
-            <p class="text-xs text-slate-400 mb-6 font-bold uppercase tracking-widest">إرسال إعجاب مباشر</p>
-            <textarea id="msgInput" placeholder="اكتب كلمة طيبة تفتح القلوب..." class="w-full h-32 p-5 bg-slate-50 rounded-[2rem] outline-none text-sm border-2 border-transparent focus:border-green-200 transition-all shadow-inner"></textarea>
-            <div class="grid grid-cols-2 gap-4 mt-8">
-                <button id="sendMsgBtn" class="bg-green-600 text-white py-4 rounded-[1.5rem] font-black shadow-xl shadow-green-200 active:scale-95 transition-all">إرسال الآن 🚀</button>
-                <button onclick="closeChat()" class="bg-slate-100 text-slate-500 py-4 rounded-[1.5rem] font-bold active:scale-95">تراجع</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // --- 1. الإعدادات والأمان ---
         const CONFIG = {
-            sheetURL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv",
-            scriptURL: "https://script.google.com/macros/s/AKfycbzOqsZZEKV2FyCQxMRxo2aB8Ld4txzXFdYEKGwXCb48ymeM6nOufWVZmv65jVErV3sL_Q/exec"
+            sheetURL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv"
         };
 
-        const checkAuth = () => {
-            if (localStorage.getItem('naseeb_logged') !== 'true') window.location.href = 'index.html';
-        };
-        checkAuth();
+        function createMemberCard(member, index, isPaid) {
+            const isPremium = /ذهبية|ماسية/i.test(member.plan);
+            const shouldBlur = !isPaid;
+            const verifiedTag = member.verified ? '<i class="fas fa-check-circle text-blue-400 ml-1"></i>' : '';
+            
+            return `
+                <div class="member-card member-item" data-name="${member.name}" data-city="${member.city}" id="card-${index}">
+                    <div class="img-box relative">
+                        ${isPremium ? '<div class="premium-badge"><i class="fas fa-crown mr-1"></i> VIP</div>' : ''}
+                        ${isPremium ? '<div class="online-dot dot-pulse"></div>' : ''}
+                        
+                        <img src="${member.img || 'https://ui-avatars.com/api/?name=' + member.name}" class="${shouldBlur ? 'blur-effect' : ''}" loading="lazy">
+                        
+                        ${shouldBlur ? `
+                            <div class="blur-overlay" onclick="location.href='checkout.html'">
+                                <div class="blur-text shadow-xl">كشف الصورة 🔓</div>
+                            </div>` : ''}
+                    </div>
+                    <div class="p-4 text-center">
+                        <h4 class="font-black text-sm truncate text-slate-700 mb-1">${member.name} ${verifiedTag}</h4>
+                        <p class="text-[10px] text-slate-400 mb-4 flex items-center justify-center gap-1">
+                            <i class="fas fa-location-dot text-red-300"></i> ${member.city}
+                        </p>
+                        <div class="flex gap-2">
+                            <button class="bg-red-50 text-red-600 w-10 h-10 flex items-center justify-center rounded-2xl transition-transform active:scale-90">🌹</button>
+                            <button class="bg-green-600 text-white px-2 py-2 rounded-2xl text-[11px] font-black flex-1 shadow-lg active:scale-95 transition-all">تواصل الآن 💌</button>
+                        </div>
+                    </div>
+                </div>`;
+        }
 
-        const logout = () => { 
-            if(confirm("هل تريد تسجيل الخروج؟")) {
-                localStorage.clear(); 
-                window.location.href = 'index.html';
-            }
-        };
-
-        let allMembers = [];
-        let isPlaying = false;
-
-        // --- 2. محرك تحميل البيانات ---
         async function load() {
             try {
                 const res = await fetch(`${CONFIG.sheetURL}?cb=${Date.now()}`);
                 const data = await res.text();
                 const rows = data.split('\n').slice(1);
-                const grid = document.getElementById('membersGrid');
-                grid.innerHTML = "";
                 
+                const grid = document.getElementById('membersGrid');
+                const suggestGrid = document.getElementById('suggestGrid');
+                const suggestSection = document.getElementById('suggestionSection');
+                
+                grid.innerHTML = "";
+                suggestGrid.innerHTML = "";
+
                 const myPlan = localStorage.getItem('userPlan') || 'عادية';
-                const isPaid = /الستر|ذهبية|ماسية/i.test(myPlan);
+                const myCity = localStorage.getItem('userCity') || ''; 
+                const isPaidUser = /الستر|ذهبية|ماسية/i.test(myPlan);
+
+                let hasSuggestions = false;
+                let count = 0;
 
                 rows.forEach((row, index) => {
                     const cols = row.split(',').map(c => c.trim().replace(/^"|"$/g, ''));
                     if(!cols[0] || cols[0].length < 2) return;
                     
                     const member = { 
-                        name: cols[0], 
-                        city: cols[3] || 'غير محدد', 
-                        img: cols[6] || `https://ui-avatars.com/api/?name=${encodeURIComponent(cols[0])}&background=random&size=256`,
-                        plan: cols[2] || 'عادية'
+                        name: cols[0], city: cols[3] || 'السودان', plan: cols[2] || 'عادية', img: cols[6], verified: true 
                     };
-                    allMembers.push(member);
 
-                    const isGolden = member.plan.includes('ذهبية') || member.plan.includes('ماسية');
+                    const cardHTML = createMemberCard(member, index, isPaidUser);
+                    count++;
 
-                    grid.innerHTML += `
-                        <div class="member-card ${isGolden ? 'ring-2 ring-yellow-400' : ''}" id="card-${index}" onclick="viewProfile('${encodeURIComponent(JSON.stringify(member))}')">
-                            <div class="img-box">
-                                <img src="${member.img}" class="${isPaid ? '' : 'blur-effect'}" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=User'">
-                                ${isGolden ? '<div class="absolute top-3 right-3 bg-yellow-400 text-white p-1 px-2 rounded-lg text-[8px] font-black shadow-lg">عضو مميز</div>' : ''}
-                            </div>
-                            <div class="p-4 text-center">
-                                <h4 class="font-black text-sm truncate text-slate-700 mb-1">${member.name}</h4>
-                                <p class="text-[10px] text-slate-400 mb-4 flex items-center justify-center gap-1">
-                                    <i class="fas fa-location-dot text-red-300"></i> ${member.city}
-                                </p>
-                                <div class="flex gap-2">
-                                    <button onclick="event.stopPropagation(); dropRose('card-${index}')" class="bg-red-50 text-red-600 w-10 h-10 flex items-center justify-center rounded-2xl text-lg hover:bg-red-100 transition-all">🌹</button>
-                                    <button onclick="event.stopPropagation(); openChat(${index})" class="bg-green-600 text-white px-2 py-2 rounded-2xl text-[11px] font-black flex-1 shadow-lg shadow-green-100 active:scale-95 transition-all">إعجاب 💌</button>
-                                </div>
-                            </div>
-                        </div>`;
+                    if (myCity && member.city.includes(myCity) && member.name !== localStorage.getItem('userName')) {
+                        suggestGrid.innerHTML += cardHTML;
+                        hasSuggestions = true;
+                    } else {
+                        grid.innerHTML += cardHTML;
+                    }
                 });
-                document.getElementById('loadingMembers').style.display = 'none';
-                updateCounters();
-                checkMyNotifications(); 
-                startHeartEffect();
-            } catch (e) { 
-                console.error("Critical Load Error");
-                alert("حدث خطأ في تحديث البيانات، يرجى المحاولة لاحقاً");
-            }
-        }
 
-        // --- 3. نظام المراسلة والإشعارات ---
-        async function sendLikeInside(targetName) {
-            let m = parseInt(localStorage.getItem('msgs') || 5);
-            const text = document.getElementById('msgInput').value.trim();
-            
-            if(!text) return alert("من فضلك اكتب رسالة الإعجاب");
-            if(m <= 0) return alert("رصيدك اليومي من الإعجابات انتهى (5/5)");
-
-            const btn = document.getElementById('sendMsgBtn');
-            btn.innerText = "جاري الإرسال..."; btn.disabled = true;
-
-            try {
-                await fetch(CONFIG.scriptURL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify({
-                        sender: localStorage.getItem('userName'),
-                        receiver: targetName,
-                        message: text
-                    })
-                });
-                localStorage.setItem('msgs', m - 1);
-                updateCounters();
-                alert(`رسالتك طارت لـ ${targetName}! ✅`);
-                closeChat();
-            } catch (e) { alert("عذراً، تعذر الإرسال حالياً"); }
-            btn.innerText = "إرسال الآن 🚀"; btn.disabled = false;
-        }
-
-        async function checkMyNotifications() {
-            const currentUser = localStorage.getItem('userName');
-            try {
-                const res = await fetch(CONFIG.scriptURL);
-                const likes = await res.json();
-                const myLikes = likes.filter(l => l.receiver === currentUser);
-                
-                const list = document.getElementById('notifList');
-                const badge = document.getElementById('notifBadge');
-                
-                if(myLikes.length > 0) {
-                    badge.innerText = myLikes.length;
-                    badge.classList.remove('hidden');
-                    list.innerHTML = myLikes.reverse().map(l => `
-                        <div class="bg-slate-50 p-4 rounded-3xl border-r-8 border-red-400 shadow-sm">
-                            <div class="flex justify-between items-start mb-1">
-                                <p class="text-[11px] font-black text-slate-800">من: ${l.sender}</p>
-                                <p class="text-[8px] text-slate-300 font-bold">${new Date(l.time).toLocaleDateString('ar-SA')}</p>
-                            </div>
-                            <p class="text-[12px] text-slate-600 leading-relaxed font-bold">${l.message}</p>
-                        </div>
-                    `).join('');
-                } else {
-                    list.innerHTML = `<div class="text-center py-10"><i class="fas fa-heart-crack text-slate-200 text-4xl mb-3"></i><p class="text-slate-400 text-sm font-bold">لا توجد إعجابات حتى اللحظة</p></div>`;
+                if(hasSuggestions) {
+                    suggestSection.classList.remove('hidden');
+                    document.getElementById('suggestTitle').innerText = `مقترحات في ${myCity}`;
                 }
-            } catch(e) { console.log("Silent Error: Notif Fetch"); }
+
+                document.getElementById('totalCountDisplay').innerText = `إجمالي الأعضاء: ${count}`;
+                document.getElementById('onlineCount').innerText = Math.floor(count * 0.3);
+                document.getElementById('loadingMembers').style.display = 'none';
+            } catch (e) { console.error("Load Failed"); }
         }
 
-        // --- 4. المؤثرات والتحكم ---
+        function filterMembers() {
+            const val = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.member-item').forEach(card => {
+                const name = card.getAttribute('data-name').toLowerCase();
+                const city = card.getAttribute('data-city').toLowerCase();
+                card.style.display = (name.includes(val) || city.includes(val)) ? 'flex' : 'none';
+            });
+        }
+
+        let isPlaying = false;
         function toggleMusic() {
             const audio = document.getElementById('bgAudio');
             const btn = document.getElementById('musicToggle');
             if(isPlaying) { audio.pause(); btn.innerHTML = '<i class="fas fa-music"></i>'; }
             else { audio.play(); btn.innerHTML = '<i class="fas fa-pause"></i>'; }
-            isPlaying = !isPlaying; btn.classList.toggle('music-playing');
+            isPlaying = !isPlaying;
         }
 
-        function startHeartEffect() {
-            setInterval(() => {
-                if(document.visibilityState !== 'visible') return;
-                const h = document.createElement('div');
-                h.className = 'heart-bg'; h.innerHTML = ['❤️','
+        setInterval(() => {
+            if(document.visibilityState !== 'visible') return;
+            const h = document.createElement('div');
+            h.className = 'heart-bg'; h.innerHTML = '❤️';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.getElementById('heartsContainer').appendChild(h);
+            setTimeout(() => h.remove(), 5000);
+        }, 1000);
+
+        function logout() { if(confirm("هل تود الخروج من المنصة؟")) { localStorage.clear(); location.href='index.html'; } }
+        function toggleNotifications() { const p = document.getElementById('notificationPanel'); p.style.display = p.style.display === 'block' ? 'none' : 'block'; }
+        
+        window.onload = load;
+    </script>
+</body>
+</html>
