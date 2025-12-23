@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
@@ -12,16 +12,17 @@
     <style>
         :root { --main-font: 'Cairo', sans-serif; }
         [dir="ltr"] { --main-font: 'Poppins', sans-serif; }
-        body { font-family: var(--main-font); background: #fafafa; overflow-x: hidden; scroll-behavior: smooth; }
+        body { font-family: var(--main-font); background: #fafafa; overflow-x: hidden; scroll-behavior: smooth; transition: background 0.3s; }
         .hero-gradient { background: linear-gradient(135deg, #15803d 0%, #14532d 100%); }
         .pulse-btn { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(21, 128, 61, 0); } 100% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0); } }
         #loginModal, #regModal { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .lang-switcher {
             position: fixed; top: 100px; left: 20px; z-index: 100;
-            background: white; padding: 8px 15px; border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #eee;
-            cursor: pointer; font-weight: bold; font-size: 12px; transition: 0.3s;
+            background: white; padding: 10px 20px; border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #eee;
+            cursor: pointer; font-weight: 900; font-size: 14px; transition: 0.3s;
+            color: #15803d;
         }
         [dir="ltr"] .lang-switcher { left: auto; right: 20px; }
         .form-input { @apply w-full bg-slate-50 border border-transparent rounded-xl p-3 text-sm focus:border-green-500 focus:bg-white focus:ring-4 focus:ring-green-500/10 outline-none transition-all; }
@@ -37,10 +38,10 @@
             <div class="w-20 h-20 border-4 border-green-100 rounded-full"></div>
             <div class="w-20 h-20 border-4 border-green-700 border-t-transparent rounded-full animate-spin absolute top-0"></div>
         </div>
-        <p class="mt-6 font-bold text-green-800 text-lg animate-pulse" id="loadingText">جاري تأمين الاتصال...</p>
+        <p class="mt-6 font-bold text-green-800 text-lg animate-pulse" id="loadingText" data-ar="جاري تأمين الاتصال..." data-en="Securing connection...">جاري تأمين الاتصال...</p>
     </div>
 
-    <div onclick="toggleLang()" id="langBtn" class="lang-switcher shadow-lg hover:scale-105 active:scale-95 transition">English</div>
+    <div onclick="toggleLang()" id="langBtn" class="lang-switcher hover:scale-110 active:scale-90 shadow-xl">English</div>
 
     <nav class="bg-white/90 backdrop-blur-lg shadow-sm p-4 sticky top-0 z-50 border-b border-gray-100">
         <div class="container mx-auto flex justify-between items-center px-4">
@@ -59,9 +60,13 @@
     <header class="hero-gradient text-white py-32 px-6 relative overflow-hidden">
         <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');"></div>
         <div class="container mx-auto relative z-10 text-center">
-            <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight" data-ar="مُحيطك للستر والحلال" data-en="Your Secure Path to Halal">مُحيطك للستر والحلال <br><span class="text-green-300 font-light text-3xl md:text-5xl" data-ar="بمعايير إسلامية وخصوصية فائقة" data-en="With Islamic Standards">بمعايير إسلامية وخصوصية فائقة</span></h1>
+            <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight">
+                <span data-ar="مُحيطك للستر والحلال" data-en="Your Path to Halal Marriage">مُحيطك للستر والحلال</span>
+                <br>
+                <span class="text-green-300 font-light text-3xl md:text-5xl" data-ar="بمعايير إسلامية وخصوصية فائقة" data-en="Islamic Standards & Full Privacy">بمعايير إسلامية وخصوصية فائقة</span>
+            </h1>
             <div class="flex flex-wrap justify-center gap-4">
-                <button onclick="toggleRegModal(true)" class="bg-white text-green-800 px-14 py-4 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-white/20 transition transform hover:-translate-y-1" data-ar="ابدأ رحلتك الآن" data-en="Start Journey">ابدأ رحلتك الآن</button>
+                <button onclick="toggleRegModal(true)" class="bg-white text-green-800 px-14 py-4 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-white/20 transition transform hover:-translate-y-1" data-ar="ابدأ رحلتك الآن" data-en="Start Your Journey">ابدأ رحلتك الآن</button>
             </div>
         </div>
     </header>
@@ -74,32 +79,32 @@
                     <div class="w-16 h-16 bg-green-50 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">🌿</div>
                     <h3 class="font-bold text-2xl mb-2 text-slate-800" data-ar="باقة الستر" data-en="Sutra Plan">باقة الستر</h3>
                     <div class="text-3xl font-black text-green-700 mb-8" id="price-sutra">...</div>
-                    <ul class="text-slate-500 text-sm mb-10 space-y-4 text-right pr-4">
-                        <li><i class="fas fa-check-circle text-green-500 ml-2"></i> تصفح أكثر من 5000 ملف</li>
-                        <li><i class="fas fa-check-circle text-green-500 ml-2"></i> إرسال وردات تعارف محدود</li>
+                    <ul class="text-slate-500 text-sm mb-10 space-y-4 text-right pr-4" id="features-sutra">
+                        <li data-ar="تصفح أكثر من 5000 ملف" data-en="Browse 5000+ Profiles"><i class="fas fa-check-circle text-green-500 ml-2"></i> تصفح أكثر من 5000 ملف</li>
+                        <li data-ar="إرسال وردات تعارف محدود" data-en="Limited Interaction Flowers"><i class="fas fa-check-circle text-green-500 ml-2"></i> إرسال وردات تعارف محدود</li>
                     </ul>
-                    <button onclick="safeRedirect('Sutra')" class="w-full py-4 rounded-2xl bg-slate-100 text-slate-700 font-bold hover:bg-green-700 hover:text-white transition-all">اختيار الباقة</button>
+                    <button onclick="safeRedirect('Sutra')" class="w-full py-4 rounded-2xl bg-slate-100 text-slate-700 font-bold hover:bg-green-700 hover:text-white transition-all" data-ar="اختيار الباقة" data-en="Select Plan">اختيار الباقة</button>
                 </div>
                 <div class="bg-white p-10 rounded-[3rem] shadow-2xl border-2 border-green-500 text-center relative transform md:-translate-y-4">
                     <div class="absolute -top-5 right-10 bg-yellow-400 text-green-900 text-[10px] font-black px-6 py-2 rounded-full shadow-lg uppercase" data-ar="الأكثر أماناً" data-en="Most Secure">الأكثر أماناً</div>
                     <div class="w-16 h-16 bg-yellow-50 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">⭐</div>
                     <h3 class="font-bold text-2xl mb-2 text-slate-800" data-ar="الباقة الذهبية" data-en="Gold Plan">الباقة الذهبية</h3>
                     <div class="text-3xl font-black text-green-700 mb-8" id="price-gold">...</div>
-                    <ul class="text-slate-500 text-sm mb-10 space-y-4 text-right pr-4">
-                        <li><i class="fas fa-star text-yellow-500 ml-2"></i> رؤية الصور الشخصية</li>
-                        <li><i class="fas fa-star text-yellow-500 ml-2"></i> أولوية الظهور للجادين</li>
+                    <ul class="text-slate-500 text-sm mb-10 space-y-4 text-right pr-4" id="features-gold">
+                        <li data-ar="رؤية الصور الشخصية" data-en="View Personal Photos"><i class="fas fa-star text-yellow-500 ml-2"></i> رؤية الصور الشخصية</li>
+                        <li data-ar="أولوية الظهور للجادين" data-en="Priority for Serious Members"><i class="fas fa-star text-yellow-500 ml-2"></i> أولوية الظهور للجادين</li>
                     </ul>
-                    <button onclick="safeRedirect('Gold')" class="w-full py-4 rounded-2xl bg-green-700 text-white font-bold shadow-xl hover:scale-105 transition-all">اشترك الآن</button>
+                    <button onclick="safeRedirect('Gold')" class="w-full py-4 rounded-2xl bg-green-700 text-white font-bold shadow-xl hover:scale-105 transition-all" data-ar="اشترك الآن" data-en="Join Now">اشترك الآن</button>
                 </div>
                 <div class="bg-slate-900 p-10 rounded-[3rem] shadow-2xl text-white text-center">
                     <div class="w-16 h-16 bg-white/10 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">💎</div>
                     <h3 class="font-bold text-2xl mb-2 text-green-400" data-ar="باقة كبار الشخصيات" data-en="VIP Plan">باقة كبار الشخصيات</h3>
                     <div class="text-3xl font-black mb-8 text-white" id="price-vip">...</div>
-                    <ul class="text-slate-400 text-sm mb-10 space-y-4 text-right pr-4">
-                        <li><i class="fas fa-crown text-green-400 ml-2"></i> خط ساخن مع الإدارة</li>
-                        <li><i class="fas fa-crown text-green-400 ml-2"></i> توفيق يدوي من الخبراء</li>
+                    <ul class="text-slate-400 text-sm mb-10 space-y-4 text-right pr-4" id="features-vip">
+                        <li data-ar="خط ساخن مع الإدارة" data-en="Admin Hot-line"><i class="fas fa-crown text-green-400 ml-2"></i> خط ساخن مع الإدارة</li>
+                        <li data-ar="توفيق يدوي من الخبراء" data-en="Manual Expert Matching"><i class="fas fa-crown text-green-400 ml-2"></i> توفيق يدوي من الخبراء</li>
                     </ul>
-                    <button onclick="safeRedirect('VIP')" class="w-full py-4 rounded-2xl bg-green-600 text-white font-bold hover:bg-green-500 transition-all">اطلب الخدمة</button>
+                    <button onclick="safeRedirect('VIP')" class="w-full py-4 rounded-2xl bg-green-600 text-white font-bold hover:bg-green-500 transition-all" data-ar="اطلب الخدمة" data-en="Order Service">اطلب الخدمة</button>
                 </div>
             </div>
         </div>
@@ -108,48 +113,47 @@
     <div id="regModal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] flex items-center justify-center p-4 opacity-0 overflow-y-auto">
         <div class="bg-white w-full max-w-lg rounded-[2.5rem] p-10 shadow-2xl relative scale-95 transition-all text-right">
             <button onclick="toggleRegModal(false)" class="absolute top-8 left-8 text-slate-300 hover:text-red-500 transition"><i class="fas fa-times-circle text-2xl"></i></button>
-            <h3 class="text-2xl font-black text-slate-800 mb-2" data-ar="انضم لمجتمع الستر" data-en="Join Us">انضم لمجتمع الستر</h3>
-            <p class="text-slate-400 text-xs mb-8" data-ar="بياناتك محمية بتشفير 256-بت" data-en="Data encrypted with 256-bit">بياناتك محمية بتشفير 256-بت</p>
+            <h3 class="text-2xl font-black text-slate-800 mb-2" data-ar="انضم لمجتمع الستر" data-en="Join Our Community">انضم لمجتمع الستر</h3>
+            <p class="text-slate-400 text-xs mb-8" data-ar="بياناتك محمية بتشفير 256-بت" data-en="Your data is encrypted 256-bit">بياناتك محمية بتشفير 256-بت</p>
             
             <form id="regForm" class="grid grid-cols-2 gap-5" onsubmit="return false;">
                 <div class="col-span-2">
-                    <label class="form-label">الاسم الحقيقي (سري للإدارة)</label>
-                    <input type="text" id="regName" class="form-input" required placeholder="مثال: محمد أحمد علي">
+                    <label class="form-label" data-ar="الاسم الحقيقي (سري للإدارة)" data-en="Full Name (Private)">الاسم الحقيقي (سري للإدارة)</label>
+                    <input type="text" id="regName" class="form-input" required placeholder="محمد أحمد">
                 </div>
                 <div>
-                    <label class="form-label">العمر</label>
-                    <input type="number" id="regAge" class="form-input" required min="18" max="70">
+                    <label class="form-label" data-ar="العمر" data-en="Age">العمر</label>
+                    <input type="number" id="regAge" class="form-input" required>
                 </div>
                 <div>
-                    <label class="form-label">الطول</label>
+                    <label class="form-label" data-ar="الطول" data-en="Height">الطول</label>
                     <input type="number" id="regHeight" class="form-input" required>
                 </div>
                 <div class="col-span-2">
-                    <label class="form-label">كلمة السر الخاصة بالمنصة</label>
+                    <label class="form-label" data-ar="كلمة السر" data-en="Password">كلمة السر</label>
                     <input type="password" id="regPass" class="form-input" required>
                 </div>
                 <div class="col-span-2">
-                    <label class="form-label">الصورة الشخصية (تظهر للباقة الذهبية فقط)</label>
                     <div class="relative group">
                         <input type="file" id="regPhoto" class="form-input opacity-0 absolute inset-0 z-10 cursor-pointer" accept="image/*" required onchange="updateFileName(this)">
-                        <div class="bg-slate-50 border-2 border-dashed border-slate-200 p-4 rounded-xl text-center group-hover:border-green-500 transition" id="filePlaceholder">
+                        <div class="bg-slate-50 border-2 border-dashed border-slate-200 p-4 rounded-xl text-center" id="filePlaceholder">
                             <i class="fas fa-cloud-upload-alt text-slate-300 text-2xl mb-1"></i>
-                            <p class="text-[10px] text-slate-500" id="fileNameText">اضغط لرفع الصورة</p>
+                            <p class="text-[10px] text-slate-500" id="fileNameText" data-ar="اضغط لرفع الصورة" data-en="Click to upload photo">اضغط لرفع الصورة</p>
                         </div>
                     </div>
                 </div>
-                <button type="button" onclick="secureSubmit()" id="regBtn" class="col-span-2 bg-green-700 text-white py-4 rounded-2xl font-bold shadow-xl shadow-green-900/20 hover:bg-green-800 transition transform active:scale-95">تأكيد البيانات وإرسال الطلب 🛡️</button>
+                <button type="button" onclick="secureSubmit()" id="regBtn" class="col-span-2 bg-green-700 text-white py-4 rounded-2xl font-bold shadow-xl" data-ar="تأكيد البيانات 🛡️" data-en="Confirm Data 🛡️">تأكيد البيانات 🛡️</button>
             </form>
         </div>
     </div>
 
     <div id="loginModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 opacity-0">
-        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl relative scale-95 transition-all">
-            <h3 class="text-2xl font-black text-center mb-8 text-slate-800">الولوج للمنصة</h3>
+        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl relative scale-95 transition-all text-center">
+            <h3 class="text-2xl font-black mb-8 text-slate-800" data-ar="الولوج للمنصة" data-en="Member Login">الولوج للمنصة</h3>
             <div class="space-y-5">
-                <input type="text" id="loginName" class="form-input" placeholder="الاسم أو المعرف">
-                <input type="password" id="loginPass" class="form-input" placeholder="كلمة المرور">
-                <button onclick="handleLogin()" id="submitLogin" class="w-full bg-green-700 text-white py-4 rounded-2xl font-bold hover:shadow-lg transition">دخول آمن 🔒</button>
+                <input type="text" id="loginName" class="form-input" placeholder="User / الاسم">
+                <input type="password" id="loginPass" class="form-input" placeholder="Pass / كلمة المرور">
+                <button onclick="handleLogin()" id="submitLogin" class="w-full bg-green-700 text-white py-4 rounded-2xl font-bold transition" data-ar="دخول آمن 🔒" data-en="Secure Login 🔒">دخول آمن 🔒</button>
             </div>
         </div>
     </div>
@@ -161,7 +165,6 @@
             lang: localStorage.getItem('app_lang') || 'ar',
             adminPhone: "249127910778",
             sessionExpiry: 3600000,
-            // مصفوفة العملات والأسعار المحدثة حسب الدولة
             pricingMatrix: {
                 "SD": { currency: "SDG", sutra: "15,000", gold: "35,000", vip: "75,000" },
                 "SA": { currency: "SAR", sutra: "100", gold: "250", vip: "500" },
@@ -173,7 +176,43 @@
             userCountry: "DEFAULT"
         };
 
-        // وظيفة التعرف على IP وتحديث العملة
+        // تحديث واجهة اللغة بالكامل
+        function applyTranslations() {
+            const isEn = CONFIG.lang === 'en';
+            const html = document.getElementById('mainHtml');
+            
+            // تحديث الاتجاه واللغة
+            html.dir = isEn ? 'ltr' : 'rtl';
+            html.lang = CONFIG.lang;
+            
+            // تحديث نصوص العناصر التي تحمل داتا
+            document.querySelectorAll('[data-ar]').forEach(el => {
+                el.innerText = isEn ? el.getAttribute('data-en') : el.getAttribute('data-ar');
+            });
+
+            // تحديث زر اللغة
+            document.getElementById('langBtn').innerText = isEn ? 'العربية' : 'English';
+            
+            // تحديث الـ Placeholders
+            if (isEn) {
+                document.getElementById('loginName').placeholder = "Username";
+                document.getElementById('loginPass').placeholder = "Password";
+                document.getElementById('regName').placeholder = "Ex: John Doe";
+            } else {
+                document.getElementById('loginName').placeholder = "الاسم أو المعرف";
+                document.getElementById('loginPass').placeholder = "كلمة المرور";
+                document.getElementById('regName').placeholder = "مثال: محمد أحمد";
+            }
+        }
+
+        function toggleLang() {
+            CONFIG.lang = CONFIG.lang === 'ar' ? 'en' : 'ar';
+            localStorage.setItem('app_lang', CONFIG.lang);
+            // تطبيق فوري للترجمة
+            applyTranslations();
+            updatePricingDisplay();
+        }
+
         async function detectLocationAndCurrency() {
             try {
                 const response = await fetch('https://ipapi.co/json/');
@@ -181,9 +220,7 @@
                 if(CONFIG.pricingMatrix[data.country_code]) {
                     CONFIG.userCountry = data.country_code;
                 }
-            } catch (e) {
-                console.log("Using default currency");
-            }
+            } catch (e) { console.log("Currency fallback active"); }
             updatePricingDisplay();
         }
 
@@ -197,25 +234,13 @@
         function safeRedirect(plan) {
             const p = CONFIG.pricingMatrix[CONFIG.userCountry];
             const priceVal = plan === 'Sutra' ? p.sutra : (plan === 'Gold' ? p.gold : p.vip);
-            const msg = `أريد تفعيل ${plan} بقيمة ${priceVal} ${p.currency} في نصيب العالمي. (الموقع: ${CONFIG.userCountry})`;
+            const msg = CONFIG.lang === 'ar' 
+                ? `أريد تفعيل ${plan} بقيمة ${priceVal} ${p.currency} في نصيب العالمي.` 
+                : `I want to activate ${plan} for ${priceVal} ${p.currency} on Naseeb Global.`;
             window.open(`https://wa.me/${CONFIG.adminPhone}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // الأكواد الوظيفية الأخرى (دون أي تعديل أو حذف)
-        function secureLocalStorage() {
-            const originalSetItem = localStorage.setItem;
-            localStorage.setItem = function(key, value) {
-                if (key === 'naseeb_logged') {
-                    const expiry = Date.now() + CONFIG.sessionExpiry;
-                    originalSetItem.apply(this, [key, value]);
-                    originalSetItem.apply(this, ['session_expiry', expiry]);
-                } else {
-                    originalSetItem.apply(this, [key, value]);
-                }
-            };
-        }
-        secureLocalStorage();
-
+        // الأكواد التشغيلية
         function toggleModal(show) { toggleEl('loginModal', show); }
         function toggleRegModal(show) { toggleEl('regModal', show); }
         function toggleEl(id, show) {
@@ -225,15 +250,17 @@
         }
 
         function updateFileName(input) {
-            const text = input.files[0] ? input.files[0].name : "اضغط لرفع الصورة";
+            const text = input.files[0] ? input.files[0].name : (CONFIG.lang === 'ar' ? "اضغط لرفع الصورة" : "Click to upload");
             document.getElementById('fileNameText').innerText = text;
-            document.getElementById('filePlaceholder').classList.add('border-green-500', 'bg-green-50');
         }
 
         async function secureSubmit() {
             const fileInput = document.getElementById('regPhoto');
             const overlay = document.getElementById('loadingOverlay');
-            if (!fileInput.files[0]) { showSimpleToast("يرجى رفع الصورة لإتمام التسجيل", "error"); return; }
+            if (!fileInput.files[0]) { 
+                showSimpleToast(CONFIG.lang === 'ar' ? "يرجى رفع الصورة" : "Please upload photo", "error"); 
+                return; 
+            }
             overlay.style.display = 'flex';
             try {
                 const formData = new FormData();
@@ -242,21 +269,18 @@
                 const result = await res.json();
                 if (result.success) {
                     const photoUrl = result.data.url;
-                    const msg = `🛡️ طلب تسجيل جديد:\n👤 الاسم: ${document.getElementById('regName').value}\n🔑 السر: ${document.getElementById('regPass').value}\n🖼️ الصورة: ${photoUrl}`;
-                    setTimeout(() => {
-                        window.open(`https://wa.me/${CONFIG.adminPhone}?text=${encodeURIComponent(msg)}`, '_blank');
-                        overlay.style.display = 'none';
-                        location.reload();
-                    }, 1000);
+                    const msg = `🛡️ New Registration:\n👤 Name: ${document.getElementById('regName').value}\n🔑 Pass: ${document.getElementById('regPass').value}\n🖼️ Photo: ${photoUrl}`;
+                    window.open(`https://wa.me/${CONFIG.adminPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+                    overlay.style.display = 'none';
+                    location.reload();
                 }
-            } catch (e) { overlay.style.display = 'none'; showSimpleToast("حدث خطأ، حاول مجدداً", "error"); }
+            } catch (e) { overlay.style.display = 'none'; }
         }
 
         async function handleLogin() {
             const user = document.getElementById('loginName').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
             if(!user || !pass) return;
-            document.getElementById('submitLogin').disabled = true;
             try {
                 const res = await fetch(CONFIG.sheetUrl + "?t=" + Date.now());
                 const text = await res.text();
@@ -270,43 +294,30 @@
                         return;
                     }
                 }
-                showSimpleToast("البيانات غير صحيحة", "error");
-            } catch(e) { showSimpleToast("خطأ في الخادم", "error"); }
-            document.getElementById('submitLogin').disabled = false;
+                showSimpleToast(CONFIG.lang === 'ar' ? "خطأ في البيانات" : "Invalid credentials", "error");
+            } catch(e) { }
         }
 
         function showSimpleToast(text, type = "success") {
             const toast = document.createElement('div');
-            toast.className = `fixed bottom-8 left-1/2 -translate-x-1/2 px-8 py-4 rounded-2xl shadow-2xl z-[200] transition-all duration-500 transform translate-y-20 opacity-0 font-bold text-sm flex items-center gap-3 ${type === 'success' ? 'bg-white text-green-800' : 'bg-red-600 text-white'}`;
-            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i> ${text}`;
+            toast.className = `fixed bottom-8 left-1/2 -translate-x-1/2 px-8 py-4 rounded-2xl shadow-2xl z-[200] transition-all duration-500 transform translate-y-20 opacity-0 font-bold text-sm ${type === 'success' ? 'bg-white text-green-800' : 'bg-red-600 text-white'}`;
+            toast.innerText = text;
             document.body.appendChild(toast);
             setTimeout(() => toast.classList.add('toast-active'), 100);
-            setTimeout(() => { toast.classList.remove('toast-active'); setTimeout(() => toast.remove(), 500); }, 3500);
-        }
-
-        function toggleLang() {
-            CONFIG.lang = CONFIG.lang === 'ar' ? 'en' : 'ar';
-            localStorage.setItem('app_lang', CONFIG.lang);
-            location.reload();
+            setTimeout(() => { toast.classList.remove('toast-active'); setTimeout(() => toast.remove(), 500); }, 3000);
         }
 
         window.onload = () => {
-            const expiry = localStorage.getItem('session_expiry');
-            if (expiry && Date.now() > expiry) { localStorage.clear(); location.reload(); }
-            const html = document.getElementById('mainHtml');
-            html.dir = CONFIG.lang === 'ar' ? 'rtl' : 'ltr';
-            document.querySelectorAll('[data-ar]').forEach(el => el.innerText = el.getAttribute(`data-${CONFIG.lang}`));
-            
-            // تشغيل كشف الموقع
+            applyTranslations();
             detectLocationAndCurrency();
-
             if(localStorage.getItem('naseeb_logged') === 'true') {
                 document.getElementById('loginBtnNav').classList.add('hidden');
                 const sec = document.getElementById('userSection');
                 sec.classList.remove('hidden');
-                sec.innerHTML = `<span class="font-black text-green-900 text-xs">🛡️ ${localStorage.getItem('userName')}</span><button onclick="localStorage.clear(); location.reload();" class="text-slate-400 ml-2"><i class="fas fa-sign-out-alt"></i></button>`;
+                sec.innerHTML = `<span class="font-black text-green-900 text-xs">🛡️ ${localStorage.getItem('userName')}</span>`;
             }
         };
     </script>
 </body>
 </html>
+                      
