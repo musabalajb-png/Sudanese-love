@@ -98,7 +98,7 @@
                 <div class="bg-white p-10 rounded-[3rem] shadow-xl shadow-slate-200/50 border border-slate-100 text-center hover:shadow-2xl transition-all duration-500">
                     <div class="w-16 h-16 bg-green-50 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">🌿</div>
                     <h3 class="font-bold text-2xl mb-2 text-slate-800" data-ar="باقة الستر" data-en="Sutra Plan">باقة الستر</h3>
-                    <div class="text-3xl font-black text-green-700 mb-8">15,000 <span class="text-sm font-normal opacity-60">SDG</span></div>
+                    <div class="text-3xl font-black text-green-700 mb-8" id="price-sutra">15,000 <span class="text-sm font-normal opacity-60">SDG</span></div>
                     <ul class="text-slate-500 text-sm mb-10 space-y-4 text-right pr-4">
                         <li><i class="fas fa-check-circle text-green-500 ml-2"></i> تصفح أكثر من 5000 ملف</li>
                         <li><i class="fas fa-check-circle text-green-500 ml-2"></i> إرسال وردات تعارف محدود</li>
@@ -109,7 +109,7 @@
                     <div class="absolute -top-5 right-10 bg-yellow-400 text-green-900 text-[10px] font-black px-6 py-2 rounded-full shadow-lg uppercase tracking-widest" data-ar="الأكثر أماناً" data-en="Most Secure">الأكثر أماناً</div>
                     <div class="w-16 h-16 bg-yellow-50 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">⭐</div>
                     <h3 class="font-bold text-2xl mb-2 text-slate-800" data-ar="الباقة الذهبية" data-en="Gold Plan">الباقة الذهبية</h3>
-                    <div class="text-3xl font-black text-green-700 mb-8">35,000 <span class="text-sm font-normal opacity-60">SDG</span></div>
+                    <div class="text-3xl font-black text-green-700 mb-8" id="price-gold">35,000 <span class="text-sm font-normal opacity-60">SDG</span></div>
                     <ul class="text-slate-500 text-sm mb-10 space-y-4 text-right pr-4">
                         <li><i class="fas fa-star text-yellow-500 ml-2"></i> رؤية الصور الشخصية</li>
                         <li><i class="fas fa-star text-yellow-500 ml-2"></i> أولوية الظهور للجادين</li>
@@ -119,7 +119,7 @@
                 <div class="bg-slate-900 p-10 rounded-[3rem] shadow-2xl text-white text-center">
                     <div class="w-16 h-16 bg-white/10 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">💎</div>
                     <h3 class="font-bold text-2xl mb-2 text-green-400" data-ar="باقة كبار الشخصيات" data-en="VIP Plan">باقة كبار الشخصيات</h3>
-                    <div class="text-3xl font-black mb-8 text-white">75,000 <span class="text-sm font-light opacity-50">SDG</span></div>
+                    <div class="text-3xl font-black mb-8 text-white" id="price-vip">75,000 <span class="text-sm font-light opacity-50">SDG</span></div>
                     <ul class="text-slate-400 text-sm mb-10 space-y-4 text-right pr-4">
                         <li><i class="fas fa-crown text-green-400 ml-2"></i> خط ساخن مع الإدارة</li>
                         <li><i class="fas fa-crown text-green-400 ml-2"></i> توفيق يدوي من الخبراء</li>
@@ -185,8 +185,21 @@
             imgbbKey: "847040441499990666014e2d31221b21",
             lang: localStorage.getItem('app_lang') || 'ar',
             adminPhone: "249127910778",
-            sessionExpiry: 3600000 
+            sessionExpiry: 3600000,
+            // نظام الباقات المتعدد العملات
+            prices: {
+                ar: { sutra: "15,000 SDG", gold: "35,000 SDG", vip: "75,000 SDG" },
+                en: { sutra: "25 USD", gold: "60 USD", vip: "125 USD" }
+            }
         };
+
+        // تحديث عرض العملات بناء على اللغة
+        function updatePricingDisplay() {
+            const p = CONFIG.prices[CONFIG.lang];
+            document.getElementById('price-sutra').innerHTML = `${p.sutra.split(' ')[0]} <span class="text-sm font-normal opacity-60">${p.sutra.split(' ')[1]}</span>`;
+            document.getElementById('price-gold').innerHTML = `${p.gold.split(' ')[0]} <span class="text-sm font-normal opacity-60">${p.gold.split(' ')[1]}</span>`;
+            document.getElementById('price-vip').innerHTML = `${p.vip.split(' ')[0]} <span class="text-sm font-normal opacity-60">${p.vip.split(' ')[1]}</span>`;
+        }
 
         function secureLocalStorage() {
             const originalSetItem = localStorage.setItem;
@@ -203,9 +216,14 @@
         secureLocalStorage();
 
         function toggleModal(show) { toggleEl('loginModal', show); }
-        function toggleRegModal(show) { toggleEl('regModal', show); }
+        function toggleRegModal(show) { toggleRegModalEl('regModal', show); }
         function toggleEl(id, show) {
             const el = document.getElementById(id);
+            if(show) { el.classList.remove('hidden'); setTimeout(() => el.classList.add('opacity-100'), 10); }
+            else { el.classList.remove('opacity-100'); setTimeout(() => el.classList.add('hidden'), 300); }
+        }
+        function toggleRegModalEl(id, show) {
+             const el = document.getElementById(id);
             if(show) { el.classList.remove('hidden'); setTimeout(() => el.classList.add('opacity-100'), 10); }
             else { el.classList.remove('opacity-100'); setTimeout(() => el.classList.add('hidden'), 300); }
         }
@@ -264,7 +282,9 @@
         }
 
         function safeRedirect(plan) {
-            const msg = `أريد تفعيل ${plan} في نصيب العالمي.`;
+            const p = CONFIG.prices[CONFIG.lang];
+            const priceVal = plan === 'Sutra' ? p.sutra : (plan === 'Gold' ? p.gold : p.vip);
+            const msg = `أريد تفعيل ${plan} بقيمة ${priceVal} في نصيب العالمي.`;
             window.open(`https://wa.me/${CONFIG.adminPhone}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
@@ -289,6 +309,10 @@
             const html = document.getElementById('mainHtml');
             html.dir = CONFIG.lang === 'ar' ? 'rtl' : 'ltr';
             document.querySelectorAll('[data-ar]').forEach(el => el.innerText = el.getAttribute(`data-${CONFIG.lang}`));
+            
+            // استدعاء تحديث الأسعار
+            updatePricingDisplay();
+
             if(localStorage.getItem('naseeb_logged') === 'true') {
                 document.getElementById('loginBtnNav').classList.add('hidden');
                 const sec = document.getElementById('userSection');
