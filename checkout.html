@@ -3,65 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تفعيل الاشتراك - نصيب العالمي</title>
+    <title>تفعيل الاشتراك | نصيب العالمي</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-        body { font-family: 'Cairo', sans-serif; background-color: #f3f4f6; }
+        body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); min-height: 100vh; user-select: none; }
+        .checkout-card { background: white; border-radius: 3rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255,255,255,0.8); }
+        .step-icon { width: 40px; height: 40px; background: #f0fdf4; color: #16a34a; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .bank-box { background: linear-gradient(to bottom right, #ffffff, #f9fafb); border: 2px dashed #22c55e; position: relative; overflow: hidden; transition: 0.3s; }
+        .bank-box:hover { background: #f0fdf4; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        
+        /* تصميم رسالة النسخ */
+        #copyToast { visibility: hidden; min-width: 200px; background-color: #333; color: #fff; text-align: center; border-radius: 50px; padding: 12px; position: fixed; z-index: 100; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 14px; font-weight: bold; }
+        #copyToast.show { visibility: visible; animation: fadeInOut 2s; }
+        @keyframes fadeInOut { 0% { bottom: 0; opacity: 0; } 20% { bottom: 30px; opacity: 1; } 80% { bottom: 30px; opacity: 1; } 100% { bottom: 0; opacity: 0; } }
     </style>
 </head>
 <body class="py-10 px-4">
 
-    <div class="max-w-xl mx-auto bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100">
-        <div class="bg-green-700 p-8 text-white text-center">
-            <div class="text-5xl mb-4">💰</div>
-            <h1 class="text-2xl font-bold">تأكيد وتفعيل الحساب</h1>
-            <p class="text-green-100 text-sm mt-2">خطوات بسيطة وتبدأ رحلتك معنا</p>
+    <div class="max-w-xl mx-auto checkout-card overflow-hidden">
+        <div class="bg-green-700 p-10 text-white text-center relative">
+            <div class="absolute top-0 right-0 p-4 opacity-10 text-9xl"><i class="fas fa-receipt"></i></div>
+            <div class="text-6xl mb-4 animate-float text-amber-400">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1 class="text-3xl font-black mb-2">تأكيد وتفعيل الحساب</h1>
+            <p class="text-green-100 font-bold opacity-90">أنت على بعد خطوة واحدة من العثور على نصيبك</p>
         </div>
 
-        <div class="p-8 space-y-6">
-            <div class="bg-blue-50 border-r-4 border-blue-500 p-5 rounded-2xl">
-                <h3 class="font-bold text-blue-900 mb-2 italic">إجراءات التفعيل المطلوبة:</h3>
-                <ul class="text-sm text-blue-800 space-y-2 list-decimal list-inside">
-                    <li>حوّل قيمة الباقة عبر تطبيق <b>بنكك</b>.</li>
-                    <li>صوّر (إشعار التحويل) بهاتفك.</li>
-                    <li>جهز (صورة البروفايل) التي تود ظهورها.</li>
-                    <li>أرسل الصور عبر الواتساب للتفعيل الفوري.</li>
-                </ul>
-            </div>
+        <div class="p-8 space-y-8">
+            <div class="space-y-4">
+                <h3 class="font-black text-slate-800 flex items-center gap-2 mb-4">
+                    <i class="fas fa-list-ol text-green-600"></i> خطوات التفعيل المطلوبة:
+                </h3>
+                
+                <div class="flex items-start gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <div class="step-icon">1</div>
+                    <div><p class="font-bold text-slate-700 text-sm">قم بتحويل قيمة الباقة عبر تطبيق بنكك.</p></div>
+                </div>
 
-            <div class="space-y-3">
-                <p class="font-bold text-gray-700 text-sm">بيانات التحويل (السودان):</p>
-                <div class="bg-gray-50 p-6 rounded-3xl border-2 border-dashed border-green-200 text-center relative">
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest">Bankak Account</p>
-                    <p class="text-lg font-bold text-gray-800">مصعب (نصيب العالمي)</p>
-                    <p class="text-3xl font-mono font-bold text-green-700 my-2">1705644</p>
-                    <p class="text-[10px] text-red-500 leading-tight">* يرجى التأكد من الرقم والاسم قبل إتمام العملية</p>
+                <div class="flex items-start gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <div class="step-icon">2</div>
+                    <div><p class="font-bold text-slate-700 text-sm">احفظ صورة من إشعار التحويل الناجح.</p></div>
+                </div>
+
+                <div class="flex items-start gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <div class="step-icon">3</div>
+                    <div><p class="font-bold text-slate-700 text-sm">أرسل (الإشعار + صورة بروفايلك) للواتساب.</p></div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 gap-4 pt-4">
+            <div class="space-y-3 text-center">
+                <p class="font-black text-slate-800 text-sm flex items-center justify-center gap-2">
+                    <i class="fas fa-university text-green-600"></i> اضغط على الصندوق لنسخ الرقم:
+                </p>
+                <div class="bank-box p-8 rounded-[2.5rem] cursor-pointer active:scale-95 transition group" onclick="copyAccount()">
+                    <p class="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-2">Bankak Account / بنكك</p>
+                    <p class="text-xl font-black text-slate-800 mb-3">مصعب (نصيب العالمي)</p>
+                    <div class="inline-block bg-green-50 px-8 py-3 rounded-2xl border border-green-100">
+                        <p id="displayAcc" class="text-4xl font-mono font-black text-green-700 tracking-widest">*******</p>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-4 font-bold flex items-center justify-center gap-2">
+                        <i class="fas fa-mouse-pointer animate-bounce"></i> اضغط هنا لظهور الرقم ونسخه تلقائياً
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 pt-2">
                 <a href="https://wa.me/249127910778?text=مرحباً+نصيب+العالمي+لقد+قمت+بالتحويل+وهذه+صور+البروفايل+والإشعار" 
-                   class="flex items-center justify-center gap-3 bg-green-600 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-green-700 transition active:scale-95">
-                    <span class="text-lg">الواتساب الأساسي (0127910778)</span>
+                   class="flex items-center justify-between bg-green-600 text-white p-5 rounded-[1.5rem] font-black shadow-xl hover:bg-green-700 transition active:scale-95 group">
+                    <span class="flex items-center gap-3"><i class="fab fa-whatsapp text-2xl"></i> الواتساب الأساسي</span>
+                    <span class="text-xs opacity-80">0127910778 <i class="fas fa-chevron-left mr-1"></i></span>
                 </a>
 
                 <a href="https://wa.me/249911118345?text=مرحباً+نصيب+العالمي+لقد+قمت+بالتحويل+وهذه+صور+البروفايل+والإشعار" 
-                   class="flex items-center justify-center gap-3 bg-gray-800 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-black transition active:scale-95">
-                    <span class="text-lg">واتساب الطوارئ (0911118345)</span>
+                   class="flex items-center justify-between bg-slate-800 text-white p-5 rounded-[1.5rem] font-black shadow-xl hover:bg-black transition active:scale-95 group">
+                    <span class="flex items-center gap-3"><i class="fas fa-phone-alt text-amber-400"></i> رقم الطوارئ</span>
+                    <span class="text-xs opacity-80">0911118345 <i class="fas fa-chevron-left mr-1"></i></span>
                 </a>
             </div>
 
-            <div class="text-center pt-4 border-t">
-                <p class="text-[11px] text-gray-400">عند تفعيل الحساب ستظهر بياناتك في صفحة الأعضاء تلقائياً.</p>
-                <a href="members.html" class="inline-block mt-4 text-green-700 font-bold hover:underline">تصفح الأعضاء الحاليين</a>
+            <div class="text-center pt-6 border-t border-slate-100">
+                <a href="members.html" class="inline-flex items-center gap-2 text-green-700 font-black hover:gap-4 transition-all">
+                    تصفح الأعضاء الحاليين <i class="fas fa-arrow-left"></i>
+                </a>
             </div>
         </div>
         
-        <div class="bg-gray-100 p-4 text-center">
-            <p class="text-[10px] text-gray-500">منصة نصيب العالمي © 2025 - أمان وخصوصية تامة</p>
+        <div class="bg-slate-50 p-6 text-center border-t border-slate-100">
+            <p class="text-[10px] text-slate-500 font-bold uppercase flex items-center justify-center gap-2">
+                <i class="fas fa-shield-alt text-green-600"></i> منصة نصيب العالمي © 2025
+            </p>
         </div>
     </div>
 
+    <div id="copyToast">✅ تم نسخ الرقم بنجاح!</div>
+
+    <script>
+        const REAL_ACCOUNT = "1705644";
+
+        function copyAccount() {
+            // نسخ الرقم الحقيقي للحافظة
+            navigator.clipboard.writeText(REAL_ACCOUNT).then(() => {
+                // تغيير النص الظاهر لحظياً للرقم الحقيقي
+                const display = document.getElementById('displayAcc');
+                display.innerText = REAL_ACCOUNT;
+                display.style.letterSpacing = "0";
+
+                // إظهار رسالة التنبيه (Toast)
+                const toast = document.getElementById('copyToast');
+                toast.className = "show";
+
+                // إعادة النجوم بعد ثانيتين
+                setTimeout(() => {
+                    toast.className = toast.className.replace("show", "");
+                    display.innerText = "*******";
+                    display.style.letterSpacing = "0.25em";
+                }, 2000);
+            });
+        }
+    </script>
 </body>
 </html>
