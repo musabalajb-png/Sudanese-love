@@ -10,7 +10,7 @@
     <style>
         body { font-family: 'Cairo', sans-serif; background: #f0f4f8; overflow-x: hidden; margin: 0; }
         
-        /* 1. تأثير الخلفية المتحركة (الألوان المتغيرة) */
+        /* 1. تأثير الخلفية المتحركة */
         .bg-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(45deg, #fff5f5, #f0fdf4, #f5f3ff, #fff9db);
@@ -20,7 +20,7 @@
         }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* 2. القلوب العائمة المستمرة في الخلفية */
+        /* 2. القلوب العائمة المستمرة */
         .heart-bg { position: fixed; color: rgba(255, 182, 193, 0.4); font-size: 20px; pointer-events: none; z-index: -1; animation: fall linear infinite; }
         @keyframes fall { from { transform: translateY(-10vh) rotate(0deg); opacity: 1; } to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
 
@@ -32,11 +32,9 @@
         .img-box img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; transition: 0.6s ease; }
         .blur-effect { filter: blur(30px); transform: scale(1.1); }
         
-        /* أنيميشن الوردة عند الضغط */
         .gift-anim { position: absolute; font-size: 2.5rem; animation: floatUp 1.5s ease-out forwards; z-index: 50; pointer-events: none; }
         @keyframes floatUp { 0% { bottom: 20%; opacity: 1; } 100% { bottom: 85%; opacity: 0; transform: scale(2.5) rotate(15deg); } }
         
-        /* زر الموسيقى */
         .music-btn {
             position: fixed; bottom: 25px; left: 25px; width: 50px; height: 50px;
             background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;
@@ -66,7 +64,7 @@
 
     <nav class="bg-white/70 backdrop-blur-md shadow-sm p-4 sticky top-0 z-50 border-b border-white/20">
         <div class="container mx-auto flex justify-between items-center px-4">
-            <span class="font-bold text-green-700 text-xl flex items-center gap-2">💍 نصيب</span>
+            <span onclick="window.location.href='index.html'" class="cursor-pointer font-bold text-green-700 text-xl flex items-center gap-2">💍 نصيب</span>
             <div class="flex gap-2">
                 <div class="bg-red-50 text-red-600 px-4 py-1.5 rounded-full text-[11px] font-bold border border-red-100 flex items-center gap-1">
                     <span>🌹</span> <span id="roseCount">0</span>
@@ -84,7 +82,8 @@
             <input type="text" id="searchInput" onkeyup="filterMembers()" placeholder="ابحث بالاسم أو المدينة..." class="w-full outline-none text-sm text-slate-700 bg-transparent font-bold">
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-4" id="membersGrid"></div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-4" id="membersGrid">
+            </div>
     </div>
 
     <div id="chatBox" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-4">
@@ -100,7 +99,13 @@
     </div>
 
     <script>
-        // 1. نظام القلوب العائمة المستمرة
+        // التحقق من تسجيل الدخول
+        if (localStorage.getItem('naseeb_logged') !== 'true') { window.location.href = 'index.html'; }
+
+        // الرابط الصحيح للشيت (CSV)
+        const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv";
+
+        // قلوب عائمة
         function createHeart() {
             const container = document.getElementById('heartsContainer');
             const heart = document.createElement('div');
@@ -113,7 +118,7 @@
         }
         setInterval(createHeart, 1500);
 
-        // 2. نظام الموسيقى
+        // نظام الموسيقى
         let isPlaying = false;
         function toggleMusic() {
             const audio = document.getElementById('bgAudio');
@@ -123,56 +128,64 @@
             isPlaying = !isPlaying;
         }
 
-        // 3. جلب البيانات والربط بالأمان والسيستم اليومي
-        if (localStorage.getItem('naseeb_logged') !== 'true') { window.location.href = 'index.html'; }
-
-        const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv";
-
         async function load() {
-            // معالجة السيستم اليومي
+            // السيستم اليومي
             const today = new Date().toDateString();
             if (localStorage.getItem('lastVisitDate') !== today) {
-                localStorage.setItem('roses', '10'); localStorage.setItem('msgs', '3'); localStorage.setItem('lastVisitDate', today);
+                localStorage.setItem('roses', '10'); 
+                localStorage.setItem('msgs', '3'); 
+                localStorage.setItem('lastVisitDate', today);
             }
 
             try {
                 const res = await fetch(sheetURL);
                 const data = await res.text();
-                const rows = data.split('\n').slice(1);
+                // تحليل البيانات مع تنظيف الأسطر الفارغة
+                const rows = data.split('\n').map(r => r.trim()).filter(r => r !== "").slice(1);
                 const grid = document.getElementById('membersGrid');
-                const isPaid = /الستر|ذهبية|ماسية/i.test(localStorage.getItem('userPlan'));
+                grid.innerHTML = ""; 
+
+                const userPlan = localStorage.getItem('userPlan') || 'عادية';
+                const isPaid = /الستر|ذهبية|ماسية/i.test(userPlan);
 
                 rows.forEach((row, index) => {
-                    const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)?.map(c => c.replace(/"/g, '').trim()) || [];
+                    const cols = row.split(',').map(c => c.trim().replace(/^"|"$/g, ''));
                     if(cols.length < 5) return;
 
                     const member = {
-                        name: cols[0], age: cols[1], city: cols[2], status: cols[3], job: cols[4], 
-                        plan: cols[5], img: cols[6], height: cols[7], weight: cols[8], skin: cols[9], requirements: cols[10]
+                        name: cols[0],
+                        plan: cols[2] || 'عادية',
+                        city: cols[3] || 'غير محدد',
+                        img: cols[6] || `https://ui-avatars.com/api/?name=${cols[0]}&background=random`,
+                        age: cols[1], status: cols[4] // بيانات إضافية للبروفايل
                     };
+
                     const dataStr = encodeURIComponent(JSON.stringify(member));
 
                     grid.innerHTML += `
                         <div class="member-card ${member.plan.includes('ذهبية') ? 'gold-member' : ''}" id="card-${index}" data-name="${member.name}" data-city="${member.city}">
-                            ${member.plan.includes('ذهبية') ? '<span class="vip-tag"><i class="fas fa-crown"></i> VIP</span>' : ''}
+                            ${member.plan.includes('ذهبية') || member.plan.includes('ماسية') ? '<span class="vip-tag"><i class="fas fa-crown"></i> VIP</span>' : ''}
                             <div class="img-box" onclick="viewProfile('${dataStr}')">
                                 <img src="${member.img}" class="${isPaid ? '' : 'blur-effect'}" onerror="this.src='https://ui-avatars.com/api/?name=${member.name}'">
                             </div>
                             <div class="p-4 text-center">
-                                <h4 class="font-bold text-[11px] text-slate-700 truncate" onclick="viewProfile('${dataStr}')">${member.name}</h4>
+                                <h4 class="font-bold text-[11px] text-slate-700 truncate">${member.name}</h4>
                                 <p class="text-[9px] text-slate-400 mb-3"><i class="fas fa-map-marker-alt"></i> ${member.city}</p>
                                 <div class="flex gap-2 justify-center">
-                                    <button onclick="event.stopPropagation(); dropGift('card-${index}', '🌹')" class="bg-red-50 text-red-600 p-2.5 rounded-2xl text-sm">🌹</button>
-                                    <button onclick="event.stopPropagation(); openChat('${member.name}', '${member.img}')" class="bg-green-600 text-white px-4 py-2 rounded-2xl text-[10px] font-bold flex-1">💌 إعجاب</button>
+                                    <button onclick="event.stopPropagation(); dropGift('card-${index}', '🌹')" class="bg-red-50 text-red-600 p-2.5 rounded-2xl text-sm hover:bg-red-100 transition">🌹</button>
+                                    <button onclick="event.stopPropagation(); openChat('${member.name}', '${member.img}')" class="bg-green-600 text-white px-4 py-2 rounded-2xl text-[10px] font-bold flex-1 hover:bg-green-700 transition">💌 إعجاب</button>
                                 </div>
                             </div>
                         </div>`;
                 });
-                updateUI();
-            } catch (e) { console.error(e); }
+                updateCounters();
+            } catch (e) {
+                console.error("Load Error:", e);
+                alert("خطأ في الاتصال بالبيانات. تأكد من الإنترنت.");
+            }
         }
 
-        function updateUI() {
+        function updateCounters() {
             document.getElementById('roseCount').innerText = localStorage.getItem('roses') || 0;
             document.getElementById('msgCount').innerText = localStorage.getItem('msgs') || 0;
         }
@@ -193,19 +206,23 @@
 
         function dropGift(cardId, emoji) {
             let r = parseInt(localStorage.getItem('roses'));
-            if(r <= 0) return alert("انتهى رصيد الورد 🌹");
+            if(r <= 0) return alert("انتهى رصيد الورد لهذا اليوم 🌹");
+            
             localStorage.setItem('roses', r - 1);
-            updateUI();
+            updateCounters();
+            
             const card = document.getElementById(cardId);
             const gift = document.createElement('div');
-            gift.className = 'gift-anim'; gift.innerHTML = emoji; gift.style.left = "45%";
+            gift.className = 'gift-anim'; 
+            gift.innerHTML = emoji; 
+            gift.style.left = "45%";
             card.appendChild(gift);
             setTimeout(() => gift.remove(), 1500);
         }
 
         function openChat(name, img) {
             document.getElementById('targetName').innerText = "تواصل مع " + name;
-            document.getElementById('chatAvatar').innerHTML = `<img src="${img}" class="w-full h-full object-cover">`;
+            document.getElementById('chatAvatar').innerHTML = `<img src="${img}" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=${name}'">`;
             document.getElementById('chatBox').classList.remove('hidden');
         }
 
@@ -213,10 +230,11 @@
 
         function sendLiveMessage() {
             let m = parseInt(localStorage.getItem('msgs'));
-            if(m <= 0) return alert("انتهى رصيد الرسائل 💌");
+            if(m <= 0) return alert("انتهى رصيد الرسائل لهذا اليوم 💌");
+            
             localStorage.setItem('msgs', m - 1);
-            updateUI();
-            alert("تم إرسال الإعجاب بنجاح ✅");
+            updateCounters();
+            alert("تم إرسال الإعجاب بنجاح ✅ سيتم إخطار الطرف الآخر.");
             closeChat();
         }
 
