@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>تصفح الأعضاء - نصيب العالمي</title>
-    <meta name="description" content="تصفح قائمة المشتركين والمشتركات الموثقين في منصة نصيب العالمي. ابحث عن شريك حياتك من السودان وكل دول العالم.">
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -19,16 +16,8 @@
         .badge-premium { background: linear-gradient(45deg, #fbbf24, #f59e0b); color: white; }
         .badge-diamond { background: linear-gradient(45deg, #06b6d4, #3b82f6); color: white; }
         .badge-standard { background: #f3f4f6; color: #64748b; }
-        .verified-tick { background: #10b981; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 10px; }
-        
-        /* Modal Style */
         .modal { display: none; position: fixed; z-index: 100; inset: 0; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); }
         .modal.active { display: flex; align-items: center; justify-content: center; }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
     </style>
 </head>
 <body class="min-h-screen">
@@ -38,15 +27,14 @@
             <div class="text-center mb-6">
                 <div class="text-4xl mb-2">🔐</div>
                 <h2 class="text-2xl font-bold text-slate-800">دخول المشتركين</h2>
-                <p class="text-sm text-gray-500">أدخل بياناتك لتتمكن من رؤية الصور والتواصل</p>
+                <p class="text-sm text-gray-500 text-center">أدخل بياناتك لتتمكن من رؤية الصور والتواصل</p>
             </div>
             <div class="space-y-4">
-                <input type="text" id="loginUser" placeholder="الاسم المستعار" class="w-full p-4 bg-gray-50 rounded-2xl outline-none border focus:ring-2 focus:ring-green-500 transition">
-                <input type="password" id="loginPass" placeholder="كلمة السر" class="w-full p-4 bg-gray-50 rounded-2xl outline-none border focus:ring-2 focus:ring-green-500 transition">
-                <button onclick="checkLogin()" class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-green-700 transition transform active:scale-95">دخول الآن</button>
+                <input type="text" id="loginUser" placeholder="الاسم المستعار" class="w-full p-4 bg-gray-50 rounded-2xl border-none text-right">
+                <input type="password" id="loginPass" placeholder="كلمة السر" class="w-full p-4 bg-gray-50 rounded-2xl border-none text-right">
+                <button onclick="checkLogin()" class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-green-700">دخول الآن</button>
                 <button onclick="toggleLoginModal()" class="w-full text-gray-400 text-sm font-bold">إغلاق النافذة</button>
             </div>
-            <p class="mt-6 text-center text-sm text-gray-600">ليس لديك حساب؟ <a href="register.html" class="text-green-600 font-bold hover:underline">اضغط هنا للتسجيل</a></p>
         </div>
     </div>
 
@@ -54,52 +42,39 @@
         <div class="container mx-auto flex justify-between items-center px-4">
             <div class="flex items-center gap-2">
                 <span class="text-2xl">💍</span>
-                <span class="font-bold text-green-700 text-xl hidden md:block">نصيب العالمي</span>
+                <span class="font-bold text-green-700 text-xl">نصيب العالمي</span>
             </div>
             <div class="flex gap-3">
                 <div id="userInfo" class="hidden flex items-center gap-2 bg-green-50 px-3 py-1 rounded-full border border-green-100">
                     <span id="userNameDisplay" class="text-xs font-bold text-green-700"></span>
                     <button onclick="logout()" class="text-[10px] bg-red-100 text-red-600 px-2 py-1 rounded-md">خروج</button>
                 </div>
-                <button id="loginHeaderBtn" onclick="toggleLoginModal()" class="bg-green-600 text-white px-5 py-2 rounded-full text-xs font-bold transition hover:bg-green-700">تسجيل الدخول</button>
-                <a href="index.html" class="bg-slate-100 text-slate-600 px-5 py-2 rounded-full text-xs font-bold hover:bg-slate-200 transition">الرئيسية</a>
+                <button id="loginHeaderBtn" onclick="toggleLoginModal()" class="bg-green-600 text-white px-5 py-2 rounded-full text-xs font-bold transition">تسجيل الدخول</button>
+                <a href="index.html" class="bg-slate-100 text-slate-600 px-5 py-2 rounded-full text-xs font-bold transition">الرئيسية</a>
             </div>
         </div>
     </nav>
 
     <header class="bg-white border-b border-gray-100 py-8 text-center">
         <div class="container mx-auto px-6">
-            <h1 class="text-2xl font-bold text-slate-800 mb-2">تصفح طلبات الزواج</h1>
+            <h1 class="text-2xl font-bold text-slate-800 mb-2">استكشف شريك حياتك</h1>
             <p class="text-gray-500 text-sm mb-6">يوجد لدينا الآن <span id="memberCount" class="text-green-600 font-bold">...</span> مشترك موثق</p>
-            
-            <div class="max-w-4xl mx-auto space-y-6">
-                <div class="relative">
-                    <i class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                    <input type="text" id="nameSearch" onkeyup="filterMembers()" placeholder="ابحث بالاسم، المدينة، أو المهنة..." class="w-full border-2 border-gray-50 bg-gray-50 p-4 pr-12 rounded-3xl outline-none focus:bg-white focus:border-green-500 transition-all shadow-sm">
-                </div>
-                
-                <div class="flex flex-wrap justify-center gap-2">
-                    <button id="filter-all" onclick="filterByGender('all')" class="filter-btn active bg-green-600 text-white px-6 py-2 rounded-full text-xs font-bold shadow-sm">الكل</button>
-                    <button id="filter-male" onclick="filterByGender('ذكر')" class="filter-btn bg-white border text-gray-600 px-6 py-2 rounded-full text-xs font-bold hover:bg-blue-50">ذكور</button>
-                    <button id="filter-female" onclick="filterByGender('أنثى')" class="filter-btn bg-white border text-gray-600 px-6 py-2 rounded-full text-xs font-bold hover:bg-pink-50">إناث</button>
-                </div>
+            <div class="max-w-4xl mx-auto">
+                <input type="text" id="nameSearch" onkeyup="filterMembers()" placeholder="ابحث بالاسم، المدينة، أو المهنة..." class="w-full border-2 border-gray-50 bg-gray-50 p-4 pr-12 rounded-3xl outline-none focus:border-green-500 transition shadow-sm">
             </div>
         </div>
     </header>
 
     <main class="container mx-auto py-12 px-6">
         <div id="loading" class="text-center py-20">
-            <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-green-700 border-t-transparent"></div>
-            <p class="mt-4 text-slate-500 font-bold">جاري تحميل المشتركين الجدد...</p>
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-green-700 border-t-transparent mx-auto"></div>
+            <p class="mt-4 text-slate-500 font-bold">جاري تحميل المشتركين...</p>
         </div>
-        
-        <div id="membersList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            </div>
+        <div id="membersList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
     </main>
 
     <script>
         const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv";
-        
         let allMembers = [];
         let isLoggedIn = localStorage.getItem('naseeb_logged') === 'true';
         let loggedUserPlan = (localStorage.getItem('userPlan') || 'مجانية').trim();
@@ -109,103 +84,58 @@
                 const response = await fetch(sheetURL);
                 const data = await response.text();
                 const rows = data.split('\n').slice(1); 
-                const list = document.getElementById('membersList');
                 document.getElementById('loading').style.display = 'none';
-                list.innerHTML = "";
-                
-                // تحديث العداد
                 document.getElementById('memberCount').innerText = rows.length;
                 
-                rows.forEach((row, index) => {
+                const list = document.getElementById('membersList');
+                list.innerHTML = "";
+                
+                rows.forEach((row) => {
                     const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
                     if(cols.length < 5) return;
 
-                    const member = {
-                        name: cols[0], age: cols[1], gender: cols[2], job: cols[3],
-                        city: cols[4], plan: cols[5] || 'عضوية عادية', img: cols[6],
-                        status: cols[7], isVerified: cols[8], password: cols[9]
-                    };
-
+                    const member = { name: cols[0], age: cols[1], gender: cols[2], job: cols[3], city: cols[4], plan: cols[5] || 'عادية', img: cols[6], status: cols[7], isVerified: cols[8], password: cols[9] };
                     allMembers.push(member);
 
-                    let planClass = "badge-standard";
-                    if(member.plan.includes("ماسية")) planClass = "badge-diamond";
-                    else if(member.plan.includes("ذهبية") || member.plan.includes("الستر")) planClass = "badge-premium";
+                    let planClass = member.plan.includes("ماسية") ? "badge-diamond" : (member.plan.includes("ذهبية") || member.plan.includes("الستر") ? "badge-premium" : "badge-standard");
+                    const isPaid = /الستر|ذهبية|ماسية|VIP/i.test(loggedUserPlan);
+                    const canSeePhotos = isLoggedIn && isPaid;
 
-                    // تعديل الربط المرن (ملاحظة 2)
-                    const isPaidPlan = /الستر|ذهبية|ماسية|VIP/i.test(loggedUserPlan);
-                    const canSeePhotos = isLoggedIn && isPaidPlan;
-                    const imageClass = canSeePhotos ? 'unblur' : 'blur-image';
-
-                    const card = `
-                        <div class="member-card group" data-gender="${member.gender}">
+                    list.innerHTML += `
+                        <div class="member-card" data-gender="${member.gender}">
                             <div class="h-72 relative overflow-hidden">
-                                <img src="${member.img || 'https://via.placeholder.com/400x500'}" class="w-full h-full object-cover ${imageClass}">
-                                ${!canSeePhotos ? `
-                                <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center p-4 text-center">
-                                    <i class="fas fa-lock text-white mb-2 text-2xl"></i>
-                                    <p class="text-white text-[10px] font-bold">اشترك في باقة الستر لرؤية الصورة</p>
-                                </div>` : ''}
-                                <div class="absolute top-4 left-4 ${planClass} px-3 py-1 rounded-full text-[10px] font-bold shadow-md">
-                                    ${member.plan}
-                                </div>
-                                <div class="absolute bottom-2 right-2 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                                <img src="${member.img}" onerror="this.src='https://ui-avatars.com/api/?name=${member.name}&background=random'" class="w-full h-full object-cover ${canSeePhotos ? 'unblur' : 'blur-image'}">
+                                ${!canSeePhotos ? '<div class="absolute inset-0 bg-black/40 flex items-center justify-center p-4 text-white text-[10px] font-bold">اشترك لرؤية الصورة 🔒</div>' : ''}
+                                <div class="absolute top-4 left-4 ${planClass} px-3 py-1 rounded-full text-[10px] font-bold shadow-md">${member.plan}</div>
                             </div>
                             <div class="p-6">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <h3 class="font-bold text-lg text-slate-800">${member.name}</h3>
-                                    ${member.isVerified === 'نعم' ? '<span class="verified-tick"><i class="fas fa-check"></i></span>' : ''}
-                                </div>
-                                <div class="grid grid-cols-2 gap-2 mb-4 text-[10px] font-bold">
-                                    <div class="bg-slate-50 p-2 rounded-xl text-slate-500 text-center">${member.age} سنة</div>
-                                    <div class="bg-slate-50 p-2 rounded-xl text-slate-500 text-center">${member.status}</div>
-                                </div>
-                                <p class="text-slate-500 text-xs mb-6"><i class="fas fa-map-marker-alt ml-1 text-green-500"></i> ${member.city}</p>
-                                <button onclick="handleContact('${member.name}')" class="w-full bg-green-600 text-white font-bold py-3 rounded-2xl hover:bg-green-700 transition-all shadow-md active:scale-95">💍 تواصل الآن</button>
+                                <h3 class="font-bold text-lg text-slate-800">${member.name} ${member.isVerified === 'نعم' ? '<span class="text-green-500">✔</span>' : ''}</h3>
+                                <p class="text-slate-500 text-xs mb-4">${member.age} سنة | ${member.status} | ${member.city}</p>
+                                <button onclick="handleContact('${member.name}')" class="w-full bg-green-600 text-white font-bold py-3 rounded-2xl hover:bg-green-700 transition active:scale-95">💍 تواصل الآن</button>
                             </div>
-                        </div>
-                    `;
-                    list.innerHTML += card;
+                        </div>`;
                 });
                 updateUI();
-            } catch (error) {
-                console.error("خطأ في تحميل البيانات:", error);
-            }
-        }
-
-        function toggleLoginModal() {
-            document.getElementById('loginModal').classList.toggle('active');
+            } catch (e) { console.error("Error:", e); }
         }
 
         function checkLogin() {
             const user = document.getElementById('loginUser').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
+            if(!user || !pass) return alert('أدخل البيانات ⚠️');
             const found = allMembers.find(m => m.name === user && m.password === pass);
-            
             if(found) {
                 localStorage.setItem('naseeb_logged', 'true');
                 localStorage.setItem('userName', found.name);
                 localStorage.setItem('userPlan', found.plan);
-                alert('أهلاً بك مجدداً يا ' + found.name + ' 🎉');
                 location.reload();
-            } else {
-                alert('خطأ في البيانات، تأكد من الاسم وكلمة السر ❌');
-            }
+            } else { alert('بيانات خاطئة ❌'); }
         }
 
-        function logout() {
-            localStorage.clear();
-            location.reload();
-        }
-
-        function handleContact(targetName) {
-            if(!isLoggedIn) {
-                alert('عذراً! يجب تسجيل الدخول أولاً لتتمكن من مراسلة الأعضاء 🔒');
-                toggleLoginModal();
-                return;
-            }
+        function handleContact(target) {
+            if(!isLoggedIn) return toggleLoginModal();
             const myName = localStorage.getItem('userName');
-            const msg = `السلام عليكم إدراة نصيب العالمي، أنا المشترك (${myName}) مهتم بالتواصل مع الطرف (${targetName}).`;
+            const msg = `أنا المشترك (${myName}) مهتم بالتواصل مع (${target}).`;
             window.open(`https://wa.me/249127910778?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
@@ -216,33 +146,14 @@
                 document.getElementById('userNameDisplay').innerText = localStorage.getItem('userName');
             }
         }
-
+        function toggleLoginModal() { document.getElementById('loginModal').classList.toggle('active'); }
+        function logout() { localStorage.clear(); location.reload(); }
         function filterMembers() {
-            const query = document.getElementById('nameSearch').value.toLowerCase();
-            document.querySelectorAll('.member-card').forEach(card => {
-                const text = card.innerText.toLowerCase();
-                card.style.display = text.includes(query) ? "block" : "none";
+            const q = document.getElementById('nameSearch').value.toLowerCase();
+            document.querySelectorAll('.member-card').forEach(c => {
+                c.style.display = c.innerText.toLowerCase().includes(q) ? "block" : "none";
             });
         }
-
-        function filterByGender(gender) {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('bg-green-600', 'text-white');
-                btn.classList.add('bg-white', 'text-gray-600');
-            });
-            
-            const btnId = gender === 'all' ? 'filter-all' : (gender === 'ذكر' ? 'filter-male' : 'filter-female');
-            document.getElementById(btnId).classList.add('bg-green-600', 'text-white');
-
-            document.querySelectorAll('.member-card').forEach(card => {
-                if(gender === 'all' || card.getAttribute('data-gender') === gender) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        }
-
         window.onload = loadMembers;
     </script>
 </body>
