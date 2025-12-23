@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>باقات نصيب العالمي | اختر خطتك</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background: #f8fafc; }
+        .price-card { transition: 0.4s; border-radius: 2rem; position: relative; overflow: hidden; }
+        .price-card:hover { transform: translateY(-10px); }
+        .popular-badge { position: absolute; top: 20px; left: -35px; background: #fbbf24; color: #000; padding: 5px 40px; transform: rotate(-45deg); font-size: 10px; font-weight: bold; }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <div class="max-w-4xl mx-auto text-center mb-10">
+        <h1 class="text-3xl font-bold text-slate-800 mb-4">اختر باقة الجدية والستر 💍</h1>
+        <p class="text-slate-500 text-sm">استمتع بمميزات حصرية وتواصل مباشر مع شريك حياتك</p>
+        
+        <div class="flex justify-center mt-8">
+            <div class="bg-white p-1 rounded-2xl shadow-sm border border-slate-200 flex gap-2">
+                <button onclick="setCurrency('SDN')" id="btnSDN" class="px-6 py-2 rounded-xl text-sm font-bold transition-all bg-green-600 text-white">🇸🇩 السودان</button>
+                <button onclick="setCurrency('KSA')" id="btnKSA" class="px-6 py-2 rounded-xl text-sm font-bold transition-all text-slate-500">🇸🇦 السعودية</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="price-card bg-white border border-slate-100 p-8 shadow-xl flex flex-col">
+            <h3 class="font-bold text-xl text-slate-700 mb-2">باقة الستر</h3>
+            <p class="text-slate-400 text-xs mb-6">مناسبة للتصفح الأساسي</p>
+            <div class="mb-6">
+                <span class="text-4xl font-bold text-slate-800 amount" data-sdn="15,000" data-ksa="100">15,000</span>
+                <span class="text-slate-500 currency">ج.س</span>
+            </div>
+            <ul class="text-slate-600 text-sm space-y-4 mb-8 flex-grow">
+                <li><i class="fas fa-check-circle text-green-500 ml-2"></i> رؤية الصور واضحة</li>
+                <li><i class="fas fa-check-circle text-green-500 ml-2"></i> 30 وردة يومياً</li>
+                <li><i class="fas fa-check-circle text-green-500 ml-2"></i> 10 رسائل إعجاب يومياً</li>
+                <li class="opacity-40"><i class="fas fa-times-circle text-slate-300 ml-2"></i> مكالمات فيديو</li>
+            </ul>
+            <button onclick="subscribe('باقة الستر')" class="w-full py-4 rounded-2xl bg-slate-800 text-white font-bold hover:bg-slate-900 transition">اشترك الآن</button>
+        </div>
+
+        <div class="price-card bg-white border-2 border-green-500 p-8 shadow-2xl flex flex-col scale-105 z-10">
+            <div class="popular-badge">الأكثر طلباً</div>
+            <h3 class="font-bold text-xl text-green-700 mb-2">الباقة الذهبية</h3>
+            <p class="text-slate-400 text-xs mb-6">الخيار المثالي للجادين</p>
+            <div class="mb-6">
+                <span class="text-4xl font-bold text-slate-800 amount" data-sdn="25,000" data-ksa="160">25,000</span>
+                <span class="text-slate-500 currency">ج.س</span>
+            </div>
+            <ul class="text-slate-600 text-sm space-y-4 mb-8 flex-grow">
+                <li><i class="fas fa-check-circle text-green-500 ml-2"></i> رؤية الصور واضحة + VIP</li>
+                <li><i class="fas fa-check-circle text-green-500 ml-2"></i> 100 وردة يومياً</li>
+                <li><i class="fas fa-check-circle text-green-500 ml-2"></i> 25 رسالة إعجاب يومياً</li>
+                <li><i class="fas fa-star text-amber-500 ml-2"></i> مكالمات فيديو (بإشراف)</li>
+            </ul>
+            <button onclick="subscribe('الباقة الذهبية')" class="w-full py-4 rounded-2xl bg-green-600 text-white font-bold hover:bg-green-700 shadow-lg shadow-green-200 transition">اشترك الآن</button>
+        </div>
+
+        <div class="price-card bg-slate-900 border border-slate-800 p-8 shadow-xl flex flex-col">
+            <h3 class="font-bold text-xl text-amber-400 mb-2">الباقة الماسية</h3>
+            <p class="text-slate-400 text-xs mb-6">VIP - أولوية قصوى</p>
+            <div class="mb-6">
+                <span class="text-4xl font-bold text-white amount" data-sdn="45,000" data-ksa="300">45,000</span>
+                <span class="text-slate-400 currency">ج.س</span>
+            </div>
+            <ul class="text-slate-300 text-sm space-y-4 mb-8 flex-grow">
+                <li><i class="fas fa-check-circle text-amber-400 ml-2"></i> ظهور حسابك في الصدارة</li>
+                <li><i class="fas fa-check-circle text-amber-400 ml-2"></i> ورد ورسائل غير محدودة</li>
+                <li><i class="fas fa-check-circle text-amber-400 ml-2"></i> مكالمات فيديو مباشرة</li>
+                <li><i class="fas fa-check-circle text-amber-400 ml-2"></i> تنسيق مباشر من الإدارة</li>
+            </ul>
+            <button onclick="subscribe('الباقة الماسية')" class="w-full py-4 rounded-2xl bg-amber-500 text-slate-900 font-bold hover:bg-amber-400 transition">اشترك الآن</button>
+        </div>
+
+    </div>
+
+    <script>
+        function setCurrency(country) {
+            const amounts = document.querySelectorAll('.amount');
+            const currencies = document.querySelectorAll('.currency');
+            const btnSDN = document.getElementById('btnSDN');
+            const btnKSA = document.getElementById('btnKSA');
+
+            if (country === 'KSA') {
+                amounts.forEach(el => el.innerText = el.getAttribute('data-ksa'));
+                currencies.forEach(el => el.innerText = 'ريال');
+                btnKSA.className = "px-6 py-2 rounded-xl text-sm font-bold transition-all bg-green-600 text-white";
+                btnSDN.className = "px-6 py-2 rounded-xl text-sm font-bold transition-all text-slate-500";
+            } else {
+                amounts.forEach(el => el.innerText = el.getAttribute('data-sdn'));
+                currencies.forEach(el => el.innerText = 'ج.س');
+                btnSDN.className = "px-6 py-2 rounded-xl text-sm font-bold transition-all bg-green-600 text-white";
+                btnKSA.className = "px-6 py-2 rounded-xl text-sm font-bold transition-all text-slate-500";
+            }
+        }
+
+        function subscribe(planName) {
+            const country = document.getElementById('btnKSA').classList.contains('bg-green-600') ? 'السعودية' : 'السودان';
+            const user = localStorage.getItem('userName') || 'مشترك جديد';
+            const msg = `مرحباً نصيب العالمي.. أرغب في الاشتراك في (${planName}) - دولة (${country}) - اسمي: ${user}`;
+            window.open(`https://wa.me/249127910778?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
