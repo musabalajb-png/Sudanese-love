@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="profileTitle">ملف شخصي | نصيب العالمي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --main-font: 'Cairo', sans-serif; }
+        [dir="ltr"] { --main-font: 'Poppins', sans-serif; }
+        body { font-family: var(--main-font); background: #f0f4f8; min-height: 100vh; padding: 20px 0; }
+        
+        .profile-container { background: white; border-radius: 2.5rem; box-shadow: 0 15px 40px rgba(0,0,0,0.1); width: 100%; max-width: 500px; overflow: hidden; position: relative; margin: auto; }
+        .profile-img-box { width: 100%; height: 380px; position: relative; overflow: hidden; background: #f8fafc; }
+        .profile-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .blur-effect { filter: blur(45px); transform: scale(1.2); }
+        
+        .glass-nav { position: absolute; top: 20px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 20px; z-index: 50; }
+        .icon-btn { background: rgba(0,0,0,0.4); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        
+        .profile-header-info { background: linear-gradient(to top, white 10%, transparent); position: absolute; bottom: 0; width: 100%; padding: 40px 20px 20px; text-align: center; }
+        .info-pill { background: #f8fafc; border: 1px solid #eef2f6; border-radius: 1.2rem; padding: 10px; text-align: center; transition: 0.3s; }
+        .info-pill:hover { border-color: #22c55e; }
+        
+        /* Tooltip Style */
+        .tooltip { position: relative; }
+        .tooltip .tooltiptext { visibility: hidden; width: 200px; background: #333; color: #fff; text-align: center; border-radius: 8px; padding: 5px; position: absolute; z-index: 100; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: 0.3s; font-size: 10px; }
+        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+    </style>
+</head>
+<body class="p-4">
+
+    <div class="profile-container">
+        <div class="glass-nav">
+            <button onclick="goBack()" class="icon-btn"><i class="fas fa-arrow-right" id="backIcon"></i></button>
+            <button onclick="toggleLang()" id="langBtn" class="bg-white/90 text-slate-800 px-4 py-1 rounded-full text-xs font-bold shadow-lg">English</button>
+        </div>
+
+        <div class="profile-img-box">
+            <div id="vipBadge" class="hidden absolute top-20 right-5 bg-gradient-to-r from-amber-400 to-yellow-600 text-white px-4 py-1 rounded-full text-[10px] font-bold z-10 shadow-lg">👑 VIP</div>
+            <img id="profileImage" src="" class="blur-effect">
+            <div class="profile-header-info">
+                <h2 id="profileName" class="text-3xl font-bold text-slate-800"></h2>
+                <p id="profileLocation" class="text-green-600 font-bold text-sm"></p>
+            </div>
+        </div>
+
+        <div class="p-6">
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <div class="info-pill"><p class="text-[10px] text-slate-400" data-ar="العمر" data-en="Age">العمر</p><b id="pAge" class="text-slate-700 text-sm"></b></div>
+                <div class="info-pill"><p class="text-[10px] text-slate-400" data-ar="الحالة" data-en="Status">الحالة</p><b id="pStatus" class="text-slate-700 text-sm"></b></div>
+                <div class="info-pill"><p class="text-[10px] text-slate-400" data-ar="الطول" data-en="Height">الطول</p><b id="pHeight" class="text-slate-700 text-sm"></b></div>
+                <div class="info-pill"><p class="text-[10px] text-slate-400" data-ar="الوزن" data-en="Weight">الوزن</p><b id="pWeight" class="text-slate-700 text-sm"></b></div>
+                <div class="info-pill"><p class="text-[10px] text-slate-400" data-ar="البشرة" data-en="Skin">البشرة</p><b id="pSkin" class="text-slate-700 text-sm"></b></div>
+                <div class="info-pill"><p class="text-[10px] text-slate-400" data-ar="المهنة" data-en="Job">المهنة</p><b id="pJob" class="text-slate-700 text-sm"></b></div>
+            </div>
+
+            <div class="bg-slate-50 p-5 rounded-3xl border border-slate-100 mb-6">
+                <h4 class="font-bold text-slate-700 mb-2 flex items-center gap-2 text-sm">
+                    <i class="fas fa-star text-amber-500"></i>
+                    <span data-ar="المواصفات المطلوبة" data-en="Requirements">المواصفات المطلوبة</span>
+                </h4>
+                <p id="pReq" class="text-slate-500 text-xs leading-relaxed"></p>
+            </div>
+            
+            <div class="flex gap-3 justify-center">
+                <button onclick="dropGift('🌹')" class="bg-red-50 text-red-600 w-14 h-14 rounded-2xl text-xl hover:bg-red-100 transition shadow-sm">🌹</button>
+                <button onclick="openChat()" class="flex-grow bg-green-600 text-white font-bold rounded-2xl shadow-lg hover:bg-green-700 transition" data-ar="إعجاب 💌" data-en="Interest 💌">إعجاب 💌</button>
+                <div class="tooltip">
+                    <button onclick="requestVideo()" class="bg-amber-100 text-amber-600 w-14 h-14 rounded-2xl text-xl hover:bg-amber-200 transition shadow-sm">
+                        <i class="fas fa-video"></i>
+                    </button>
+                    <span class="tooltiptext" id="vTip" data-ar="للمشتركين فقط" data-en="For members only">للمشتركين فقط</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="chatBox" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-[3rem] p-8 shadow-2xl relative border-t-8 border-green-600">
+            <h3 id="targetName" class="font-bold text-center text-xl mb-4 text-slate-800"></h3>
+            <textarea id="msgInput" class="w-full h-32 p-4 bg-slate-50 rounded-2xl border-none outline-none text-sm" placeholder="..."></textarea>
+            <div class="grid grid-cols-2 gap-4 mt-6">
+                <button onclick="sendLiveMessage()" class="bg-green-600 text-white py-3 rounded-xl font-bold" data-ar="إرسال" data-en="Send">إرسال</button>
+                <button onclick="closeChat()" class="bg-slate-100 text-slate-500 py-3 rounded-xl font-bold" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'ar';
+        const profileData = JSON.parse(sessionStorage.getItem('currentProfile') || '{}');
+
+        function init() {
+            if (!profileData.name) { window.location.href = 'members.html'; return; }
+            
+            // تعبئة البيانات
+            document.getElementById('profileName').innerText = profileData.name;
+            document.getElementById('profileLocation').innerText = profileData.city;
+            document.getElementById('pAge').innerText = profileData.age;
+            document.getElementById('pStatus').innerText = profileData.status;
+            document.getElementById('pHeight').innerText = profileData.height;
+            document.getElementById('pWeight').innerText = profileData.weight;
+            document.getElementById('pSkin').innerText = profileData.skin;
+            document.getElementById('pJob').innerText = profileData.job;
+            document.getElementById('pReq').innerText = profileData.requirements || "...";
+            document.getElementById('profileImage').src = profileData.img;
+
+            // فحص الاشتراك
+            const isPaid = /الستر|ذهبية|ماسية/i.test(localStorage.getItem('userPlan'));
+            if(isPaid) document.getElementById('profileImage').classList.remove('blur-effect');
+            if(profileData.plan && profileData.plan.includes('ذهبية')) document.getElementById('vipBadge').classList.remove('hidden');
+        }
+
+        function toggleLang() {
+            const html = document.getElementById('mainHtml');
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            html.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('langBtn').innerText = currentLang === 'ar' ? 'English' : 'عربي';
+            document.getElementById('backIcon').className = currentLang === 'ar' ? 'fas fa-arrow-right' : 'fas fa-arrow-left';
+            
+            document.querySelectorAll('[data-ar]').forEach(el => {
+                el.innerText = el.getAttribute(`data-${currentLang}`);
+            });
+        }
+
+        function goBack() { window.location.href = 'members.html'; }
+
+        function dropGift(emoji) {
+            let r = parseInt(localStorage.getItem('roses'));
+            if(r <= 0) return alert(currentLang === 'ar' ? "انتهى الرصيد" : "No roses left");
+            localStorage.setItem('roses', r - 1);
+            alert(currentLang === 'ar' ? "تم إرسال الوردة 🌹" : "Rose sent 🌹");
+        }
+
+        function openChat() {
+            document.getElementById('targetName').innerText = profileData.name;
+            document.getElementById('chatBox').classList.remove('hidden');
+        }
+
+        function closeChat() { document.getElementById('chatBox').classList.add('hidden'); }
+
+        function sendLiveMessage() {
+            let m = parseInt(localStorage.getItem('msgs'));
+            if(m <= 0) return alert("No messages left");
+            localStorage.setItem('msgs', m - 1);
+            alert(currentLang === 'ar' ? "تم الإرسال بنجاح ✅" : "Sent successfully ✅");
+            closeChat();
+        }
+
+        function requestVideo() {
+            const isPaid = /ذهبية|ماسية/i.test(localStorage.getItem('userPlan'));
+            if(!isPaid) return alert(currentLang === 'ar' ? "للمشتركين فقط" : "Members only");
+            window.open(`https://wa.me/249127910778?text=Video Request with ${profileData.name}`);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
