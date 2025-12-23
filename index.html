@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -114,15 +114,23 @@
         </div>
     </section>
 
+    <section class="py-16 bg-slate-900 text-white">
+        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div><div class="text-4xl font-bold counter text-green-400" data-target="5124">0</div><div class="text-xs mt-2 opacity-60">مشترك موثق</div></div>
+            <div><div class="text-4xl font-bold counter text-green-400" data-target="1248">0</div><div class="text-xs mt-2 opacity-60">حالة زواج</div></div>
+            <div><div class="text-4xl font-bold text-green-400">100%</div><div class="text-xs mt-2 opacity-60">سرية تامة</div></div>
+            <div><div class="text-4xl font-bold text-green-400">24/7</div><div class="text-xs mt-2 opacity-60">دعم فني</div></div>
+        </div>
+    </section>
+
     <script>
-        // رابط شيت المستخدمين (تأكد من وضع الرابط الصحيح هنا)
-        const userSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR_pL5-E-u1_O5Jm4GqE6P6_fXNq7N5B_YOUR_USER_SHEET_CSV/pub?output=csv";
+        // الرابط الصحيح والمؤكد لورقة المستخدمين (CSV)
+        const userSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv";
 
         function toggleModal(show) {
             document.getElementById('loginModal').classList.toggle('hidden', !show);
         }
 
-        // دالة ذكية: إذا مسجل دخول تفتح الصفحة، لو لا تفتح المودال
         function checkAccess(page) {
             if(localStorage.getItem('naseeb_logged') === 'true') {
                 window.location.href = page;
@@ -132,11 +140,11 @@
         }
 
         async function handleLogin() {
-            const name = document.getElementById('loginName').value.trim();
-            const pass = document.getElementById('loginPass').value.trim();
+            const nameInput = document.getElementById('loginName').value.trim();
+            const passInput = document.getElementById('loginPass').value.trim();
             const btn = document.getElementById('submitLogin');
 
-            if(!name || !pass) return alert("الرجاء إدخال البيانات");
+            if(!nameInput || !passInput) return alert("الرجاء إدخال البيانات كاملة");
 
             btn.innerText = "جاري التحقق...";
             btn.disabled = true;
@@ -144,16 +152,16 @@
             try {
                 const res = await fetch(userSheetURL);
                 const text = await res.text();
-                const rows = text.split('\n').slice(1);
+                // استعادة معالجة الأسطر لضمان عدم حدوث أخطاء في الفراغات
+                const rows = text.split('\n').map(row => row.trim()).filter(row => row !== "");
                 
                 let found = false;
-                for(let row of rows) {
-                    const cols = row.split(',').map(c => c.trim());
-                    // التحقق من الاسم والباسورد (العمود الأول والثاني في الشيت)
-                    if(cols[0] === name && cols[1] === pass) {
+                for(let i = 1; i < rows.length; i++) { // نبدأ من 1 لتخطي العنوان
+                    const cols = rows[i].split(',').map(c => c.trim().replace(/^"|"$/g, ''));
+                    if(cols[0] === nameInput && cols[1] === passInput) {
                         found = true;
                         localStorage.setItem('naseeb_logged', 'true');
-                        localStorage.setItem('userName', name);
+                        localStorage.setItem('userName', nameInput);
                         localStorage.setItem('userPlan', cols[2] || 'عادية');
                         localStorage.setItem('roses', '10');
                         localStorage.setItem('msgs', '3');
@@ -167,7 +175,8 @@
                     btn.disabled = false;
                 }
             } catch(e) {
-                alert("خطأ في الاتصال بالبيانات");
+                console.error("Login Error:", e);
+                alert("فشل الاتصال بقاعدة البيانات. تأكد من الإنترنت.");
                 btn.disabled = false;
                 btn.innerText = "دخول آمن 🚀";
             }
@@ -182,16 +191,69 @@
             if(logged && user) {
                 if(loginBtn) loginBtn.classList.add('hidden');
                 sec.classList.remove('hidden');
-                sec.innerHTML = `<span class="text-xs font-bold text-green-700">مرحباً، ${user}</span><button onclick="logout()" class="text-[10px] bg-red-100 text-red-600 px-2 py-1 rounded mr-2">خروج</button>`;
+                sec.innerHTML = `
+                    <span class="text-xs font-bold text-green-700">مرحباً، ${user}</span>
+                    <button onclick="logout()" class="text-[10px] bg-red-100 text-red-600 px-2 py-1 rounded mr-2 hover:bg-red-200">خروج</button>
+                `;
             }
         }
 
-        function logout() { localStorage.clear(); location.reload(); }
+        function logout() { 
+            localStorage.clear(); 
+            location.reload(); 
+        }
+
+        function runCounters() {
+            document.querySelectorAll('.counter').forEach(c => {
+                const target = +c.getAttribute('data-target');
+                const update = () => {
+                    const count = +c.innerText.replace('+','');
+                    if(count < target) {
+                        c.innerText = Math.ceil(count + target/100);
+                        setTimeout(update, 30);
+                    } else { c.innerText = target + "+"; }
+                };
+                update();
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-5 right-5 bg-white border-r-4 border-green-600 shadow-2xl p-4 rounded-xl z-[100] transition-all duration-500 transform translate-y-20 opacity-0 text-[10px] font-bold flex items-center gap-3";
+            toast.innerHTML = `<div class="bg-green-100 p-2 rounded-full text-green-600"><i class="fas fa-bell"></i></div><div>${msg}</div>`;
+            document.body.appendChild(toast);
+            
+            // ظهور التوست
+            setTimeout(() => {
+                toast.classList.remove('translate-y-20', 'opacity-0');
+            }, 100);
+
+            // اختفاء التوست
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                setTimeout(() => toast.remove(), 500);
+            }, 5000);
+        }
 
         window.onload = () => {
             updateUI();
-            // تشغيل العدادات والإشعارات التي أرسلتها أنت في كودك
-            if(typeof runCounters === "function") runCounters();
+            runCounters();
+            
+            // نظام الإشعارات العشوائية لزيادة التفاعل
+            const notes = [
+                "انضم الآن خالد من الرياض (باقة الستر)", 
+                "مشتركة جديدة من الخرطوم (ذهبية)", 
+                "تم توثيق حالة زواج جديدة 💍",
+                "عضو جديد انضم من مسقط (الباقة الماسية)"
+            ];
+            
+            // عرض أول إشعار بعد 5 ثواني
+            setTimeout(() => showToast(notes[Math.floor(Math.random()*notes.length)]), 5000);
+            
+            // تكرار الإشعارات كل 20 ثانية
+            setInterval(() => {
+                showToast(notes[Math.floor(Math.random()*notes.length)]);
+            }, 20000);
         };
     </script>
 </body>
