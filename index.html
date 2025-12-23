@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نصيب العالمي | المنصة الأولى للستر والحلال</title>
+    <title id="mainTitle">نصيب العالمي | المنصة الأولى للستر والحلال</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        body { font-family: 'Cairo', sans-serif; background: #fafafa; overflow-x: hidden; }
+        :root { --main-font: 'Cairo', sans-serif; }
+        [dir="ltr"] { --main-font: 'Poppins', sans-serif; }
+        body { font-family: var(--main-font); background: #fafafa; overflow-x: hidden; scroll-behavior: smooth; }
         .hero-gradient { background: linear-gradient(135deg, #15803d 0%, #14532d 100%); }
         .step-card { transition: all 0.3s ease; }
         .step-card:hover { transform: translateY(-10px); }
@@ -16,61 +22,82 @@
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(21, 128, 61, 0); } 100% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0); } }
         .avatar-group img { border: 2px solid white; margin-right: -10px; transition: 0.3s; }
         .avatar-group img:hover { margin-right: 5px; z-index: 10; }
-        #loginModal { transition: 0.3s; }
+        #loginModal { transition: visibility 0.3s, opacity 0.3s; }
+        
+        .lang-switcher {
+            position: fixed; top: 100px; left: 20px; z-index: 100;
+            background: white; padding: 8px 15px; border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #eee;
+            cursor: pointer; font-weight: bold; font-size: 12px; transition: 0.3s;
+            user-select: none;
+        }
+        .lang-switcher:hover { transform: scale(1.1); background: #f8fafc; }
+        [dir="ltr"] .lang-switcher { left: auto; right: 20px; }
+        
+        .stat-badge { @apply bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] flex items-center gap-1; }
+        .animate-swing { animation: swing 2s infinite; }
+        @keyframes swing { 0%, 100% { transform: rotate(0deg); } 20% { transform: rotate(15deg); } 40% { transform: rotate(-10deg); } 60% { transform: rotate(5deg); } 80% { transform: rotate(-5deg); } }
     </style>
 </head>
 <body>
+
+    <div onclick="toggleLang()" id="langBtn" class="lang-switcher">English</div>
 
     <nav class="bg-white/95 backdrop-blur-md shadow-sm p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center px-4">
             <div class="flex items-center gap-2">
                 <span class="text-3xl">💍</span>
-                <span class="font-bold text-green-700 text-xl">نصيب العالمي</span>
+                <span class="font-bold text-green-700 text-xl" data-ar="نصيب العالمي" data-en="Naseeb Global">نصيب العالمي</span>
             </div>
             <div class="flex items-center gap-4">
-                <div id="userSection" class="hidden flex items-center gap-3 bg-green-50 px-4 py-2 rounded-full border border-green-100"></div>
-                <button onclick="checkAccess('members.html')" class="text-gray-600 font-bold hover:text-green-700 text-sm">تصفح الأعضاء</button>
-                <button id="loginBtnNav" onclick="toggleModal(true)" class="bg-green-700 text-white px-6 py-2 rounded-full text-sm font-bold pulse-btn">دخول / تسجيل</button>
+                <div id="userSection" class="hidden flex items-center gap-3 bg-green-50 px-4 py-2 rounded-2xl border border-green-100 shadow-sm"></div>
+                
+                <button onclick="checkAccess('members.html')" class="text-gray-600 font-bold hover:text-green-700 text-sm hidden md:block" data-ar="تصفح الأعضاء" data-en="Browse Members">تصفح الأعضاء</button>
+                <button id="loginBtnNav" onclick="toggleModal(true)" class="bg-green-700 text-white px-6 py-2 rounded-full text-sm font-bold pulse-btn" data-ar="دخول / تسجيل" data-en="Login / Sign Up">دخول / تسجيل</button>
             </div>
         </div>
     </nav>
 
-    <div id="loginModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl relative">
+    <div id="loginModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 opacity-0">
+        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl relative scale-95 transition-transform duration-300">
             <button onclick="toggleModal(false)" class="absolute top-6 left-6 text-slate-400 hover:text-red-500"><i class="fas fa-times text-xl"></i></button>
             <div class="text-center mb-8">
-                <h3 class="text-2xl font-bold text-slate-800">مرحباً بك مجدداً</h3>
-                <p class="text-xs text-slate-400 mt-2">أدخل بياناتك للوصول إلى قائمة الأعضاء</p>
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">🔐</div>
+                <h3 class="text-2xl font-bold text-slate-800" data-ar="مرحباً بك مجدداً" data-en="Welcome Back">مرحباً بك مجدداً</h3>
+                <p class="text-xs text-slate-400 mt-2" data-ar="أدخل بياناتك للوصول إلى قائمة الأعضاء" data-en="Enter details to access members">أدخل بياناتك للوصول إلى قائمة الأعضاء</p>
             </div>
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-2 mr-2">اسم المستخدم</label>
-                    <input type="text" id="loginName" class="w-full bg-slate-50 border-none rounded-2xl p-4 text-sm focus:ring-2 focus:ring-green-500 outline-none" placeholder="مثال: مصعب علي">
+                    <label class="block text-xs font-bold text-slate-600 mb-2 px-2" data-ar="اسم المستخدم" data-en="Username">اسم المستخدم</label>
+                    <input type="text" id="loginName" class="w-full bg-slate-50 border-none rounded-2xl p-4 text-sm focus:ring-2 focus:ring-green-500 outline-none" placeholder="User Name">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-2 mr-2">كلمة السر</label>
+                    <label class="block text-xs font-bold text-slate-600 mb-2 px-2" data-ar="كلمة السر" data-en="Password">كلمة السر</label>
                     <input type="password" id="loginPass" class="w-full bg-slate-50 border-none rounded-2xl p-4 text-sm focus:ring-2 focus:ring-green-500 outline-none" placeholder="********">
                 </div>
-                <button onclick="handleLogin()" id="submitLogin" class="w-full bg-green-700 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-green-800 transition active:scale-95">دخول آمن 🚀</button>
-                <p class="text-center text-[10px] text-slate-400">ليس لديك حساب؟ <a href="https://wa.me/249127910778" class="text-green-600 font-bold">تواصل مع الإدارة</a></p>
+                <button onclick="handleLogin()" id="submitLogin" class="w-full bg-green-700 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-green-800 transition active:scale-95" data-ar="دخول آمن 🚀" data-en="Secure Login 🚀">دخول آمن 🚀</button>
+                <p class="text-center text-[10px] text-slate-400 pt-2">
+                    <span data-ar="ليس لديك حساب؟" data-en="Don't have an account?">ليس لديك حساب؟</span> 
+                    <a href="javascript:void(0)" onclick="redirectToWhatsapp('Admin_Contact')" class="text-green-600 font-bold hover:underline" data-ar="تواصل مع الإدارة" data-en="Contact Admin">تواصل مع الإدارة</a>
+                </p>
             </div>
         </div>
     </div>
 
     <header class="hero-gradient text-white py-24 px-6 relative overflow-hidden">
         <div class="container mx-auto text-center relative z-10">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">طريقك للستر والحلال <br><span class="text-green-300 italic">بكل خصوصية وأمان</span></h1>
-            <p class="text-lg opacity-90 mb-10 max-w-2xl mx-auto italic font-light">"نصيب العالمي ليس مجرد موقع، بل هو جسر يجمع القلوب على كتاب الله وسنة رسوله."</p>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight" data-ar="طريقك للستر والحلال بكل خصوصية وأمان" data-en="Your Path to Halal Marriage with Privacy">طريقك للستر والحلال <br><span class="text-green-300 italic">بكل خصوصية وأمان</span></h1>
+            <p class="text-lg opacity-90 mb-10 max-w-2xl mx-auto italic font-light" data-ar='"نصيب العالمي ليس مجرد موقع، بل هو جسر يجمع القلوب."' data-en='"Naseeb Global is a bridge that unites hearts."'>"نصيب العالمي ليس مجرد موقع، بل هو جسر يجمع القلوب على كتاب الله وسنة رسوله."</p>
             <div class="flex flex-col items-center gap-6">
-                <button onclick="checkAccess('register.html')" class="bg-white text-green-800 px-12 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:bg-gray-100 transition">سجل عضويتك الآن</button>
+                <button onclick="checkAccess('register.html')" class="bg-white text-green-800 px-12 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:bg-gray-100 transition transform hover:scale-105" data-ar="سجل عضويتك الآن" data-en="Register Now">سجل عضويتك الآن</button>
                 <div class="flex items-center gap-3 mt-4">
                     <div class="flex avatar-group">
-                        <img src="https://i.pravatar.cc/100?u=1" class="w-10 h-10 rounded-full">
-                        <img src="https://i.pravatar.cc/100?u=2" class="w-10 h-10 rounded-full">
-                        <img src="https://i.pravatar.cc/100?u=3" class="w-10 h-10 rounded-full">
+                        <img src="https://i.pravatar.cc/100?u=11" class="w-10 h-10 rounded-full" alt="M">
+                        <img src="https://i.pravatar.cc/100?u=22" class="w-10 h-10 rounded-full" alt="M">
+                        <img src="https://i.pravatar.cc/100?u=33" class="w-10 h-10 rounded-full" alt="M">
                         <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-[10px] font-bold border-2 border-white">+5K</div>
                     </div>
-                    <p class="text-xs text-green-100">انضم إلينا أكثر من 5000 مشترك جاد</p>
+                    <p class="text-xs text-green-100" data-ar="انضم إلينا أكثر من 5000 مشترك جاد" data-en="Over 5000 serious members joined">انضم إلينا أكثر من 5000 مشترك جاد</p>
                 </div>
             </div>
         </div>
@@ -79,36 +106,41 @@
     <section class="py-20 bg-gray-50 px-6">
         <div class="container mx-auto max-w-6xl">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-slate-800">اختر باقة الستر المناسبة</h2>
+                <h2 class="text-3xl font-bold text-slate-800" data-ar="اختر باقة الستر المناسبة" data-en="Choose Your Plan">اختر باقة الستر المناسبة</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border text-center hover:border-green-500 transition">
-                    <h3 class="font-bold text-xl mb-4 text-slate-700">باقة الستر</h3>
+                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border text-center hover:border-green-500 transition group">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition">🌿</div>
+                    <h3 class="font-bold text-xl mb-4 text-slate-700" data-ar="باقة الستر" data-en="Sutra Plan">باقة الستر</h3>
                     <div class="text-3xl font-bold text-green-700 mb-6">15,000 SDG</div>
                     <ul class="text-slate-500 text-sm mb-8 space-y-2">
-                        <li>تصفح الأعضاء</li>
-                        <li>إرسال 10 وردات يومياً</li>
+                        <li data-ar="تصفح الأعضاء" data-en="Browse Members">تصفح الأعضاء</li>
+                        <li data-ar="إرسال 10 وردات يومياً" data-en="10 Roses Daily">إرسال 10 وردات يومياً</li>
                     </ul>
-                    <a href="https://wa.me/249127910778?text=أريد الاشتراك في باقة الستر" class="block py-4 rounded-xl bg-green-700 text-white font-bold hover:bg-green-800">اشترك الآن</a>
+                    <button onclick="redirectToWhatsapp('Sutra')" class="w-full py-4 rounded-xl bg-green-700 text-white font-bold hover:bg-green-800 transition" data-ar="اشترك الآن" data-en="Subscribe Now">اشترك الآن</button>
                 </div>
+                
                 <div class="bg-white p-8 rounded-[2.5rem] shadow-xl border-2 border-green-500 text-center relative scale-105">
-                    <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-xs font-bold px-4 py-1 rounded-full text-green-900">الأكثر طلباً</span>
-                    <h3 class="font-bold text-xl mb-4 text-slate-700">الباقة الذهبية</h3>
+                    <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-[10px] font-bold px-4 py-1 rounded-full text-green-900 shadow-md" data-ar="الأكثر طلباً" data-en="Best Seller">الأكثر طلباً</span>
+                    <div class="text-4xl mb-4">⭐</div>
+                    <h3 class="font-bold text-xl mb-4 text-slate-700" data-ar="الباقة الذهبية" data-en="Gold Plan">الباقة الذهبية</h3>
                     <div class="text-3xl font-bold text-green-700 mb-6">35,000 SDG</div>
                     <ul class="text-slate-500 text-sm mb-8 space-y-2">
-                        <li>إظهار صور الأعضاء بوضوح</li>
-                        <li>رؤية الملفات المميزة</li>
+                        <li data-ar="إظهار صور الأعضاء" data-en="View Photos">إظهار صور الأعضاء</li>
+                        <li data-ar="رؤية الملفات المميزة" data-en="Premium Profiles">رؤية الملفات المميزة</li>
                     </ul>
-                    <a href="https://wa.me/249127910778?text=أريد الاشتراك في الباقة الذهبية" class="block py-4 rounded-xl bg-green-700 text-white font-bold hover:bg-green-800">اشترك الآن</a>
+                    <button onclick="redirectToWhatsapp('Gold')" class="w-full py-4 rounded-xl bg-green-700 text-white font-bold hover:bg-green-800 transition shadow-lg shadow-green-200" data-ar="اشترك الآن" data-en="Subscribe Now">اشترك الآن</button>
                 </div>
-                <div class="bg-slate-800 p-8 rounded-[2.5rem] shadow-sm text-white text-center">
-                    <h3 class="font-bold text-xl mb-4 text-green-400">الباقة الماسية (VIP)</h3>
+
+                <div class="bg-slate-800 p-8 rounded-[2.5rem] shadow-sm text-white text-center group">
+                    <div class="text-4xl mb-4 group-hover:animate-bounce">💎</div>
+                    <h3 class="font-bold text-xl mb-4 text-green-400" data-ar="الباقة الماسية (VIP)" data-en="Diamond VIP">الباقة الماسية (VIP)</h3>
                     <div class="text-3xl font-bold mb-6 text-white">75,000 SDG</div>
                     <ul class="text-gray-400 text-sm mb-8 space-y-2">
-                        <li>مساعدة مباشرة في البحث</li>
-                        <li>رقم خاص للدعم</li>
+                        <li data-ar="مساعدة مباشرة" data-en="Direct Help">مساعدة مباشرة</li>
+                        <li data-ar="رقم خاص للدعم" data-en="VIP Support">رقم خاص للدعم</li>
                     </ul>
-                    <a href="https://wa.me/249127910778?text=أريد الاشتراك في الباقة الماسية" class="block py-4 rounded-xl bg-green-600 text-white font-bold">اشترك الآن</a>
+                    <button onclick="redirectToWhatsapp('VIP')" class="w-full py-4 rounded-xl bg-green-600 text-white font-bold hover:bg-green-500 transition" data-ar="اشترك الآن" data-en="Subscribe Now">اشترك الآن</button>
                 </div>
             </div>
         </div>
@@ -116,19 +148,66 @@
 
     <section class="py-16 bg-slate-900 text-white">
         <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div><div class="text-4xl font-bold counter text-green-400" data-target="5124">0</div><div class="text-xs mt-2 opacity-60">مشترك موثق</div></div>
-            <div><div class="text-4xl font-bold counter text-green-400" data-target="1248">0</div><div class="text-xs mt-2 opacity-60">حالة زواج</div></div>
-            <div><div class="text-4xl font-bold text-green-400">100%</div><div class="text-xs mt-2 opacity-60">سرية تامة</div></div>
-            <div><div class="text-4xl font-bold text-green-400">24/7</div><div class="text-xs mt-2 opacity-60">دعم فني</div></div>
+            <div><div class="text-4xl font-bold counter text-green-400" data-target="5124">0</div><div class="text-xs mt-2 opacity-60" data-ar="مشترك موثق" data-en="Verified">مشترك موثق</div></div>
+            <div><div class="text-4xl font-bold counter text-green-400" data-target="1248">0</div><div class="text-xs mt-2 opacity-60" data-ar="حالة زواج" data-en="Marriages">حالة زواج</div></div>
+            <div><div class="text-4xl font-bold text-green-400">100%</div><div class="text-xs mt-2 opacity-60" data-ar="سرية تامة" data-en="Privacy">سرية تامة</div></div>
+            <div><div class="text-4xl font-bold text-green-400">24/7</div><div class="text-xs mt-2 opacity-60" data-ar="دعم فني" data-en="Support">دعم فني</div></div>
         </div>
     </section>
 
     <script>
-        // الرابط الصحيح والمؤكد لورقة المستخدمين (CSV)
-        const userSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv";
+        const CONFIG = {
+            sheetUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv",
+            lang: localStorage.getItem('app_lang') || 'ar',
+            adminPhone: "249127910778"
+        };
+
+        // دالة التوجيه للواتساب مع العودة التلقائية
+        function redirectToWhatsapp(planName) {
+            const message = encodeURIComponent(`السلام عليكم، أريد الاشتراك في ${planName} بموقع نصيب العالمي.`);
+            const waUrl = `https://wa.me/${CONFIG.adminPhone}?text=${message}`;
+            
+            // فتح الواتساب في نافذة جديدة
+            window.open(waUrl, '_blank');
+            
+            // إظهار رسالة شكر وإرجاع المستخدم للصفحة الرئيسية (تحديث الصفحة)
+            setTimeout(() => {
+                alert(CONFIG.lang === 'ar' ? "تم توجيهك للواتساب. سيتم تحديث الصفحة الآن." : "Redirecting to WhatsApp. Page will refresh.");
+                window.location.href = 'index.html'; 
+            }, 1000);
+        }
+
+        function toggleLang() {
+            CONFIG.lang = CONFIG.lang === 'ar' ? 'en' : 'ar';
+            localStorage.setItem('app_lang', CONFIG.lang);
+            applyLanguage();
+        }
+
+        function applyLanguage() {
+            const html = document.getElementById('mainHtml');
+            html.dir = CONFIG.lang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('langBtn').innerText = CONFIG.lang === 'ar' ? 'English' : 'عربي';
+            document.querySelectorAll('[data-ar]').forEach(el => {
+                el.innerText = el.getAttribute(`data-${CONFIG.lang}`);
+            });
+            document.getElementById('mainTitle').innerText = CONFIG.lang === 'ar' ? 
+                "نصيب العالمي | المنصة الأولى للستر والحلال" : "Naseeb Global | #1 Marriage Platform";
+            updateUI();
+        }
 
         function toggleModal(show) {
-            document.getElementById('loginModal').classList.toggle('hidden', !show);
+            const modal = document.getElementById('loginModal');
+            if(show) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.add('opacity-100');
+                    modal.querySelector('div').classList.remove('scale-95');
+                }, 10);
+            } else {
+                modal.classList.remove('opacity-100');
+                modal.querySelector('div').classList.add('scale-95');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
         }
 
         function checkAccess(page) {
@@ -139,30 +218,38 @@
             }
         }
 
+        function sanitize(str) {
+            const temp = document.createElement('div');
+            temp.textContent = str;
+            return temp.innerHTML;
+        }
+
         async function handleLogin() {
-            const nameInput = document.getElementById('loginName').value.trim();
-            const passInput = document.getElementById('loginPass').value.trim();
+            const nameInput = sanitize(document.getElementById('loginName').value.trim());
+            const passInput = sanitize(document.getElementById('loginPass').value.trim());
             const btn = document.getElementById('submitLogin');
 
-            if(!nameInput || !passInput) return alert("الرجاء إدخال البيانات كاملة");
+            if(!nameInput || !passInput) {
+                return alert(CONFIG.lang === 'ar' ? "الرجاء إدخال البيانات" : "Please enter credentials");
+            }
 
-            btn.innerText = "جاري التحقق...";
+            btn.innerText = CONFIG.lang === 'ar' ? "جاري التحقق..." : "Verifying...";
             btn.disabled = true;
 
             try {
-                const res = await fetch(userSheetURL);
+                const res = await fetch(CONFIG.sheetUrl);
                 const text = await res.text();
-                // استعادة معالجة الأسطر لضمان عدم حدوث أخطاء في الفراغات
-                const rows = text.split('\n').map(row => row.trim()).filter(row => row !== "");
+                const rows = text.split('\n').map(r => r.trim()).filter(r => r !== "");
                 
                 let found = false;
-                for(let i = 1; i < rows.length; i++) { // نبدأ من 1 لتخطي العنوان
+                for(let i = 1; i < rows.length; i++) {
                     const cols = rows[i].split(',').map(c => c.trim().replace(/^"|"$/g, ''));
                     if(cols[0] === nameInput && cols[1] === passInput) {
                         found = true;
                         localStorage.setItem('naseeb_logged', 'true');
                         localStorage.setItem('userName', nameInput);
-                        localStorage.setItem('userPlan', cols[2] || 'عادية');
+                        localStorage.setItem('userPass', passInput);
+                        localStorage.setItem('userPlan', cols[2] || 'Basic');
                         localStorage.setItem('roses', '10');
                         localStorage.setItem('msgs', '3');
                         window.location.href = 'members.html';
@@ -170,21 +257,20 @@
                     }
                 }
                 if(!found) {
-                    alert("الاسم أو كلمة السر غير صحيحة ❌");
-                    btn.innerText = "دخول آمن 🚀";
+                    alert(CONFIG.lang === 'ar' ? "الاسم أو كلمة السر خطأ ❌" : "Incorrect login ❌");
                     btn.disabled = false;
+                    btn.innerText = CONFIG.lang === 'ar' ? "دخول آمن 🚀" : "Secure Login 🚀";
                 }
             } catch(e) {
-                console.error("Login Error:", e);
-                alert("فشل الاتصال بقاعدة البيانات. تأكد من الإنترنت.");
+                alert(CONFIG.lang === 'ar' ? "خطأ في الاتصال" : "Connection Error");
                 btn.disabled = false;
-                btn.innerText = "دخول آمن 🚀";
             }
         }
 
         function updateUI() {
             const logged = localStorage.getItem('naseeb_logged') === 'true';
             const user = localStorage.getItem('userName');
+            const pass = localStorage.getItem('userPass');
             const sec = document.getElementById('userSection');
             const loginBtn = document.getElementById('loginBtnNav');
 
@@ -192,43 +278,60 @@
                 if(loginBtn) loginBtn.classList.add('hidden');
                 sec.classList.remove('hidden');
                 sec.innerHTML = `
-                    <span class="text-xs font-bold text-green-700">مرحباً، ${user}</span>
-                    <button onclick="logout()" class="text-[10px] bg-red-100 text-red-600 px-2 py-1 rounded mr-2 hover:bg-red-200">خروج</button>
+                    <div class="flex flex-col gap-1 min-w-[120px]">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-user-circle text-green-600 text-sm"></i>
+                            <span class="font-bold text-green-800 text-[11px]">${user}</span>
+                            <span class="text-gray-300">|</span>
+                            <i class="fas fa-key text-gray-400 text-[10px]"></i>
+                            <span class="text-gray-500 text-[10px] font-mono">${pass}</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="flex items-center gap-1 text-[10px] font-bold text-red-500">
+                                <i class="fas fa-hand-holding-heart"></i> ${localStorage.getItem('roses') || 10}
+                            </span>
+                            <span class="flex items-center gap-1 text-[10px] font-bold text-blue-500">
+                                <i class="fas fa-comment-dots"></i> ${localStorage.getItem('msgs') || 3}
+                            </span>
+                            <button onclick="logout()" class="text-red-600 hover:text-red-700 transition ml-auto">
+                                <i class="fas fa-power-off text-[11px]"></i>
+                            </button>
+                        </div>
+                    </div>
                 `;
             }
         }
 
         function logout() { 
-            localStorage.clear(); 
-            location.reload(); 
+            if(confirm(CONFIG.lang === 'ar' ? "هل متأكد من تسجيل الخروج؟" : "Confirm Logout?")) {
+                localStorage.clear(); 
+                location.reload(); 
+            }
         }
 
         function runCounters() {
             document.querySelectorAll('.counter').forEach(c => {
                 const target = +c.getAttribute('data-target');
+                let count = 0;
                 const update = () => {
-                    const count = +c.innerText.replace('+','');
+                    const inc = target / 100;
                     if(count < target) {
-                        c.innerText = Math.ceil(count + target/100);
-                        setTimeout(update, 30);
+                        count += inc;
+                        c.innerText = Math.ceil(count);
+                        setTimeout(update, 20);
                     } else { c.innerText = target + "+"; }
                 };
                 update();
             });
         }
 
-        function showToast(msg) {
+        function showToast(msgAr, msgEn) {
             const toast = document.createElement('div');
-            toast.className = "fixed bottom-5 right-5 bg-white border-r-4 border-green-600 shadow-2xl p-4 rounded-xl z-[100] transition-all duration-500 transform translate-y-20 opacity-0 text-[10px] font-bold flex items-center gap-3";
-            toast.innerHTML = `<div class="bg-green-100 p-2 rounded-full text-green-600"><i class="fas fa-bell"></i></div><div>${msg}</div>`;
+            toast.className = "fixed bottom-5 right-5 left-5 md:left-auto bg-white border-r-4 border-green-600 shadow-2xl p-4 rounded-xl z-[100] transition-all duration-500 transform translate-y-20 opacity-0 text-[10px] font-bold flex items-center gap-3";
+            const currentMsg = CONFIG.lang === 'ar' ? msgAr : msgEn;
+            toast.innerHTML = `<div class="bg-green-100 p-2 rounded-full text-green-600"><i class="fas fa-bell animate-swing"></i></div><div>${currentMsg}</div>`;
             document.body.appendChild(toast);
-            
-            // ظهور التوست
-            setTimeout(() => {
-                toast.classList.remove('translate-y-20', 'opacity-0');
-            }, 100);
-
-            // اختفاء التوست
+            setTimeout(() => toast.classList.remove('translate-y-20', 'opacity-0'), 100);
             setTimeout(() => {
                 toast.classList.add('translate-y-20', 'opacity-0');
                 setTimeout(() => toast.remove(), 500);
@@ -236,24 +339,18 @@
         }
 
         window.onload = () => {
-            updateUI();
+            applyLanguage();
             runCounters();
-            
-            // نظام الإشعارات العشوائية لزيادة التفاعل
             const notes = [
-                "انضم الآن خالد من الرياض (باقة الستر)", 
-                "مشتركة جديدة من الخرطوم (ذهبية)", 
-                "تم توثيق حالة زواج جديدة 💍",
-                "عضو جديد انضم من مسقط (الباقة الماسية)"
+                {ar: "انضم الآن خالد من الرياض (باقة الستر)", en: "Khalid joined from Riyadh"}, 
+                {ar: "مشتركة جديدة من الخرطوم (ذهبية)", en: "New member from Khartoum"}, 
+                {ar: "تم توثيق حالة زواج جديدة 💍", en: "New marriage success 💍"},
+                {ar: "عضو جديد من مسقط انضم للماسية", en: "VIP member from Muscat"}
             ];
-            
-            // عرض أول إشعار بعد 5 ثواني
-            setTimeout(() => showToast(notes[Math.floor(Math.random()*notes.length)]), 5000);
-            
-            // تكرار الإشعارات كل 20 ثانية
             setInterval(() => {
-                showToast(notes[Math.floor(Math.random()*notes.length)]);
-            }, 20000);
+                const n = notes[Math.floor(Math.random()*notes.length)];
+                showToast(n.ar, n.en);
+            }, 25000);
         };
     </script>
 </body>
