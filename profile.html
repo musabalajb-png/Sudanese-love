@@ -24,7 +24,6 @@
         .info-pill { background: #f8fafc; border: 1px solid #eef2f6; border-radius: 1.2rem; padding: 10px; text-align: center; transition: 0.3s; }
         .info-pill:hover { border-color: #22c55e; }
         
-        /* Tooltip Style */
         .tooltip { position: relative; }
         .tooltip .tooltiptext { visibility: hidden; width: 200px; background: #333; color: #fff; text-align: center; border-radius: 8px; padding: 5px; position: absolute; z-index: 100; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: 0.3s; font-size: 10px; }
         .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
@@ -93,25 +92,38 @@
         let currentLang = 'ar';
         const profileData = JSON.parse(sessionStorage.getItem('currentProfile') || '{}');
 
+        // قاموس الترجمة للبيانات المتكررة من الشيت
+        const dictionary = {
+            "الخرطوم": "Khartoum", "أمدرمان": "Omdurman", "بحري": "Bahri", "بورتسودان": "Port Sudan",
+            "آنسة": "Single", "مطلق": "Divorced", "أرملة": "Widow", "مطلقة": "Divorced",
+            "أبيض": "White", "قمحي": "Wheaten", "أسمر": "Dark",
+            "موظف": "Employee", "اعمال حرة": "Freelancer", "طالب": "Student"
+        };
+
         function init() {
             if (!profileData.name) { window.location.href = 'members.html'; return; }
+            renderData();
             
-            // تعبئة البيانات
-            document.getElementById('profileName').innerText = profileData.name;
-            document.getElementById('profileLocation').innerText = profileData.city;
-            document.getElementById('pAge').innerText = profileData.age;
-            document.getElementById('pStatus').innerText = profileData.status;
-            document.getElementById('pHeight').innerText = profileData.height;
-            document.getElementById('pWeight').innerText = profileData.weight;
-            document.getElementById('pSkin').innerText = profileData.skin;
-            document.getElementById('pJob').innerText = profileData.job;
-            document.getElementById('pReq').innerText = profileData.requirements || "...";
-            document.getElementById('profileImage').src = profileData.img;
-
-            // فحص الاشتراك
             const isPaid = /الستر|ذهبية|ماسية/i.test(localStorage.getItem('userPlan'));
             if(isPaid) document.getElementById('profileImage').classList.remove('blur-effect');
             if(profileData.plan && profileData.plan.includes('ذهبية')) document.getElementById('vipBadge').classList.remove('hidden');
+        }
+
+        function renderData() {
+            const isAr = currentLang === 'ar';
+            document.getElementById('profileName').innerText = profileData.name;
+            document.getElementById('profileImage').src = profileData.img;
+            
+            // ترجمة البيانات باستخدام القاموس
+            document.getElementById('profileLocation').innerText = isAr ? profileData.city : (dictionary[profileData.city] || profileData.city);
+            document.getElementById('pStatus').innerText = isAr ? profileData.status : (dictionary[profileData.status] || profileData.status);
+            document.getElementById('pSkin').innerText = isAr ? profileData.skin : (dictionary[profileData.skin] || profileData.skin);
+            document.getElementById('pJob').innerText = isAr ? profileData.job : (dictionary[profileData.job] || profileData.job);
+            
+            document.getElementById('pAge').innerText = profileData.age;
+            document.getElementById('pHeight').innerText = profileData.height;
+            document.getElementById('pWeight').innerText = profileData.weight;
+            document.getElementById('pReq').innerText = profileData.requirements || "...";
         }
 
         function toggleLang() {
@@ -121,9 +133,12 @@
             document.getElementById('langBtn').innerText = currentLang === 'ar' ? 'English' : 'عربي';
             document.getElementById('backIcon').className = currentLang === 'ar' ? 'fas fa-arrow-right' : 'fas fa-arrow-left';
             
+            // ترجمة العناوين
             document.querySelectorAll('[data-ar]').forEach(el => {
                 el.innerText = el.getAttribute(`data-${currentLang}`);
             });
+
+            renderData(); // تحديث عرض البيانات المسحوبة
         }
 
         function goBack() { window.location.href = 'members.html'; }
@@ -144,7 +159,7 @@
 
         function sendLiveMessage() {
             let m = parseInt(localStorage.getItem('msgs'));
-            if(m <= 0) return alert("No messages left");
+            if(m <= 0) return alert(currentLang === 'ar' ? "نفد الرصيد" : "No messages left");
             localStorage.setItem('msgs', m - 1);
             alert(currentLang === 'ar' ? "تم الإرسال بنجاح ✅" : "Sent successfully ✅");
             closeChat();
