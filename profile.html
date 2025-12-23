@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     <style>
         :root { --main-font: 'Cairo', sans-serif; }
         [dir="ltr"] { --main-font: 'Poppins', sans-serif; }
-        body { font-family: var(--main-font); background: #f0f4f8; min-height: 100vh; padding: 20px 0; }
+        body { font-family: var(--main-font); background: #f0f4f8; min-height: 100vh; padding: 20px 0; user-select: none; }
         
         .profile-container { background: white; border-radius: 2.5rem; box-shadow: 0 15px 40px rgba(0,0,0,0.1); width: 100%; max-width: 500px; overflow: hidden; position: relative; margin: auto; }
         .profile-img-box { width: 100%; height: 420px; position: relative; overflow: hidden; background: #f8fafc; }
@@ -24,13 +24,10 @@
         .info-pill { background: #f8fafc; border: 1px solid #eef2f6; border-radius: 1.2rem; padding: 10px; text-align: center; transition: 0.3s; }
         .info-pill:hover { border-color: #22c55e; transform: translateY(-3px); }
         
-        .tooltip { position: relative; }
-        .tooltip .tooltiptext { visibility: hidden; width: 140px; background: #333; color: #fff; text-align: center; border-radius: 8px; padding: 5px; position: absolute; z-index: 100; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: 0.3s; font-size: 10px; }
-        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
-
-        /* أنيميشن الوردة المتحركة */
-        .rose-anim { position: absolute; font-size: 2rem; animation: floatRose 2s ease-out forwards; z-index: 60; }
+        .rose-anim { position: absolute; font-size: 2rem; animation: floatRose 2s ease-out forwards; z-index: 60; pointer-events: none; }
         @keyframes floatRose { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-200px) scale(2); opacity: 0; } }
+        
+        #chatBox { transition: 0.3s; }
     </style>
 </head>
 <body class="p-4">
@@ -42,8 +39,8 @@
         </div>
 
         <div class="profile-img-box">
-            <div id="vipBadge" class="hidden absolute top-20 right-5 bg-gradient-to-r from-amber-400 to-yellow-600 text-white px-4 py-1 rounded-full text-[10px] font-bold z-10 shadow-lg">👑 VIP</div>
-            <img id="profileImage" src="" class="blur-effect">
+            <div id="vipBadge" class="hidden absolute top-20 right-5 bg-gradient-to-r from-amber-400 to-yellow-600 text-white px-4 py-1 rounded-full text-[10px] font-bold z-10 shadow-lg animate-pulse">👑 VIP</div>
+            <img id="profileImage" src="" class="blur-effect" onerror="this.src='https://ui-avatars.com/api/?name=User'">
             <div class="profile-header-info">
                 <h2 id="profileName" class="text-3xl font-bold text-slate-800">...</h2>
                 <p id="profileLocation" class="text-green-600 font-bold text-sm">...</p>
@@ -65,18 +62,15 @@
                     <i class="fas fa-star text-amber-500"></i>
                     <span data-ar="المواصفات المطلوبة" data-en="Requirements">المواصفات المطلوبة</span>
                 </h4>
-                <p id="pReq" class="text-slate-500 text-xs leading-relaxed">...</p>
+                <p id="pReq" class="text-slate-500 text-xs leading-relaxed font-bold">...</p>
             </div>
             
             <div class="flex gap-3 justify-center relative" id="actionArea">
                 <button onclick="dropGift('🌹')" class="bg-red-50 text-red-600 w-14 h-14 rounded-2xl text-xl hover:bg-red-100 transition shadow-sm active:scale-95">🌹</button>
                 <button onclick="openChat()" class="flex-grow bg-green-600 text-white font-bold rounded-2xl shadow-lg hover:bg-green-700 transition active:scale-95" data-ar="إعجاب 💌" data-en="Interest 💌">إعجاب 💌</button>
-                <div class="tooltip">
-                    <button onclick="requestVideo()" class="bg-amber-100 text-amber-600 w-14 h-14 rounded-2xl text-xl hover:bg-amber-200 transition shadow-sm">
-                        <i class="fas fa-video"></i>
-                    </button>
-                    <span class="tooltiptext" id="vTip" data-ar="للمشتركين فقط" data-en="For members only">للمشتركين فقط</span>
-                </div>
+                <button onclick="requestVideo()" class="bg-amber-100 text-amber-600 w-14 h-14 rounded-2xl text-xl hover:bg-amber-200 transition shadow-sm">
+                    <i class="fas fa-video"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -84,43 +78,38 @@
     <div id="chatBox" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-[3rem] p-8 shadow-2xl relative border-t-8 border-green-600">
             <h3 id="targetName" class="font-bold text-center text-xl mb-4 text-slate-800"></h3>
-            <textarea id="msgInput" class="w-full h-32 p-4 bg-slate-50 rounded-2xl border-none outline-none text-sm" placeholder="اكتب رسالتك هنا..."></textarea>
+            <textarea id="msgInput" class="w-full h-32 p-4 bg-slate-50 rounded-2xl border-none outline-none text-sm font-bold shadow-inner" placeholder="اكتب رسالتك هنا..."></textarea>
             <div class="grid grid-cols-2 gap-4 mt-6">
-                <button onclick="sendLiveMessage()" class="bg-green-600 text-white py-3 rounded-xl font-bold transition hover:bg-green-700" data-ar="إرسال" data-en="Send">إرسال</button>
-                <button onclick="closeChat()" class="bg-slate-100 text-slate-500 py-3 rounded-xl font-bold transition hover:bg-slate-200" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
+                <button id="sendBtn" onclick="sendToSheet()" class="bg-green-600 text-white py-3 rounded-xl font-bold shadow-lg active:scale-95" data-ar="إرسال" data-en="Send">إرسال</button>
+                <button onclick="closeChat()" class="bg-slate-100 text-slate-500 py-3 rounded-xl font-bold" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
             </div>
         </div>
     </div>
 
     <script>
+        // --- الإعدادات ---
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOqsZZEKV2FyCQxMRxo2aB8Ld4txzXFdYEKGwXCb48ymeM6nOufWVZmv65jVErV3sL_Q/exec";
         let currentLang = 'ar';
         const profileData = JSON.parse(sessionStorage.getItem('currentProfile') || '{}');
 
-        // قاموس الترجمة
+        // الأمن: منع الدخول غير المصرح
+        if (localStorage.getItem('naseeb_logged') !== 'true') window.location.href = 'index.html';
+
         const dictionary = {
             "الخرطوم": "Khartoum", "أمدرمان": "Omdurman", "بحري": "Bahri", "بورتسودان": "Port Sudan",
             "آنسة": "Single", "مطلق": "Divorced", "أرملة": "Widow", "مطلقة": "Divorced", "أعزب": "Single",
-            "أبيض": "White", "قمحي": "Wheaten", "أسمر": "Dark",
-            "موظف": "Employee", "اعمال حرة": "Freelancer", "طالب": "Student", "ربة منزل": "Housewife"
+            "أبيض": "White", "قمحي": "Wheaten", "أسمر": "Dark"
         };
 
         function init() {
-            // اختبار أمني: التأكد من وجود بيانات في الجلسة
-            if (!profileData.name) { 
-                alert("عذراً، لم يتم العثور على بيانات العضو.");
-                window.location.href = 'members.html'; 
-                return; 
-            }
+            if (!profileData.name) { goBack(); return; }
             
-            // تطبيق نظام الخصوصية المعتمد
+            // نظام الخصوصية
             const userPlan = localStorage.getItem('userPlan') || 'عادية';
             const isPaid = /الستر|ذهبية|ماسية/i.test(userPlan);
+            if(isPaid) document.getElementById('profileImage').classList.remove('blur-effect');
             
-            if(isPaid) {
-                document.getElementById('profileImage').classList.remove('blur-effect');
-            }
-            
-            // وسم الـ VIP
+            // VIP Badge
             if(profileData.plan && (profileData.plan.includes('ذهبية') || profileData.plan.includes('ماسية'))) {
                 document.getElementById('vipBadge').classList.remove('hidden');
             }
@@ -132,20 +121,71 @@
             const isAr = currentLang === 'ar';
             document.getElementById('profileName').innerText = profileData.name;
             document.getElementById('profileImage').src = profileData.img;
-            
-            // ترجمة ذكية للبيانات
             document.getElementById('profileLocation').innerText = isAr ? (profileData.city || "غير محدد") : (dictionary[profileData.city] || profileData.city);
-            document.getElementById('pStatus').innerText = isAr ? (profileData.status || "-") : (dictionary[profileData.status] || profileData.status);
-            document.getElementById('pSkin').innerText = isAr ? (profileData.skin || "-") : (dictionary[profileData.skin] || profileData.skin);
-            document.getElementById('pJob').innerText = isAr ? (profileData.job || "-") : (dictionary[profileData.job] || profileData.job);
             
-            document.getElementById('pAge').innerText = profileData.age || "-";
-            document.getElementById('pHeight').innerText = (profileData.height || "-") + " cm";
-            document.getElementById('pWeight').innerText = (profileData.weight || "-") + " kg";
+            // البيانات التقنية
+            const fields = {
+                'pStatus': profileData.status,
+                'pSkin': profileData.skin,
+                'pJob': profileData.job,
+                'pAge': profileData.age,
+                'pHeight': profileData.height ? profileData.height + " cm" : "-",
+                'pWeight': profileData.weight ? profileData.weight + " kg" : "-"
+            };
+
+            for (let id in fields) {
+                let val = fields[id] || "-";
+                document.getElementById(id).innerText = isAr ? val : (dictionary[val] || val);
+            }
+
             document.getElementById('pReq').innerText = profileData.requirements || (isAr ? "لا توجد مواصفات محددة" : "No specific requirements");
-            
-            // تحديث نصوص المودال
             document.getElementById('msgInput').placeholder = isAr ? "اكتب رسالة إعجاب محترمة..." : "Write a respectful message...";
+        }
+
+        // إرسال البيانات الفعلي للشيت
+        async function sendToSheet() {
+            const msg = document.getElementById('msgInput').value.trim();
+            if(!msg) return alert(currentLang === 'ar' ? "يرجى كتابة رسالة" : "Please write a message");
+
+            let m = parseInt(localStorage.getItem('msgs') || 0);
+            if(m <= 0) return alert(currentLang === 'ar' ? "نفد رصيد رسائلك اليوم" : "No messages left today");
+
+            const btn = document.getElementById('sendBtn');
+            btn.disabled = true;
+            btn.innerText = currentLang === 'ar' ? "جاري الإرسال..." : "Sending...";
+
+            try {
+                // استخدام POST عبر الـ Script URL الموحد
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify({
+                        sender: localStorage.getItem('userName'),
+                        receiver: profileData.name,
+                        message: msg
+                    })
+                });
+
+                localStorage.setItem('msgs', m - 1);
+                alert(currentLang === 'ar' ? "رسالتك وصلت بنجاح ✅" : "Message sent successfully ✅");
+                closeChat();
+            } catch (e) {
+                alert("Error sending message");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = currentLang === 'ar' ? "إرسال" : "Send";
+            }
+        }
+
+        function dropGift(emoji) {
+            let r = parseInt(localStorage.getItem('roses') || 0);
+            if(r <= 0) return alert(currentLang === 'ar' ? "نفد رصيدك من الورد" : "Out of roses");
+            
+            localStorage.setItem('roses', r - 1);
+            const rose = document.createElement('div');
+            rose.className = 'rose-anim'; rose.innerHTML = emoji; rose.style.left = "20%";
+            document.getElementById('actionArea').appendChild(rose);
+            setTimeout(() => rose.remove(), 2000);
         }
 
         function toggleLang() {
@@ -154,69 +194,21 @@
             html.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
             document.getElementById('langBtn').innerText = currentLang === 'ar' ? 'English' : 'عربي';
             document.getElementById('backIcon').className = currentLang === 'ar' ? 'fas fa-arrow-right' : 'fas fa-arrow-left';
-            
-            // ترجمة العناصر الثابتة
-            document.querySelectorAll('[data-ar]').forEach(el => {
-                el.innerText = el.getAttribute(`data-${currentLang}`);
-            });
-
+            document.querySelectorAll('[data-ar]').forEach(el => el.innerText = el.getAttribute(`data-${currentLang}`));
             renderData(); 
         }
 
         function goBack() { window.location.href = 'members.html'; }
-
-        // أنيميشن الوردة عند الإرسال
-        function dropGift(emoji) {
-            let r = parseInt(localStorage.getItem('roses') || 0);
-            if(r <= 0) {
-                alert(currentLang === 'ar' ? "نفد رصيدك من الورد اليوم، سيتم التجديد تلقائياً غداً." : "Out of roses! Daily roses refill every 24h.");
-                return;
-            }
-            
-            localStorage.setItem('roses', r - 1);
-            
-            // صنع وردة متحركة
-            const rose = document.createElement('div');
-            rose.className = 'rose-anim';
-            rose.innerHTML = emoji;
-            rose.style.left = "20%";
-            document.getElementById('actionArea').appendChild(rose);
-            
-            setTimeout(() => rose.remove(), 2000);
-            alert(currentLang === 'ar' ? "تم إرسال وردة إعجاب 🌹" : "Rose sent successfully 🌹");
-        }
-
-        function openChat() {
+        function openChat() { 
             document.getElementById('targetName').innerText = (currentLang === 'ar' ? "تواصل مع " : "Message ") + profileData.name;
-            document.getElementById('chatBox').classList.remove('hidden');
+            document.getElementById('chatBox').classList.remove('hidden'); 
         }
-
         function closeChat() { document.getElementById('chatBox').classList.add('hidden'); }
-
-        function sendLiveMessage() {
-            const msg = document.getElementById('msgInput').value.trim();
-            if(!msg) return alert(currentLang === 'ar' ? "يرجى كتابة رسالة" : "Please write a message");
-
-            let m = parseInt(localStorage.getItem('msgs') || 0);
-            if(m <= 0) {
-                alert(currentLang === 'ar' ? "نفد رصيد رسائلك اليوم" : "No messages left today");
-                return;
-            }
-
-            localStorage.setItem('msgs', m - 1);
-            alert(currentLang === 'ar' ? "تم إرسال رسالتك بنجاح ✅" : "Message sent successfully ✅");
-            closeChat();
-        }
-
+        
         function requestVideo() {
-            const userPlan = localStorage.getItem('userPlan') || 'عادية';
-            const isPaid = /ذهبية|ماسية/i.test(userPlan);
-            
-            if(!isPaid) {
-                alert(currentLang === 'ar' ? "طلب رؤية فيديو متاح للمشتركين في الباقة الذهبية والماسية فقط." : "Video requests are for Gold and VIP members only.");
-                return;
-            }
-            window.open(`https://wa.me/249127910778?text=أريد طلب رؤية فيديو للعضو: ${profileData.name}`);
+            const isPaid = /ذهبية|ماسية/i.test(localStorage.getItem('userPlan'));
+            if(!isPaid) return alert(currentLang === 'ar' ? "هذه الميزة للباقة الذهبية والماسية فقط" : "Gold/VIP members only");
+            window.open(`https://wa.me/249127910778?text=طلب فيديو للعضو: ${profileData.name}`);
         }
 
         window.onload = init;
