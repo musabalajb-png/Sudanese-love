@@ -3,158 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تصفح الأعضاء - نصيب العالمي</title>
+    <title>تصفح الأعضاء | نصيب العالمي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Cairo', sans-serif; background: #f8fafc; }
-        .member-card { transition: all 0.4s ease; border-radius: 2rem; overflow: hidden; background: white; border: 1px solid #f1f5f9; }
-        .member-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1); }
-        .blur-image { filter: blur(25px); transform: scale(1.2); transition: 0.5s; }
-        .unblur { filter: blur(0) !important; transform: scale(1) !important; }
-        .badge-premium { background: linear-gradient(45deg, #fbbf24, #f59e0b); color: white; }
-        .badge-diamond { background: linear-gradient(45deg, #06b6d4, #3b82f6); color: white; }
-        .badge-standard { background: #f3f4f6; color: #64748b; }
-        .modal { display: none; position: fixed; z-index: 100; inset: 0; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); }
-        .modal.active { display: flex; align-items: center; justify-content: center; }
+        .blur-img { filter: blur(20px); transform: scale(1.1); transition: 0.5s; }
+        .member-card { border-radius: 2rem; overflow: hidden; background: white; transition: 0.3s; }
+        .member-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="bg-slate-50">
+    <script>
+        // 🔒 حارس الأمان اللحظي
+        if(localStorage.getItem('naseeb_logged') !== 'true') {
+            alert("🔒 يرجى تسجيل الدخول أولاً");
+            window.location.href = "index.html";
+        }
+    </script>
 
-    <div id="loginModal" class="modal p-4">
-        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl">
-            <div class="text-center mb-6">
-                <div class="text-4xl mb-2">🔐</div>
-                <h2 class="text-2xl font-bold text-slate-800">دخول المشتركين</h2>
-                <p class="text-sm text-gray-500 text-center">أدخل بياناتك لتتمكن من رؤية الصور والتواصل</p>
-            </div>
-            <div class="space-y-4">
-                <input type="text" id="loginUser" placeholder="الاسم المستعار" class="w-full p-4 bg-gray-50 rounded-2xl border-none text-right">
-                <input type="password" id="loginPass" placeholder="كلمة السر" class="w-full p-4 bg-gray-50 rounded-2xl border-none text-right">
-                <button onclick="checkLogin()" class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-green-700">دخول الآن</button>
-                <button onclick="toggleLoginModal()" class="w-full text-gray-400 text-sm font-bold">إغلاق النافذة</button>
-            </div>
-        </div>
-    </div>
-
-    <nav class="bg-white/90 backdrop-blur-md shadow-sm p-4 sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center px-4">
-            <div class="flex items-center gap-2">
-                <span class="text-2xl">💍</span>
-                <span class="font-bold text-green-700 text-xl">نصيب العالمي</span>
-            </div>
-            <div class="flex gap-3">
-                <div id="userInfo" class="hidden flex items-center gap-2 bg-green-50 px-3 py-1 rounded-full border border-green-100">
-                    <span id="userNameDisplay" class="text-xs font-bold text-green-700"></span>
-                    <button onclick="logout()" class="text-[10px] bg-red-100 text-red-600 px-2 py-1 rounded-md">خروج</button>
-                </div>
-                <button id="loginHeaderBtn" onclick="toggleLoginModal()" class="bg-green-600 text-white px-5 py-2 rounded-full text-xs font-bold transition">تسجيل الدخول</button>
-                <a href="index.html" class="bg-slate-100 text-slate-600 px-5 py-2 rounded-full text-xs font-bold transition">الرئيسية</a>
-            </div>
+    <nav class="bg-white p-4 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-green-700">💍 نصيب العالمي</a>
+            <button onclick="localStorage.clear(); location.href='index.html'" class="text-xs bg-red-50 text-red-600 px-3 py-1 rounded-full">تسجيل خروج</button>
         </div>
     </nav>
 
-    <header class="bg-white border-b border-gray-100 py-8 text-center">
-        <div class="container mx-auto px-6">
-            <h1 class="text-2xl font-bold text-slate-800 mb-2">استكشف شريك حياتك</h1>
-            <p class="text-gray-500 text-sm mb-6">يوجد لدينا الآن <span id="memberCount" class="text-green-600 font-bold">...</span> مشترك موثق</p>
-            <div class="max-w-4xl mx-auto">
-                <input type="text" id="nameSearch" onkeyup="filterMembers()" placeholder="ابحث بالاسم، المدينة، أو المهنة..." class="w-full border-2 border-gray-50 bg-gray-50 p-4 pr-12 rounded-3xl outline-none focus:border-green-500 transition shadow-sm">
-            </div>
-        </div>
-    </header>
-
-    <main class="container mx-auto py-12 px-6">
-        <div id="loading" class="text-center py-20">
-            <div class="animate-spin rounded-full h-12 w-12 border-4 border-green-700 border-t-transparent mx-auto"></div>
-            <p class="mt-4 text-slate-500 font-bold">جاري تحميل المشتركين...</p>
-        </div>
-        <div id="membersList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
-    </main>
+    <div class="container mx-auto p-6">
+        <input type="text" id="search" onkeyup="filter()" placeholder="بحث بالاسم أو المدينة..." class="w-full max-w-md mx-auto block p-4 rounded-2xl border-none shadow-sm mb-10">
+        <div id="list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    </div>
 
     <script>
         const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv";
-        let allMembers = [];
-        let isLoggedIn = localStorage.getItem('naseeb_logged') === 'true';
-        let loggedUserPlan = (localStorage.getItem('userPlan') || 'مجانية').trim();
+        
+        async function load() {
+            const res = await fetch(sheetURL);
+            const data = await res.text();
+            const rows = data.split('\n').slice(1);
+            const list = document.getElementById('list');
+            const isPaid = /الستر|ذهبية|ماسية/i.test(localStorage.getItem('userPlan'));
 
-        async function loadMembers() {
-            try {
-                const response = await fetch(sheetURL);
-                const data = await response.text();
-                const rows = data.split('\n').slice(1); 
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('memberCount').innerText = rows.length;
-                
-                const list = document.getElementById('membersList');
-                list.innerHTML = "";
-                
-                rows.forEach((row) => {
-                    const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
-                    if(cols.length < 5) return;
+            rows.forEach(row => {
+                // 🛠️ حل ثغرة الفواصل في CSV
+                const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)?.map(c => c.replace(/"/g, '').trim()) || [];
+                if(cols.length < 5) return;
 
-                    const member = { name: cols[0], age: cols[1], gender: cols[2], job: cols[3], city: cols[4], plan: cols[5] || 'عادية', img: cols[6], status: cols[7], isVerified: cols[8], password: cols[9] };
-                    allMembers.push(member);
-
-                    let planClass = member.plan.includes("ماسية") ? "badge-diamond" : (member.plan.includes("ذهبية") || member.plan.includes("الستر") ? "badge-premium" : "badge-standard");
-                    const isPaid = /الستر|ذهبية|ماسية|VIP/i.test(loggedUserPlan);
-                    const canSeePhotos = isLoggedIn && isPaid;
-
-                    list.innerHTML += `
-                        <div class="member-card" data-gender="${member.gender}">
-                            <div class="h-72 relative overflow-hidden">
-                                <img src="${member.img}" onerror="this.src='https://ui-avatars.com/api/?name=${member.name}&background=random'" class="w-full h-full object-cover ${canSeePhotos ? 'unblur' : 'blur-image'}">
-                                ${!canSeePhotos ? '<div class="absolute inset-0 bg-black/40 flex items-center justify-center p-4 text-white text-[10px] font-bold">اشترك لرؤية الصورة 🔒</div>' : ''}
-                                <div class="absolute top-4 left-4 ${planClass} px-3 py-1 rounded-full text-[10px] font-bold shadow-md">${member.plan}</div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="font-bold text-lg text-slate-800">${member.name} ${member.isVerified === 'نعم' ? '<span class="text-green-500">✔</span>' : ''}</h3>
-                                <p class="text-slate-500 text-xs mb-4">${member.age} سنة | ${member.status} | ${member.city}</p>
-                                <button onclick="handleContact('${member.name}')" class="w-full bg-green-600 text-white font-bold py-3 rounded-2xl hover:bg-green-700 transition active:scale-95">💍 تواصل الآن</button>
-                            </div>
-                        </div>`;
-                });
-                updateUI();
-            } catch (e) { console.error("Error:", e); }
-        }
-
-        function checkLogin() {
-            const user = document.getElementById('loginUser').value.trim();
-            const pass = document.getElementById('loginPass').value.trim();
-            if(!user || !pass) return alert('أدخل البيانات ⚠️');
-            const found = allMembers.find(m => m.name === user && m.password === pass);
-            if(found) {
-                localStorage.setItem('naseeb_logged', 'true');
-                localStorage.setItem('userName', found.name);
-                localStorage.setItem('userPlan', found.plan);
-                location.reload();
-            } else { alert('بيانات خاطئة ❌'); }
-        }
-
-        function handleContact(target) {
-            if(!isLoggedIn) return toggleLoginModal();
-            const myName = localStorage.getItem('userName');
-            const msg = `أنا المشترك (${myName}) مهتم بالتواصل مع (${target}).`;
-            window.open(`https://wa.me/249127910778?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function updateUI() {
-            if(isLoggedIn) {
-                document.getElementById('loginHeaderBtn').classList.add('hidden');
-                document.getElementById('userInfo').classList.remove('hidden');
-                document.getElementById('userNameDisplay').innerText = localStorage.getItem('userName');
-            }
-        }
-        function toggleLoginModal() { document.getElementById('loginModal').classList.toggle('active'); }
-        function logout() { localStorage.clear(); location.reload(); }
-        function filterMembers() {
-            const q = document.getElementById('nameSearch').value.toLowerCase();
-            document.querySelectorAll('.member-card').forEach(c => {
-                c.style.display = c.innerText.toLowerCase().includes(q) ? "block" : "none";
+                const m = { name:cols[0], age:cols[1], city:cols[4], plan:cols[5], img:cols[6] };
+                list.innerHTML += `
+                    <div class="member-card border">
+                        <div class="h-64 overflow-hidden bg-gray-100">
+                            <img src="${m.img}" onerror="this.src='https://ui-avatars.com/api/?name=${m.name}'" class="w-full h-full object-cover ${isPaid ? '' : 'blur-img'}">
+                        </div>
+                        <div class="p-5 text-center">
+                            <h3 class="font-bold">${m.name}</h3>
+                            <p class="text-[10px] text-gray-400">${m.age} سنة - ${m.city}</p>
+                            <button onclick="contact('${m.name}')" class="mt-4 w-full bg-green-600 text-white py-2 rounded-xl text-sm font-bold">تواصل</button>
+                        </div>
+                    </div>`;
             });
         }
-        window.onload = loadMembers;
+        function contact(n) { window.open(`https://wa.me/249127910778?text=أنا المشترك ${localStorage.getItem('userName')} أرغب في التواصل مع ${n}`, '_blank'); }
+        function filter() {
+            const q = document.getElementById('search').value.toLowerCase();
+            document.querySelectorAll('#list > div').forEach(c => c.style.display = c.innerText.toLowerCase().includes(q) ? 'block' : 'none');
+        }
+        window.onload = load;
     </script>
 </body>
 </html>
