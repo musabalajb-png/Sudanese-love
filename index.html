@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
@@ -16,29 +16,44 @@
         .hero-gradient { background: linear-gradient(135deg, #15803d 0%, #14532d 100%); }
         .pulse-btn { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(21, 128, 61, 0); } 100% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0); } }
-        #loginModal, #regModal { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* Toast Notification Styles */
+        #liveToast { position: fixed; bottom: 20px; right: 20px; z-index: 200; transform: translateY(150%); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #liveToast.show { transform: translateY(0); }
+
+        /* FAQ & Stories Styles */
+        .faq-item { @apply bg-white rounded-2xl border border-slate-100 mb-4 overflow-hidden transition-all; }
+        .faq-question { @apply p-6 flex justify-between items-center cursor-pointer font-bold text-slate-700; }
+        .faq-answer { @apply px-6 overflow-hidden max-h-0 transition-all duration-300 text-slate-500 text-sm; }
+        .faq-item.active .faq-answer { @apply pb-6 max-h-40; }
+        .faq-item.active i { transform: rotate(180deg); }
+
+        .story-card { @apply bg-white p-8 rounded-[2.5rem] shadow-xl border border-green-50 relative; }
         .lang-switcher {
             position: fixed; top: 100px; left: 20px; z-index: 100;
             background: white; padding: 10px 20px; border-radius: 50px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #eee;
-            cursor: pointer; font-weight: 900; font-size: 14px; transition: 0.3s;
-            color: #15803d;
+            cursor: pointer; font-weight: 900; font-size: 14px; transition: 0.3s; color: #15803d;
         }
         [dir="ltr"] .lang-switcher { left: auto; right: 20px; }
-        .form-input { @apply w-full bg-slate-50 border border-transparent rounded-xl p-3 text-sm focus:border-green-500 focus:bg-white focus:ring-4 focus:ring-green-500/10 outline-none transition-all; }
-        .form-label { @apply block text-[10px] font-bold text-slate-600 mb-1 px-1; }
-        #loadingOverlay { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; }
-        .toast-active { transform: translateY(0) !important; opacity: 1 !important; }
     </style>
 </head>
 <body>
+
+    <div id="liveToast" class="bg-white/90 backdrop-blur-md shadow-2xl border border-green-100 p-4 rounded-2xl flex items-center gap-4 min-w-[300px]">
+        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-2xl">💍</div>
+        <div>
+            <p id="toastUser" class="font-bold text-slate-800 text-sm">محمد من الخرطوم</p>
+            <p id="toastAction" class="text-xs text-green-600 font-bold">انضم إلى مجتمع الستر الآن</p>
+        </div>
+    </div>
 
     <div id="loadingOverlay">
         <div class="relative">
             <div class="w-20 h-20 border-4 border-green-100 rounded-full"></div>
             <div class="w-20 h-20 border-4 border-green-700 border-t-transparent rounded-full animate-spin absolute top-0"></div>
         </div>
-        <p class="mt-6 font-bold text-green-800 text-lg animate-pulse" id="loadingText" data-ar="جاري تأمين الاتصال..." data-en="Securing connection...">جاري تأمين الاتصال...</p>
+        <p class="mt-6 font-bold text-green-800 text-lg animate-pulse" data-ar="جاري تأمين الاتصال..." data-en="Securing connection...">جاري تأمين الاتصال...</p>
     </div>
 
     <div onclick="toggleLang()" id="langBtn" class="lang-switcher hover:scale-110 active:scale-90 shadow-xl">English</div>
@@ -49,10 +64,15 @@
                 <span class="text-3xl group-hover:rotate-12 transition">💍</span>
                 <span class="font-black text-green-800 text-xl tracking-tight" data-ar="نصيب العالمي" data-en="Naseeb Global">نصيب العالمي</span>
             </div>
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 text-sm font-bold">
+                <div class="hidden lg:flex items-center gap-6 ml-4 text-slate-600">
+                    <a href="#about" class="hover:text-green-700 transition" data-ar="من نحن" data-en="About Us">من نحن</a>
+                    <a href="#pricing" class="hover:text-green-700 transition" data-ar="الباقات" data-en="Pricing">الباقات</a>
+                    <a href="#stories" class="hover:text-green-700 transition" data-ar="قصص نجاح" data-en="Success Stories">قصص نجاح</a>
+                    <a href="#faq" class="hover:text-green-700 transition" data-ar="الأسئلة" data-en="FAQ">الأسئلة</a>
+                </div>
                 <div id="userSection" class="hidden flex items-center gap-3 bg-green-50/50 px-4 py-2 rounded-2xl border border-green-100 shadow-inner"></div>
-                <button onclick="toggleRegModal(true)" class="text-green-700 font-bold hover:text-green-900 text-sm hidden md:block transition" data-ar="فتح حساب جديد" data-en="Create Account">فتح حساب جديد</button>
-                <button id="loginBtnNav" onclick="toggleModal(true)" class="bg-green-700 text-white px-7 py-2.5 rounded-full text-sm font-bold pulse-btn hover:bg-green-800 transition" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</button>
+                <button id="loginBtnNav" onclick="toggleModal(true)" class="bg-green-700 text-white px-7 py-2.5 rounded-full pulse-btn hover:bg-green-800 transition" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</button>
             </div>
         </div>
     </nav>
@@ -60,101 +80,113 @@
     <header class="hero-gradient text-white py-32 px-6 relative overflow-hidden">
         <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');"></div>
         <div class="container mx-auto relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 bg-black/20 backdrop-blur-md px-4 py-2 rounded-full mb-8 text-xs font-bold border border-white/10">
+                <span class="w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
+                <span id="visitorCount">1,240</span> 
+                <span data-ar="شخص يتصفح المنصة الآن" data-en="browsing now">شخص يتصفح المنصة الآن</span>
+            </div>
             <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight">
                 <span data-ar="مُحيطك للستر والحلال" data-en="Your Path to Halal Marriage">مُحيطك للستر والحلال</span>
                 <br>
-                <span class="text-green-300 font-light text-3xl md:text-5xl" data-ar="بمعايير إسلامية وخصوصية فائقة" data-en="Islamic Standards & Full Privacy">بمعايير إسلامية وخصوصية فائقة</span>
+                <span class="text-green-300 font-light text-3xl md:text-5xl" data-ar="بمعايير إسلامية وخصوصية فائقة" data-en="Islamic Privacy Standards">بمعايير إسلامية وخصوصية فائقة</span>
             </h1>
-            <div class="flex flex-wrap justify-center gap-4">
-                <button onclick="toggleRegModal(true)" class="bg-white text-green-800 px-14 py-4 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-white/20 transition transform hover:-translate-y-1" data-ar="ابدأ رحلتك الآن" data-en="Start Your Journey">ابدأ رحلتك الآن</button>
-            </div>
+            <button onclick="toggleRegModal(true)" class="bg-white text-green-800 px-14 py-4 rounded-2xl font-bold text-xl shadow-2xl hover:scale-105 transition" data-ar="ابدأ رحلتك الآن" data-en="Start Now">ابدأ رحلتك الآن</button>
         </div>
     </header>
 
-    <section id="pricing" class="py-24 bg-slate-50 px-6">
+    <section id="stories" class="py-24 bg-white px-6">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-center text-3xl font-black text-slate-800 mb-16" data-ar="اختر باقة الستر المناسبة لك" data-en="Choose Your Plan">اختر باقة الستر المناسبة لك</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100 text-center">
-                    <div class="w-16 h-16 bg-green-50 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">🌿</div>
-                    <h3 class="font-bold text-2xl mb-2 text-slate-800" data-ar="باقة الستر" data-en="Sutra Plan">باقة الستر</h3>
-                    <div class="text-3xl font-black text-green-700 mb-8" id="price-sutra">...</div>
-                    <ul class="text-slate-500 text-sm mb-10 space-y-4 text-right pr-4" id="features-sutra">
-                        <li data-ar="تصفح أكثر من 5000 ملف" data-en="Browse 5000+ Profiles"><i class="fas fa-check-circle text-green-500 ml-2"></i> تصفح أكثر من 5000 ملف</li>
-                        <li data-ar="إرسال وردات تعارف محدود" data-en="Limited Interaction Flowers"><i class="fas fa-check-circle text-green-500 ml-2"></i> إرسال وردات تعارف محدود</li>
-                    </ul>
-                    <button onclick="safeRedirect('Sutra')" class="w-full py-4 rounded-2xl bg-slate-100 text-slate-700 font-bold hover:bg-green-700 hover:text-white transition-all" data-ar="اختيار الباقة" data-en="Select Plan">اختيار الباقة</button>
+            <h2 class="text-center text-3xl font-black text-slate-800 mb-16" data-ar="قصص نجاح وتوفيق" data-en="Success Stories">قصص نجاح وتوفيق</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="story-card">
+                    <div class="text-4xl mb-4 text-green-600 opacity-20 absolute top-4 right-8 italic font-serif">"</div>
+                    <p class="text-slate-600 leading-relaxed mb-6 italic" data-ar="بفضل الله ثم منصة نصيب، وجدت شريكة حياتي التي تناسب قيمي السودانية رغم أني أعيش في كندا. التوفيق تم بخصوصية كاملة." data-en="Thanks to Naseeb, I found my life partner who matches my values even while living in Canada.">"بفضل الله ثم منصة نصيب، وجدت شريكة حياتي التي تناسب قيمي السودانية رغم أني أعيش في كندا. التوفيق تم بخصوصية كاملة."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center font-bold text-green-700">أ.م</div>
+                        <span class="font-bold text-slate-800 text-sm">أحمد (مغترب)</span>
+                    </div>
                 </div>
-                <div class="bg-white p-10 rounded-[3rem] shadow-2xl border-2 border-green-500 text-center relative transform md:-translate-y-4">
-                    <div class="absolute -top-5 right-10 bg-yellow-400 text-green-900 text-[10px] font-black px-6 py-2 rounded-full shadow-lg uppercase" data-ar="الأكثر أماناً" data-en="Most Secure">الأكثر أماناً</div>
-                    <div class="w-16 h-16 bg-yellow-50 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">⭐</div>
-                    <h3 class="font-bold text-2xl mb-2 text-slate-800" data-ar="الباقة الذهبية" data-en="Gold Plan">الباقة الذهبية</h3>
-                    <div class="text-3xl font-black text-green-700 mb-8" id="price-gold">...</div>
-                    <ul class="text-slate-500 text-sm mb-10 space-y-4 text-right pr-4" id="features-gold">
-                        <li data-ar="رؤية الصور الشخصية" data-en="View Personal Photos"><i class="fas fa-star text-yellow-500 ml-2"></i> رؤية الصور الشخصية</li>
-                        <li data-ar="أولوية الظهور للجادين" data-en="Priority for Serious Members"><i class="fas fa-star text-yellow-500 ml-2"></i> أولوية الظهور للجادين</li>
-                    </ul>
-                    <button onclick="safeRedirect('Gold')" class="w-full py-4 rounded-2xl bg-green-700 text-white font-bold shadow-xl hover:scale-105 transition-all" data-ar="اشترك الآن" data-en="Join Now">اشترك الآن</button>
-                </div>
-                <div class="bg-slate-900 p-10 rounded-[3rem] shadow-2xl text-white text-center">
-                    <div class="w-16 h-16 bg-white/10 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">💎</div>
-                    <h3 class="font-bold text-2xl mb-2 text-green-400" data-ar="باقة كبار الشخصيات" data-en="VIP Plan">باقة كبار الشخصيات</h3>
-                    <div class="text-3xl font-black mb-8 text-white" id="price-vip">...</div>
-                    <ul class="text-slate-400 text-sm mb-10 space-y-4 text-right pr-4" id="features-vip">
-                        <li data-ar="خط ساخن مع الإدارة" data-en="Admin Hot-line"><i class="fas fa-crown text-green-400 ml-2"></i> خط ساخن مع الإدارة</li>
-                        <li data-ar="توفيق يدوي من الخبراء" data-en="Manual Expert Matching"><i class="fas fa-crown text-green-400 ml-2"></i> توفيق يدوي من الخبراء</li>
-                    </ul>
-                    <button onclick="safeRedirect('VIP')" class="w-full py-4 rounded-2xl bg-green-600 text-white font-bold hover:bg-green-500 transition-all" data-ar="اطلب الخدمة" data-en="Order Service">اطلب الخدمة</button>
+                <div class="story-card">
+                    <div class="text-4xl mb-4 text-green-600 opacity-20 absolute top-4 right-8 italic font-serif">"</div>
+                    <p class="text-slate-600 leading-relaxed mb-6 italic" data-ar="أكثر ما أعجبني هو الجدية والستر. الإدارة حريصة جداً على التأكد من هوية المشتركين وهذا ما جعلني أشعر بالأمان." data-en="What I liked most was the seriousness and privacy. The administration is very keen on verifying identities.">"أكثر ما أعجبني هو الجدية والستر. الإدارة حريصة جداً على التأكد من هوية المشتركين وهذا ما جعلني أشعر بالأمان."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center font-bold text-pink-700">س.ح</div>
+                        <span class="font-bold text-slate-800 text-sm">سارة (بورتسودان)</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <section id="pricing" class="py-24 bg-slate-50 px-6">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-center text-3xl font-black text-slate-800 mb-16" data-ar="اختر باقة الستر" data-en="Choose Plan">اختر باقة الستر</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="bg-white p-10 rounded-[3rem] shadow-xl text-center border border-slate-100">
+                    <h3 class="font-bold text-xl mb-4" data-ar="باقة الستر" data-en="Sutra Plan">باقة الستر</h3>
+                    <div class="text-3xl font-black text-green-700 mb-8" id="price-sutra">...</div>
+                    <button onclick="safeRedirect('Sutra')" class="w-full py-3 rounded-xl bg-slate-100 font-bold hover:bg-green-700 hover:text-white transition" data-ar="اختيار" data-en="Select">اختيار</button>
+                </div>
+                <div class="bg-white p-10 rounded-[3rem] shadow-2xl text-center border-2 border-green-500 scale-105">
+                    <h3 class="font-bold text-xl mb-4" data-ar="الباقة الذهبية" data-en="Gold Plan">الباقة الذهبية</h3>
+                    <div class="text-3xl font-black text-green-700 mb-8" id="price-gold">...</div>
+                    <button onclick="safeRedirect('Gold')" class="w-full py-3 rounded-xl bg-green-700 text-white font-bold hover:bg-green-800 transition" data-ar="اشترك الآن" data-en="Join Now">اشترك الآن</button>
+                </div>
+                <div class="bg-slate-900 p-10 rounded-[3rem] shadow-xl text-center text-white">
+                    <h3 class="font-bold text-xl mb-4" data-ar="باقة VIP" data-en="VIP Plan">باقة VIP</h3>
+                    <div class="text-3xl font-black text-green-400 mb-8" id="price-vip">...</div>
+                    <button onclick="safeRedirect('VIP')" class="w-full py-3 rounded-xl bg-green-600 font-bold hover:bg-green-500 transition" data-ar="طلب الخدمة" data-en="Order">طلب الخدمة</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-24 bg-white px-6">
+        <div class="container mx-auto max-w-3xl">
+            <h2 class="text-center text-3xl font-black text-slate-800 mb-12" data-ar="الأسئلة الشائعة" data-en="FAQ">الأسئلة الشائعة</h2>
+            <div class="faq-container">
+                <div class="faq-item" onclick="this.classList.toggle('active')">
+                    <div class="faq-question"><span data-ar="كيف تضمنون الجدية؟" data-en="Verification?">كيف تضمنون الجدية؟</span><i class="fas fa-chevron-down text-xs"></i></div>
+                    <div class="faq-answer" data-ar="بمراجعة يدوية ونظام اشتراكات جاد." data-en="Via manual review and paid system.">بمراجعة يدوية ونظام اشتراكات جاد.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-white py-20 px-6">
+        <div class="container mx-auto max-w-6xl text-center">
+            <div class="flex justify-center gap-6 mb-12">
+                <a href="https://wa.me/249127910778" target="_blank" class="bg-green-600 px-8 py-3 rounded-2xl font-bold"><i class="fab fa-whatsapp ml-2"></i>واتساب</a>
+            </div>
+            <p class="text-slate-500 text-xs">© 2025 Naseeb Global. <span data-ar="جميع الحقوق محفوظة" data-en="All rights reserved">جميع الحقوق محفوظة</span></p>
+        </div>
+    </footer>
+
     <div id="regModal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] flex items-center justify-center p-4 opacity-0 overflow-y-auto">
-        <div class="bg-white w-full max-w-lg rounded-[2.5rem] p-10 shadow-2xl relative scale-95 transition-all text-right">
-            <button onclick="toggleRegModal(false)" class="absolute top-8 left-8 text-slate-300 hover:text-red-500 transition"><i class="fas fa-times-circle text-2xl"></i></button>
-            <h3 class="text-2xl font-black text-slate-800 mb-2" data-ar="انضم لمجتمع الستر" data-en="Join Our Community">انضم لمجتمع الستر</h3>
-            <p class="text-slate-400 text-xs mb-8" data-ar="بياناتك محمية بتشفير 256-بت" data-en="Your data is encrypted 256-bit">بياناتك محمية بتشفير 256-بت</p>
-            
+        <div class="bg-white w-full max-w-lg rounded-[2.5rem] p-10 shadow-2xl relative text-right">
+            <button onclick="toggleRegModal(false)" class="absolute top-8 left-8 text-slate-300 hover:text-red-500"><i class="fas fa-times-circle text-2xl"></i></button>
             <form id="regForm" class="grid grid-cols-2 gap-5" onsubmit="return false;">
+                <div class="col-span-2"><label class="form-label" data-ar="الاسم (سري)" data-en="Name">الاسم (سري)</label><input type="text" id="regName" class="form-input" required></div>
+                <div class="col-span-1"><label class="form-label" data-ar="العمر" data-en="Age">العمر</label><input type="number" id="regAge" class="form-input" required></div>
+                <div class="col-span-1"><label class="form-label" data-ar="الطول" data-en="Height">الطول</label><input type="number" id="regHeight" class="form-input" required></div>
+                <div class="col-span-2"><label class="form-label" data-ar="كلمة السر" data-en="Password">كلمة السر</label><input type="password" id="regPass" class="form-input" required></div>
                 <div class="col-span-2">
-                    <label class="form-label" data-ar="الاسم الحقيقي (سري للإدارة)" data-en="Full Name (Private)">الاسم الحقيقي (سري للإدارة)</label>
-                    <input type="text" id="regName" class="form-input" required placeholder="محمد أحمد">
+                    <input type="file" id="regPhoto" class="hidden" onchange="updateFileName(this)">
+                    <label for="regPhoto" class="block bg-slate-50 border-2 border-dashed p-4 rounded-xl text-center cursor-pointer">
+                        <i class="fas fa-camera text-slate-400 mb-2"></i><p id="fileNameText" class="text-xs text-slate-500" data-ar="اضغط لرفع الصورة الشخصية" data-en="Upload Photo">اضغط لرفع الصورة الشخصية</p>
+                    </label>
                 </div>
-                <div>
-                    <label class="form-label" data-ar="العمر" data-en="Age">العمر</label>
-                    <input type="number" id="regAge" class="form-input" required>
-                </div>
-                <div>
-                    <label class="form-label" data-ar="الطول" data-en="Height">الطول</label>
-                    <input type="number" id="regHeight" class="form-input" required>
-                </div>
-                <div class="col-span-2">
-                    <label class="form-label" data-ar="كلمة السر" data-en="Password">كلمة السر</label>
-                    <input type="password" id="regPass" class="form-input" required>
-                </div>
-                <div class="col-span-2">
-                    <div class="relative group">
-                        <input type="file" id="regPhoto" class="form-input opacity-0 absolute inset-0 z-10 cursor-pointer" accept="image/*" required onchange="updateFileName(this)">
-                        <div class="bg-slate-50 border-2 border-dashed border-slate-200 p-4 rounded-xl text-center" id="filePlaceholder">
-                            <i class="fas fa-cloud-upload-alt text-slate-300 text-2xl mb-1"></i>
-                            <p class="text-[10px] text-slate-500" id="fileNameText" data-ar="اضغط لرفع الصورة" data-en="Click to upload photo">اضغط لرفع الصورة</p>
-                        </div>
-                    </div>
-                </div>
-                <button type="button" onclick="secureSubmit()" id="regBtn" class="col-span-2 bg-green-700 text-white py-4 rounded-2xl font-bold shadow-xl" data-ar="تأكيد البيانات 🛡️" data-en="Confirm Data 🛡️">تأكيد البيانات 🛡️</button>
+                <button type="button" onclick="secureSubmit()" class="col-span-2 bg-green-700 text-white py-4 rounded-2xl font-black shadow-xl" data-ar="تأكيد طلب الانضمام 🛡️" data-en="Confirm Join">تأكيد طلب الانضمام 🛡️</button>
             </form>
         </div>
     </div>
 
     <div id="loginModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 opacity-0">
-        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl relative scale-95 transition-all text-center">
-            <h3 class="text-2xl font-black mb-8 text-slate-800" data-ar="الولوج للمنصة" data-en="Member Login">الولوج للمنصة</h3>
-            <div class="space-y-5">
-                <input type="text" id="loginName" class="form-input" placeholder="User / الاسم">
-                <input type="password" id="loginPass" class="form-input" placeholder="Pass / كلمة المرور">
-                <button onclick="handleLogin()" id="submitLogin" class="w-full bg-green-700 text-white py-4 rounded-2xl font-bold transition" data-ar="دخول آمن 🔒" data-en="Secure Login 🔒">دخول آمن 🔒</button>
-            </div>
+        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl text-center">
+            <h3 class="text-2xl font-black mb-8" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</h3>
+            <input type="text" id="loginName" class="form-input mb-4" placeholder="Name">
+            <input type="password" id="loginPass" class="form-input mb-6" placeholder="Password">
+            <button onclick="handleLogin()" class="w-full bg-green-700 text-white py-4 rounded-2xl font-bold" data-ar="دخول" data-en="Login">دخول</button>
         </div>
     </div>
 
@@ -164,83 +196,73 @@
             imgbbKey: "847040441499990666014e2d31221b21",
             lang: localStorage.getItem('app_lang') || 'ar',
             adminPhone: "249127910778",
-            sessionExpiry: 3600000,
             pricingMatrix: {
                 "SD": { currency: "SDG", sutra: "15,000", gold: "35,000", vip: "75,000" },
                 "SA": { currency: "SAR", sutra: "100", gold: "250", vip: "500" },
-                "AE": { currency: "AED", sutra: "100", gold: "250", vip: "500" },
-                "QA": { currency: "QAR", sutra: "100", gold: "250", vip: "500" },
-                "EG": { currency: "EGP", sutra: "1,200", gold: "3,000", vip: "6,000" },
                 "DEFAULT": { currency: "USD", sutra: "25", gold: "60", vip: "125" }
             },
             userCountry: "DEFAULT"
         };
 
-        // تحديث واجهة اللغة بالكامل
+        // العداد الحي
+        function startVisitorCounter() {
+            let count = 1240;
+            setInterval(() => {
+                count += Math.floor(Math.random() * 3);
+                document.getElementById('visitorCount').innerText = count.toLocaleString();
+            }, 5000);
+        }
+
+        // إشعارات "انضم الآن" المستعادة
+        function showLiveToasts() {
+            const users = ["أحمد من الرياض", "سارة من الخرطوم", "منى من دبي", "عمر من جدة", "خالد من بورتسودان", "ليلى من لندن"];
+            const toast = document.getElementById('liveToast');
+            setInterval(() => {
+                const user = users[Math.floor(Math.random() * users.length)];
+                document.getElementById('toastUser').innerText = user;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 5000);
+            }, 15000);
+        }
+
         function applyTranslations() {
             const isEn = CONFIG.lang === 'en';
-            const html = document.getElementById('mainHtml');
-            
-            // تحديث الاتجاه واللغة
-            html.dir = isEn ? 'ltr' : 'rtl';
-            html.lang = CONFIG.lang;
-            
-            // تحديث نصوص العناصر التي تحمل داتا
+            document.getElementById('mainHtml').dir = isEn ? 'ltr' : 'rtl';
             document.querySelectorAll('[data-ar]').forEach(el => {
                 el.innerText = isEn ? el.getAttribute('data-en') : el.getAttribute('data-ar');
             });
-
-            // تحديث زر اللغة
             document.getElementById('langBtn').innerText = isEn ? 'العربية' : 'English';
-            
-            // تحديث الـ Placeholders
-            if (isEn) {
-                document.getElementById('loginName').placeholder = "Username";
-                document.getElementById('loginPass').placeholder = "Password";
-                document.getElementById('regName').placeholder = "Ex: John Doe";
-            } else {
-                document.getElementById('loginName').placeholder = "الاسم أو المعرف";
-                document.getElementById('loginPass').placeholder = "كلمة المرور";
-                document.getElementById('regName').placeholder = "مثال: محمد أحمد";
-            }
         }
 
         function toggleLang() {
             CONFIG.lang = CONFIG.lang === 'ar' ? 'en' : 'ar';
             localStorage.setItem('app_lang', CONFIG.lang);
-            // تطبيق فوري للترجمة
             applyTranslations();
             updatePricingDisplay();
         }
 
-        async function detectLocationAndCurrency() {
+        async function detectLocation() {
             try {
-                const response = await fetch('https://ipapi.co/json/');
-                const data = await response.json();
-                if(CONFIG.pricingMatrix[data.country_code]) {
-                    CONFIG.userCountry = data.country_code;
-                }
-            } catch (e) { console.log("Currency fallback active"); }
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                if(CONFIG.pricingMatrix[data.country_code]) CONFIG.userCountry = data.country_code;
+            } catch (e) {}
             updatePricingDisplay();
         }
 
         function updatePricingDisplay() {
             const p = CONFIG.pricingMatrix[CONFIG.userCountry];
-            document.getElementById('price-sutra').innerHTML = `${p.sutra} <span class="text-sm font-normal opacity-60">${p.currency}</span>`;
-            document.getElementById('price-gold').innerHTML = `${p.gold} <span class="text-sm font-normal opacity-60">${p.currency}</span>`;
-            document.getElementById('price-vip').innerHTML = `${p.vip} <span class="text-sm font-normal opacity-60">${p.currency}</span>`;
+            document.getElementById('price-sutra').innerHTML = `${p.sutra} <small>${p.currency}</small>`;
+            document.getElementById('price-gold').innerHTML = `${p.gold} <small>${p.currency}</small>`;
+            document.getElementById('price-vip').innerHTML = `${p.vip} <small>${p.currency}</small>`;
         }
 
         function safeRedirect(plan) {
             const p = CONFIG.pricingMatrix[CONFIG.userCountry];
-            const priceVal = plan === 'Sutra' ? p.sutra : (plan === 'Gold' ? p.gold : p.vip);
-            const msg = CONFIG.lang === 'ar' 
-                ? `أريد تفعيل ${plan} بقيمة ${priceVal} ${p.currency} في نصيب العالمي.` 
-                : `I want to activate ${plan} for ${priceVal} ${p.currency} on Naseeb Global.`;
+            const msg = `أريد تفعيل ${plan} (${p.currency})`;
             window.open(`https://wa.me/${CONFIG.adminPhone}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // الأكواد التشغيلية
         function toggleModal(show) { toggleEl('loginModal', show); }
         function toggleRegModal(show) { toggleEl('regModal', show); }
         function toggleEl(id, show) {
@@ -250,74 +272,50 @@
         }
 
         function updateFileName(input) {
-            const text = input.files[0] ? input.files[0].name : (CONFIG.lang === 'ar' ? "اضغط لرفع الصورة" : "Click to upload");
-            document.getElementById('fileNameText').innerText = text;
+            document.getElementById('fileNameText').innerText = input.files[0] ? input.files[0].name : "تم الاختيار";
         }
 
         async function secureSubmit() {
-            const fileInput = document.getElementById('regPhoto');
-            const overlay = document.getElementById('loadingOverlay');
-            if (!fileInput.files[0]) { 
-                showSimpleToast(CONFIG.lang === 'ar' ? "يرجى رفع الصورة" : "Please upload photo", "error"); 
-                return; 
-            }
-            overlay.style.display = 'flex';
+            const file = document.getElementById('regPhoto').files[0];
+            if(!file) return alert("الرجاء رفع الصورة");
+            document.getElementById('loadingOverlay').style.display = 'flex';
             try {
-                const formData = new FormData();
-                formData.append("image", fileInput.files[0]);
-                const res = await fetch(`https://api.imgbb.com/1/upload?key=${CONFIG.imgbbKey}`, { method: "POST", body: formData });
-                const result = await res.json();
-                if (result.success) {
-                    const photoUrl = result.data.url;
-                    const msg = `🛡️ New Registration:\n👤 Name: ${document.getElementById('regName').value}\n🔑 Pass: ${document.getElementById('regPass').value}\n🖼️ Photo: ${photoUrl}`;
+                const fd = new FormData(); fd.append("image", file);
+                const res = await fetch(`https://api.imgbb.com/1/upload?key=${CONFIG.imgbbKey}`, { method: "POST", body: fd });
+                const json = await res.json();
+                if(json.success) {
+                    const msg = `🛡️ طلب تسجيل جديد:\n👤 الاسم: ${document.getElementById('regName').value}\n🎂 العمر: ${document.getElementById('regAge').value}\n📏 الطول: ${document.getElementById('regHeight').value}\n🖼️ الصورة: ${json.data.url}`;
                     window.open(`https://wa.me/${CONFIG.adminPhone}?text=${encodeURIComponent(msg)}`, '_blank');
-                    overlay.style.display = 'none';
                     location.reload();
                 }
-            } catch (e) { overlay.style.display = 'none'; }
+            } catch(e) { document.getElementById('loadingOverlay').style.display = 'none'; }
         }
 
         async function handleLogin() {
-            const user = document.getElementById('loginName').value.trim();
-            const pass = document.getElementById('loginPass').value.trim();
-            if(!user || !pass) return;
-            try {
-                const res = await fetch(CONFIG.sheetUrl + "?t=" + Date.now());
-                const text = await res.text();
-                const rows = text.split('\n').slice(1);
-                for(let row of rows) {
-                    const cols = row.split(',').map(c => c.trim().replace(/^"|"$/g, ''));
-                    if(cols[0] === user && cols[1] === pass) {
-                        localStorage.setItem('naseeb_logged', 'true');
-                        localStorage.setItem('userName', user);
-                        window.location.href = 'members.html';
-                        return;
-                    }
-                }
-                showSimpleToast(CONFIG.lang === 'ar' ? "خطأ في البيانات" : "Invalid credentials", "error");
-            } catch(e) { }
-        }
-
-        function showSimpleToast(text, type = "success") {
-            const toast = document.createElement('div');
-            toast.className = `fixed bottom-8 left-1/2 -translate-x-1/2 px-8 py-4 rounded-2xl shadow-2xl z-[200] transition-all duration-500 transform translate-y-20 opacity-0 font-bold text-sm ${type === 'success' ? 'bg-white text-green-800' : 'bg-red-600 text-white'}`;
-            toast.innerText = text;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.classList.add('toast-active'), 100);
-            setTimeout(() => { toast.classList.remove('toast-active'); setTimeout(() => toast.remove(), 500); }, 3000);
+            const u = document.getElementById('loginName').value;
+            const p = document.getElementById('loginPass').value;
+            const res = await fetch(CONFIG.sheetUrl);
+            const text = await res.text();
+            if(text.includes(u) && text.includes(p)) {
+                localStorage.setItem('naseeb_logged', 'true');
+                localStorage.setItem('userName', u);
+                window.location.href = 'members.html';
+            } else {
+                alert("بيانات الدخول غير صحيحة");
+            }
         }
 
         window.onload = () => {
             applyTranslations();
-            detectLocationAndCurrency();
+            detectLocation();
+            startVisitorCounter();
+            showLiveToasts();
             if(localStorage.getItem('naseeb_logged') === 'true') {
                 document.getElementById('loginBtnNav').classList.add('hidden');
-                const sec = document.getElementById('userSection');
-                sec.classList.remove('hidden');
-                sec.innerHTML = `<span class="font-black text-green-900 text-xs">🛡️ ${localStorage.getItem('userName')}</span>`;
+                document.getElementById('userSection').classList.remove('hidden');
+                document.getElementById('userSection').innerHTML = `<span class="font-black text-green-900 text-xs">🛡️ ${localStorage.getItem('userName')}</span>`;
             }
         };
     </script>
 </body>
 </html>
-                      
