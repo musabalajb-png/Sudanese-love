@@ -3,72 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الأعضاء - نصيب العالمي</title>
+    <title>تصفح الأعضاء - نصيب العالمي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Cairo', sans-serif; background: #fff5f7; }
-        .member-card { transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 2.5rem; overflow: hidden; display: flex; flex-direction: column; height: 100%; position: relative; background: white; border: 1px solid #fce7f3; }
-        .member-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px -12px rgba(219, 39, 119, 0.15); }
-        .blur-image { filter: blur(20px); transform: scale(1.1); }
-        .unblur { filter: blur(0) !important; transform: scale(1) !important; transition: 0.5s; }
+        body { font-family: 'Cairo', sans-serif; background: #f8fafc; }
+        .member-card { transition: all 0.4s ease; border-radius: 2rem; overflow: hidden; background: white; border: 1px solid #f1f5f9; }
+        .member-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1); }
+        .blur-image { filter: blur(25px); transform: scale(1.2); transition: 0.5s; }
+        .unblur { filter: blur(0) !important; transform: scale(1) !important; }
         .badge-premium { background: linear-gradient(45deg, #fbbf24, #f59e0b); color: white; }
         .badge-diamond { background: linear-gradient(45deg, #06b6d4, #3b82f6); color: white; }
-        .badge-standard { background: #f3f4f6; color: #4b5563; }
-        .verified-tick { background: #10b981; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px; }
-        .online-dot { width: 12px; height: 12px; background: #10b981; border-radius: 50%; border: 2px solid white; position: absolute; bottom: 2px; right: 2px; }
+        .badge-standard { background: #f3f4f6; color: #64748b; }
+        .verified-tick { background: #10b981; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 10px; }
         
         /* Modal Style */
-        .modal { display: none; position: fixed; z-index: 100; inset: 0; background: rgba(0,0,0,0.5); backdrop-blur: 5px; }
+        .modal { display: none; position: fixed; z-index: 100; inset: 0; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); }
         .modal.active { display: flex; align-items: center; justify-content: center; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen">
+<body class="min-h-screen">
 
     <div id="loginModal" class="modal p-4">
-        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl animate-scale-up">
-            <h2 class="text-2xl font-bold text-slate-800 mb-2">تسجيل دخول الأعضاء</h2>
-            <p class="text-sm text-gray-500 mb-6">أدخل اسمك المستعار وكلمة السر للمتابعة</p>
-            <div class="space-y-4">
-                <input type="text" id="loginUser" placeholder="الاسم المستعار" class="w-full p-4 bg-gray-50 rounded-2xl outline-none border focus:border-green-500">
-                <input type="password" id="loginPass" placeholder="كلمة السر" class="w-full p-4 bg-gray-50 rounded-2xl outline-none border focus:border-green-500">
-                <button onclick="checkLogin()" class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-green-700 transition">دخول</button>
-                <button onclick="toggleLoginModal()" class="w-full text-gray-400 text-sm font-bold">إلغاء</button>
+        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl">
+            <div class="text-center mb-6">
+                <div class="text-4xl mb-2">🔐</div>
+                <h2 class="text-2xl font-bold text-slate-800">دخول المشتركين</h2>
+                <p class="text-sm text-gray-500">أدخل بياناتك لتتمكن من رؤية الصور والتواصل</p>
             </div>
-            <p class="mt-4 text-center text-xs">ليس لديك حساب؟ <a href="register.html" class="text-green-600 font-bold underline">سجل الآن</a></p>
+            <div class="space-y-4">
+                <input type="text" id="loginUser" placeholder="الاسم المستعار" class="w-full p-4 bg-gray-50 rounded-2xl outline-none border focus:ring-2 focus:ring-green-500 transition">
+                <input type="password" id="loginPass" placeholder="كلمة السر" class="w-full p-4 bg-gray-50 rounded-2xl outline-none border focus:ring-2 focus:ring-green-500 transition">
+                <button onclick="checkLogin()" class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-green-700 transition transform active:scale-95">دخول الآن</button>
+                <button onclick="toggleLoginModal()" class="w-full text-gray-400 text-sm font-bold">إغلاق النافذة</button>
+            </div>
+            <p class="mt-6 text-center text-sm text-gray-600">ليس لديك حساب؟ <a href="register.html" class="text-green-600 font-bold hover:underline">اضغط هنا للتسجيل</a></p>
         </div>
     </div>
 
-    <nav class="bg-white/80 backdrop-blur-md shadow-sm p-4 sticky top-0 z-50">
+    <nav class="bg-white/90 backdrop-blur-md shadow-sm p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center px-4">
-            <h1 class="text-2xl font-bold text-green-700">💍 نصيب العالمي</h1>
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">💍</span>
+                <span class="font-bold text-green-700 text-xl hidden md:block">نصيب العالمي</span>
+            </div>
             <div class="flex gap-3">
-                <span id="welcomeMsg" class="hidden text-sm font-bold text-slate-600 self-center ml-2"></span>
-                <button id="loginHeaderBtn" onclick="toggleLoginModal()" class="bg-green-600 text-white px-5 py-2 rounded-full text-xs font-bold transition hover:bg-green-700">دخول الأعضاء</button>
-                <a href="index.html" class="text-gray-400 font-bold hover:text-green-700 transition text-sm self-center">الرئيسية</a>
+                <div id="userInfo" class="hidden flex items-center gap-2 bg-green-50 px-3 py-1 rounded-full border border-green-100">
+                    <span id="userNameDisplay" class="text-xs font-bold text-green-700"></span>
+                    <button onclick="logout()" class="text-[10px] bg-red-100 text-red-600 px-2 py-1 rounded-md">خروج</button>
+                </div>
+                <button id="loginHeaderBtn" onclick="toggleLoginModal()" class="bg-green-600 text-white px-5 py-2 rounded-full text-xs font-bold transition hover:bg-green-700">تسجيل الدخول</button>
+                <a href="index.html" class="bg-slate-100 text-slate-600 px-5 py-2 rounded-full text-xs font-bold hover:bg-slate-200 transition">الرئيسية</a>
             </div>
         </div>
     </nav>
 
-    <header class="bg-white p-6 border-b border-pink-50 shadow-sm">
-        <div class="container mx-auto max-w-4xl text-center">
-            <input type="text" id="nameSearch" onkeyup="filterMembers()" placeholder="ابحث عن شريك حياتك (اسم، بلد، مهنة)..." class="w-full border-2 border-pink-50 p-4 rounded-2xl outline-none focus:border-green-500 transition-all text-md shadow-inner mb-2">
-            <p class="text-[10px] text-gray-400 font-bold">⚠️ ملاحظة: صور الأعضاء تظهر بوضوح فقط للمسجلين في باقات (الستر، الذهبية، والماسية).</p>
+    <header class="bg-white border-b border-gray-100 py-8">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="relative">
+                    <i class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="nameSearch" onkeyup="filterMembers()" placeholder="ابحث بالاسم، المدينة، أو المهنة..." class="w-full border-2 border-gray-50 bg-gray-50 p-4 pr-12 rounded-3xl outline-none focus:bg-white focus:border-green-500 transition-all shadow-sm">
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-2">
+                    <button onclick="filterByGender('all')" class="filter-btn active bg-green-600 text-white px-6 py-2 rounded-full text-xs font-bold shadow-sm">الكل</button>
+                    <button onclick="filterByGender('ذكر')" class="filter-btn bg-white border text-gray-600 px-6 py-2 rounded-full text-xs font-bold hover:bg-blue-50">ذكور</button>
+                    <button onclick="filterByGender('أنثى')" class="filter-btn bg-white border text-gray-600 px-6 py-2 rounded-full text-xs font-bold hover:bg-pink-50">إناث</button>
+                </div>
+            </div>
         </div>
     </header>
 
     <main class="container mx-auto py-12 px-6">
-        <div id="loading" class="flex flex-col items-center justify-center py-20">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-700"></div>
-            <p class="mt-4 text-green-700 font-bold">جاري تحميل قائمة المشتركين...</p>
+        <div id="loading" class="text-center py-20">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-green-700 border-t-transparent"></div>
+            <p class="mt-4 text-slate-500 font-bold">جاري تحميل المشتركين الجدد...</p>
         </div>
-        <div id="membersList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
+        
+        <div id="membersList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            </div>
     </main>
 
     <script>
+        // رابط الشيت الخاص بك
         const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv";
+        
         let allMembers = [];
-        let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        let isLoggedIn = localStorage.getItem('naseeb_logged') === 'true';
         let loggedUserPlan = localStorage.getItem('userPlan') || 'مجانية';
 
         async function loadMembers() {
@@ -80,48 +108,59 @@
                 document.getElementById('loading').style.display = 'none';
                 list.innerHTML = "";
                 
-                rows.forEach(row => {
-                    const columns = row.split(',').map(c => c.replace(/"/g, '').trim());
-                    if(columns.length < 5) return;
+                rows.forEach((row, index) => {
+                    const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
+                    if(cols.length < 5) return;
 
-                    // بافتراض الترتيب الجديد في جدولك: [الاسم، العمر، النوع، المهنة، المدينة، الباقة، الصورة، الحالة، توثيق، كلمة_السر]
-                    const [name, age, gender, job, city, plan, img, status, isVerified, password] = columns;
-                    
-                    allMembers.push({name, password, plan}); // لتخزينهم للتحقق من الدخول
+                    // الترتيب المتوقع: [الاسم، العمر، النوع، المهنة، المدينة، الباقة، الصورة، الحالة، توثيق، كلمة_السر]
+                    const member = {
+                        name: cols[0],
+                        age: cols[1],
+                        gender: cols[2],
+                        job: cols[3],
+                        city: cols[4],
+                        plan: cols[5] || 'عضوية عادية',
+                        img: cols[6],
+                        status: cols[7],
+                        isVerified: cols[8],
+                        password: cols[9]
+                    };
+
+                    allMembers.push(member);
 
                     let planClass = "badge-standard";
-                    if(plan && plan.includes("ماسية")) planClass = "badge-diamond";
-                    if(plan && plan.includes("ذهبية")) planClass = "badge-premium";
+                    if(member.plan.includes("ماسية")) planClass = "badge-diamond";
+                    else if(member.plan.includes("ذهبية") || member.plan.includes("الستر")) planClass = "badge-premium";
 
-                    const verifiedHTML = (isVerified && isVerified.toLowerCase() === 'نعم') ? `<span class="verified-tick">✓</span>` : '';
-
-                    // ميزة فك التغبيش (Unblur) للأعضاء المميزين فقط
-                    const imageClass = (isLoggedIn && loggedUserPlan !== 'المجانية') ? 'unblur' : 'blur-image';
+                    // منطق فك التغبيش: يجب أن يكون مسجلاً وباقته ليست "مجانية"
+                    const canSeePhotos = isLoggedIn && (loggedUserPlan !== 'مجانية' && loggedUserPlan !== 'المجانية');
+                    const imageClass = canSeePhotos ? 'unblur' : 'blur-image';
 
                     const card = `
-                        <div class="member-card shadow-sm">
-                            <div class="h-80 relative overflow-hidden">
-                                <img src="${img || 'https://via.placeholder.com/400x500'}" class="w-full h-full object-cover ${imageClass}" loading="lazy">
-                                <div class="absolute inset-0 bg-black/10 flex flex-col items-center justify-center ${isLoggedIn && loggedUserPlan !== 'المجانية' ? 'hidden' : ''}">
-                                    <div class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20">
-                                        <p class="text-white text-[10px] font-bold tracking-widest uppercase">Privacy Protected</p>
-                                    </div>
+                        <div class="member-card group" data-gender="${member.gender}">
+                            <div class="h-72 relative overflow-hidden">
+                                <img src="${member.img || 'https://via.placeholder.com/400x500'}" class="w-full h-full object-cover ${imageClass}">
+                                ${!canSeePhotos ? `
+                                <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center p-4 text-center">
+                                    <i class="fas fa-lock text-white mb-2 text-2xl"></i>
+                                    <p class="text-white text-[10px] font-bold">اشترك في باقة الستر لرؤية الصورة</p>
+                                </div>` : ''}
+                                <div class="absolute top-4 left-4 ${planClass} px-3 py-1 rounded-full text-[10px] font-bold shadow-md">
+                                    ${member.plan}
                                 </div>
-                                <div class="absolute top-4 right-4 ${planClass} px-3 py-1 rounded-full text-[10px] font-bold shadow-lg">
-                                    ${plan || 'عضو'}
-                                </div>
+                                <div class="absolute bottom-2 right-2 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
                             </div>
-                            <div class="p-6 flex flex-grow flex-col">
+                            <div class="p-6">
                                 <div class="flex items-center gap-2 mb-2">
-                                    <h3 class="font-bold text-xl text-slate-800">${name}</h3>
-                                    ${verifiedHTML}
+                                    <h3 class="font-bold text-lg text-slate-800">${member.name}</h3>
+                                    ${member.isVerified === 'نعم' ? '<span class="verified-tick"><i class="fas fa-check"></i></span>' : ''}
                                 </div>
-                                <div class="flex flex-wrap gap-2 mb-4 text-[10px] font-bold">
-                                    <span class="bg-slate-100 text-slate-600 px-2 py-1 rounded-lg">${age} سنة</span>
-                                    <span class="bg-pink-50 text-pink-600 px-2 py-1 rounded-lg">${status}</span>
+                                <div class="grid grid-cols-2 gap-2 mb-4 text-[10px] font-bold">
+                                    <div class="bg-slate-50 p-2 rounded-xl text-slate-500 text-center">${member.age} سنة</div>
+                                    <div class="bg-slate-50 p-2 rounded-xl text-slate-500 text-center">${member.status}</div>
                                 </div>
-                                <p class="text-slate-500 text-sm mb-6 flex items-center gap-1">📍 ${city}</p>
-                                <button onclick="handleContact('${name}')" class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl hover:bg-green-700 transition shadow-lg">💍 تواصل الآن</button>
+                                <p class="text-slate-500 text-xs mb-6"><i class="fas fa-map-marker-alt ml-1 text-green-500"></i> ${member.city}</p>
+                                <button onclick="handleContact('${member.name}')" class="w-full bg-green-600 text-white font-bold py-3 rounded-2xl hover:bg-green-700 transition-all shadow-md active:scale-95">💍 تواصل الآن</button>
                             </div>
                         </div>
                     `;
@@ -129,7 +168,7 @@
                 });
                 updateUI();
             } catch (error) {
-                console.error(error);
+                console.error("خطأ في تحميل البيانات:", error);
             }
         }
 
@@ -138,41 +177,43 @@
         }
 
         function checkLogin() {
-            const user = document.getElementById('loginUser').value;
-            const pass = document.getElementById('loginPass').value;
+            const user = document.getElementById('loginUser').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
             
-            const member = allMembers.find(m => m.name === user && m.password === pass);
+            const found = allMembers.find(m => m.name === user && m.password === pass);
             
-            if(member) {
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('userName', user);
-                localStorage.setItem('userPlan', member.plan);
+            if(found) {
+                localStorage.setItem('naseeb_logged', 'true');
+                localStorage.setItem('userName', found.name);
+                localStorage.setItem('userPlan', found.plan);
+                alert('أهلاً بك مجدداً يا ' + found.name + ' 🎉');
                 location.reload();
             } else {
-                alert('اسم المستخدم أو كلمة السر غير صحيحة ❌');
+                alert('خطأ في البيانات، تأكد من الاسم وكلمة السر ❌');
             }
         }
 
-        function handleContact(name) {
+        function logout() {
+            localStorage.clear();
+            location.reload();
+        }
+
+        function handleContact(targetName) {
             if(!isLoggedIn) {
-                alert('يرجى تسجيل الدخول أولاً لرؤية تفاصيل التواصل 🔒');
+                alert('عذراً! يجب تسجيل الدخول أولاً لتتمكن من مراسلة الأعضاء 🔒');
                 toggleLoginModal();
-            } else {
-                const msg = `أنا المشترك ${localStorage.getItem('userName')}، أرغب في التواصل مع الطرف: ${name}`;
-                window.location.href = `https://wa.me/249127910778?text=${encodeURIComponent(msg)}`;
+                return;
             }
+            const myName = localStorage.getItem('userName');
+            const msg = `السلام عليكم إدراة نصيب العالمي، أنا المشترك (${myName}) مهتم بالتواصل مع الطرف (${targetName}).`;
+            window.open(`https://wa.me/249127910778?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         function updateUI() {
             if(isLoggedIn) {
-                document.getElementById('loginHeaderBtn').innerText = 'خروج';
-                document.getElementById('loginHeaderBtn').onclick = () => {
-                    localStorage.clear();
-                    location.reload();
-                };
-                const msg = document.getElementById('welcomeMsg');
-                msg.innerText = `أهلاً، ${localStorage.getItem('userName')}`;
-                msg.classList.remove('hidden');
+                document.getElementById('loginHeaderBtn').classList.add('hidden');
+                document.getElementById('userInfo').classList.remove('hidden');
+                document.getElementById('userNameDisplay').innerText = localStorage.getItem('userName');
             }
         }
 
@@ -180,7 +221,24 @@
             const query = document.getElementById('nameSearch').value.toLowerCase();
             document.querySelectorAll('.member-card').forEach(card => {
                 const text = card.innerText.toLowerCase();
-                card.style.display = text.includes(query) ? "flex" : "none";
+                card.style.display = text.includes(query) ? "block" : "none";
+            });
+        }
+
+        function filterByGender(gender) {
+            // تحديث شكل الأزرار
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-green-600', 'text-white');
+                btn.classList.add('bg-white', 'text-gray-600');
+            });
+            event.target.classList.add('bg-green-600', 'text-white');
+
+            document.querySelectorAll('.member-card').forEach(card => {
+                if(gender === 'all' || card.getAttribute('data-gender') === gender) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
             });
         }
 
