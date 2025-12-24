@@ -1,112 +1,229 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>باقات نصيب العالمي | اختر خطتك</title>
+    <title>باقات نصيب العالمي | استثمر في مستقبلك</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
-        body { font-family: 'Cairo', sans-serif; background: #f8fafc; }
-        .price-card { transition: 0.4s; border-radius: 2rem; position: relative; overflow: hidden; }
-        .price-card:hover { transform: translateY(-10px); }
-        .popular-badge { position: absolute; top: 20px; left: -35px; background: #fbbf24; color: #000; padding: 5px 40px; transform: rotate(-45deg); font-size: 10px; font-weight: bold; }
+        :root { --main-font: 'Cairo', sans-serif; --primary-green: #15803d; --accent-gold: #fbbf24; }
+        [dir="ltr"] { --main-font: 'Poppins', sans-serif; }
+        body { font-family: var(--main-font); background: #f8fafc; user-select: none; }
+        
+        .plan-column {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .plan-column.popular {
+            border-color: var(--accent-gold);
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
-<body class="p-4 md:p-10">
+<body class="pb-20">
 
-    <div class="max-w-4xl mx-auto text-center mb-10">
-        <h1 class="text-3xl font-bold text-slate-800 mb-4">اختر باقة الجدية والستر 💍</h1>
-        <p class="text-slate-500 text-sm">استمتع بمميزات حصرية وتواصل مباشر مع شريك حياتك</p>
-        
-        <div class="flex justify-center mt-8">
-            <div class="bg-white p-1 rounded-2xl shadow-sm border border-slate-200 flex gap-2">
-                <button onclick="setCurrency('SDN')" id="btnSDN" class="px-6 py-2 rounded-xl text-sm font-bold transition-all bg-green-600 text-white">🇸🇩 السودان</button>
-                <button onclick="setCurrency('KSA')" id="btnKSA" class="px-6 py-2 rounded-xl text-sm font-bold transition-all text-slate-500">🇸🇦 السعودية</button>
+    <nav class="bg-white/80 backdrop-blur-xl shadow-sm p-4 sticky top-0 z-50 border-b border-slate-100 mb-12">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="location.href='index.html'">
+                <div class="w-10 h-10 bg-green-700 rounded-2xl flex items-center justify-center text-white shadow-lg rotate-3"><i class="fas fa-ring text-lg"></i></div>
+                <div>
+                    <span class="font-black text-green-800 text-xl block leading-none" data-ar="نصيب" data-en="Naseeb">نصيب</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="members.html" class="text-sm font-bold text-slate-600 hover:text-primary-green" data-ar="الأعضاء" data-en="Members">الأعضاء</a>
+                <a href="profile.html" class="text-sm font-bold text-slate-600 hover:text-primary-green" data-ar="ملفي الشخصي" data-en="My Profile">ملفي الشخصي</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-5xl mx-auto text-center px-4">
+        <h1 class="text-4xl md:text-5xl font-black text-slate-800 mb-4" data-ar="باقة واحدة تفصلك عن نصيبك" data-en="One Plan Away From Your Destiny"></h1>
+        <p class="text-slate-500 text-lg" data-ar="استثمر في رحلة البحث عن شريك حياتك بجدية وخصوصية تامة." data-en="Invest in your journey to find a life partner with seriousness and complete privacy."></p>
+        <p id="geoNote" class="text-primary-green font-bold text-sm mt-4 italic"></p>
+    </div>
+
+    <div class="max-w-7xl mx-auto mt-12 px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-1">
+            <!-- Feature List -->
+            <div class="p-8 space-y-4 hidden lg:block">
+                <h3 class="font-black text-lg pt-24" data-ar="الميزات الرئيسية" data-en="Key Features"></h3>
+                <div class="text-sm font-bold text-slate-600 h-12 flex items-center" data-ar="تصفح كل الأعضاء" data-en="Browse All Members"></div>
+                <div class="text-sm font-bold text-slate-600 h-12 flex items-center" data-ar="رؤية الصور بوضوح" data-en="See Photos Clearly"></div>
+                <div class="text-sm font-bold text-slate-600 h-12 flex items-center" data-ar="رسائل مباشرة" data-en="Direct Messages"></div>
+                <div class="text-sm font-bold text-slate-600 h-12 flex items-center" data-ar="تصفح خفي" data-en="Incognito Mode"></div>
+                <div class="text-sm font-bold text-slate-600 h-12 flex items-center" data-ar="شارة العضوية" data-en="Membership Badge"></div>
+                <div class="text-sm font-bold text-slate-600 h-12 flex items-center" data-ar="دعم فني مباشر" data-en="Direct Support"></div>
+            </div>
+
+            <!-- Free Plan -->
+            <div class="plan-column text-center">
+                <h3 class="font-black text-xl text-slate-700" data-ar="الباقة المجانية" data-en="Free Plan"></h3>
+                <p class="text-4xl font-bold my-4" data-ar="مجاناً" data-en="Free"></p>
+                <p class="text-xs text-slate-400 mb-6" data-ar="للبداية والاستكشاف" data-en="To start and explore"></p>
+                <div class="space-y-4 text-sm">
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-check-circle text-2xl text-slate-300"></i></div>
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-times-circle text-2xl text-slate-300"></i></div>
+                    <div class="h-12 flex items-center justify-center font-bold" data-ar="محدود" data-en="Limited"></div>
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-times-circle text-2xl text-slate-300"></i></div>
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-times-circle text-2xl text-slate-300"></i></div>
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-times-circle text-2xl text-slate-300"></i></div>
+                </div>
+                <button disabled class="w-full py-4 mt-6 rounded-2xl bg-slate-200 text-slate-500 font-bold cursor-not-allowed" data-ar="باقتك الحالية" data-en="Your Current Plan"></button>
+            </div>
+
+            <!-- Gold Plan -->
+            <div class="plan-column popular text-center">
+                <p class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-accent-gold text-white px-4 py-1 rounded-full text-xs font-bold" data-ar="الأكثر شيوعاً" data-en="Most Popular"></p>
+                <h3 class="font-black text-xl text-amber-600" data-ar="الباقة الذهبية" data-en="Gold Plan"></h3>
+                <p class="text-4xl font-bold my-4"><span class="price" data-price-sdg="75000">...</span> <span class="currency-code"></span></p>
+                <p class="text-xs text-slate-400 mb-6" data-ar="للجادين في البحث" data-en="For serious seekers"></p>
+                <div class="space-y-4 text-sm">
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-check-circle text-2xl text-green-500"></i></div>
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-check-circle text-2xl text-green-500"></i></div>
+                    <div class="h-12 flex items-center justify-center font-bold" data-ar="غير محدود" data-en="Unlimited"></div>
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-check-circle text-2xl text-green-500"></i></div>
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-star text-2xl text-amber-500"></i></div>
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-times-circle text-2xl text-slate-300"></i></div>
+                </div>
+                <button onclick="subscribe('الباقة الذهبية')" class="w-full py-4 mt-6 rounded-2xl bg-accent-gold text-white font-bold hover:bg-amber-500 transition shadow-lg shadow-amber-200" data-ar="الترقية للذهبية" data-en="Upgrade to Gold"></button>
+            </div>
+
+            <!-- Diamond Plan -->
+            <div class="plan-column text-center">
+                <h3 class="font-black text-xl text-purple-700" data-ar="الباقة الماسية" data-en="Diamond Plan"></h3>
+                <p class="text-4xl font-bold my-4"><span class="price" data-price-sdg="90000">...</span> <span class="currency-code"></span></p>
+                <p class="text-xs text-slate-400 mb-6" data-ar="تجربة VIP متكاملة" data-en="All-inclusive VIP experience"></p>
+                <div class="space-y-4 text-sm">
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-check-circle text-2xl text-green-500"></i></div>
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-check-circle text-2xl text-green-500"></i></div>
+                    <div class="h-12 flex items-center justify-center font-bold" data-ar="غير محدود" data-en="Unlimited"></div>
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-check-circle text-2xl text-green-500"></i></div>
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-gem text-2xl text-purple-500"></i></div>
+                    <div class="h-12 flex items-center justify-center"><i class="fas fa-gem text-2xl text-purple-500"></i></div>
+                </div>
+                <button onclick="subscribe('الباقة الماسية')" class="w-full py-4 mt-6 rounded-2xl bg-purple-700 text-white font-bold hover:bg-purple-800 transition" data-ar="الترقية للماسية" data-en="Upgrade to Diamond"></button>
             </div>
         </div>
     </div>
 
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <div class="price-card bg-white border border-slate-100 p-8 shadow-xl flex flex-col">
-            <h3 class="font-bold text-xl text-slate-700 mb-2">باقة الستر</h3>
-            <p class="text-slate-400 text-xs mb-6">مناسبة للتصفح الأساسي</p>
-            <div class="mb-6">
-                <span class="text-4xl font-bold text-slate-800 amount" data-sdn="15,000" data-ksa="100">15,000</span>
-                <span class="text-slate-500 currency">ج.س</span>
+    <div class="max-w-4xl mx-auto mt-20 px-4">
+        <h3 class="text-2xl font-black text-center mb-8" data-ar="أسئلة شائعة" data-en="Frequently Asked Questions"></h3>
+        <div class="space-y-4">
+            <div class="bg-white p-5 rounded-2xl border border-slate-100">
+                <h4 class="font-bold" data-ar="هل عملية الدفع آمنة؟" data-en="Is the payment process secure?"></h4>
+                <p class="text-sm text-slate-600 mt-2" data-ar="نعم، يتم تأمين جميع عمليات الدفع عبر قنوات موثوقة. للمشتركين من السودان، يتم التحويل عبر تطبيق بنكك، وللمشتركين الدوليين يتم التنسيق عبر واتساب لضمان أقصى درجات الأمان." data-en="Yes, all payments are secured through trusted channels. For Sudanese subscribers, transfers are made via the Bankak app. For international subscribers, coordination is done via WhatsApp to ensure maximum security."></p>
             </div>
-            <ul class="text-slate-600 text-sm space-y-4 mb-8 flex-grow">
-                <li><i class="fas fa-check-circle text-green-500 ml-2"></i> رؤية الصور واضحة</li>
-                <li><i class="fas fa-check-circle text-green-500 ml-2"></i> 30 وردة يومياً</li>
-                <li><i class="fas fa-check-circle text-green-500 ml-2"></i> 10 رسائل إعجاب يومياً</li>
-                <li class="opacity-40"><i class="fas fa-times-circle text-slate-300 ml-2"></i> مكالمات فيديو</li>
-            </ul>
-            <button onclick="subscribe('باقة الستر')" class="w-full py-4 rounded-2xl bg-slate-800 text-white font-bold hover:bg-slate-900 transition">اشترك الآن</button>
-        </div>
-
-        <div class="price-card bg-white border-2 border-green-500 p-8 shadow-2xl flex flex-col scale-105 z-10">
-            <div class="popular-badge">الأكثر طلباً</div>
-            <h3 class="font-bold text-xl text-green-700 mb-2">الباقة الذهبية</h3>
-            <p class="text-slate-400 text-xs mb-6">الخيار المثالي للجادين</p>
-            <div class="mb-6">
-                <span class="text-4xl font-bold text-slate-800 amount" data-sdn="25,000" data-ksa="160">25,000</span>
-                <span class="text-slate-500 currency">ج.س</span>
+            <div class="bg-white p-5 rounded-2xl border border-slate-100">
+                <h4 class="font-bold" data-ar="ماذا يحدث بعد الاشتراك؟" data-en="What happens after I subscribe?"></h4>
+                <p class="text-sm text-slate-600 mt-2" data-ar="بمجرد تأكيد اشتراكك، سيتم تفعيل جميع ميزات باقتك تلقائياً. ستتمكن من رؤية الصور بوضوح، إرسال رسائل غير محدودة، والاستفادة من كل الميزات الحصرية فوراً." data-en="Once your subscription is confirmed, all your plan's features will be activated automatically. You will be able to see photos clearly, send unlimited messages, and benefit from all exclusive features immediately."></p>
             </div>
-            <ul class="text-slate-600 text-sm space-y-4 mb-8 flex-grow">
-                <li><i class="fas fa-check-circle text-green-500 ml-2"></i> رؤية الصور واضحة + VIP</li>
-                <li><i class="fas fa-check-circle text-green-500 ml-2"></i> 100 وردة يومياً</li>
-                <li><i class="fas fa-check-circle text-green-500 ml-2"></i> 25 رسالة إعجاب يومياً</li>
-                <li><i class="fas fa-star text-amber-500 ml-2"></i> مكالمات فيديو (بإشراف)</li>
-            </ul>
-            <button onclick="subscribe('الباقة الذهبية')" class="w-full py-4 rounded-2xl bg-green-600 text-white font-bold hover:bg-green-700 shadow-lg shadow-green-200 transition">اشترك الآن</button>
         </div>
-
-        <div class="price-card bg-slate-900 border border-slate-800 p-8 shadow-xl flex flex-col">
-            <h3 class="font-bold text-xl text-amber-400 mb-2">الباقة الماسية</h3>
-            <p class="text-slate-400 text-xs mb-6">VIP - أولوية قصوى</p>
-            <div class="mb-6">
-                <span class="text-4xl font-bold text-white amount" data-sdn="45,000" data-ksa="300">45,000</span>
-                <span class="text-slate-400 currency">ج.س</span>
-            </div>
-            <ul class="text-slate-300 text-sm space-y-4 mb-8 flex-grow">
-                <li><i class="fas fa-check-circle text-amber-400 ml-2"></i> ظهور حسابك في الصدارة</li>
-                <li><i class="fas fa-check-circle text-amber-400 ml-2"></i> ورد ورسائل غير محدودة</li>
-                <li><i class="fas fa-check-circle text-amber-400 ml-2"></i> مكالمات فيديو مباشرة</li>
-                <li><i class="fas fa-check-circle text-amber-400 ml-2"></i> تنسيق مباشر من الإدارة</li>
-            </ul>
-            <button onclick="subscribe('الباقة الماسية')" class="w-full py-4 rounded-2xl bg-amber-500 text-slate-900 font-bold hover:bg-amber-400 transition">اشترك الآن</button>
-        </div>
-
     </div>
 
     <script>
-        function setCurrency(country) {
-            const amounts = document.querySelectorAll('.amount');
-            const currencies = document.querySelectorAll('.currency');
-            const btnSDN = document.getElementById('btnSDN');
-            const btnKSA = document.getElementById('btnKSA');
+        let currentLang = 'ar';
+        let userCurrency = 'SDG';
+        let exchangeRates = {};
 
-            if (country === 'KSA') {
-                amounts.forEach(el => el.innerText = el.getAttribute('data-ksa'));
-                currencies.forEach(el => el.innerText = 'ريال');
-                btnKSA.className = "px-6 py-2 rounded-xl text-sm font-bold transition-all bg-green-600 text-white";
-                btnSDN.className = "px-6 py-2 rounded-xl text-sm font-bold transition-all text-slate-500";
+        async function initializeCurrency() {
+            const cachedData = JSON.parse(localStorage.getItem('currencyData'));
+            const now = new Date().getTime();
+
+            if (cachedData && (now - cachedData.timestamp < 6 * 60 * 60 * 1000)) {
+                userCurrency = cachedData.userCurrency;
+                exchangeRates = cachedData.exchangeRates;
+                updateGeoNote(cachedData.countryName);
             } else {
-                amounts.forEach(el => el.innerText = el.getAttribute('data-sdn'));
-                currencies.forEach(el => el.innerText = 'ج.س');
-                btnSDN.className = "px-6 py-2 rounded-xl text-sm font-bold transition-all bg-green-600 text-white";
-                btnKSA.className = "px-6 py-2 rounded-xl text-sm font-bold transition-all text-slate-500";
+                try {
+                    const geoRes = await fetch('https://ipapi.co/json/');
+                    const geoData = await geoRes.json();
+                    userCurrency = geoData.currency || 'USD';
+                    updateGeoNote(geoData.country_name);
+                    
+                    const ratesRes = await fetch('https://api.exchangerate-api.com/v4/latest/SDG');
+                    const ratesData = await ratesRes.json();
+                    exchangeRates = ratesData.rates;
+                    
+                    localStorage.setItem('currencyData', JSON.stringify({ 
+                        userCurrency, 
+                        exchangeRates, 
+                        countryName: geoData.country_name,
+                        timestamp: now 
+                    }));
+                } catch(e) {
+                    console.error("Geo/Currency API failed:", e);
+                    userCurrency = 'USD'; // Fallback to USD
+                }
+            }
+            updatePrices();
+        }
+
+        function updateGeoNote(countryName) {
+            const note = document.getElementById('geoNote');
+            if (countryName) {
+                const textAr = `الأسعار تظهر بعملة بلدك (${countryName}) لسهولة المقارنة.`;
+                const textEn = `Prices are shown in your local currency (${countryName}) for easy comparison.`;
+                note.setAttribute('data-ar', textAr);
+                note.setAttribute('data-en', textEn);
+                note.innerText = currentLang === 'ar' ? textAr : textEn;
             }
         }
 
+        function updatePrices() {
+            const rate = exchangeRates[userCurrency] || exchangeRates['USD']; // Fallback to USD rate
+            if (!rate) return;
+
+            document.querySelectorAll('.price').forEach(priceEl => {
+                const priceSDG = parseFloat(priceEl.getAttribute('data-price-sdg'));
+                let finalPrice;
+
+                if (userCurrency === 'SDG') {
+                    finalPrice = priceSDG;
+                } else {
+                    // Round to a sensible number, e.g., nearest 1, 5, or 10
+                    finalPrice = Math.round((priceSDG * rate) / 5) * 5;
+                }
+                
+                priceEl.innerText = new Intl.NumberFormat(currentLang === 'ar' ? 'ar-EG' : 'en-US').format(finalPrice);
+            });
+
+            document.querySelectorAll('.currency-code').forEach(codeEl => {
+                codeEl.innerText = userCurrency;
+            });
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.getElementById('mainHtml').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            
+            document.querySelectorAll('[data-ar]').forEach(el => {
+                const text = el.getAttribute(`data-${currentLang}`);
+                if (text) el.innerText = text;
+            });
+            updatePrices();
+        }
+
         function subscribe(planName) {
-            const country = document.getElementById('btnKSA').classList.contains('bg-green-600') ? 'السعودية' : 'السودان';
             const user = localStorage.getItem('userName') || 'مشترك جديد';
-            const msg = `مرحباً نصيب العالمي.. أرغب في الاشتراك في (${planName}) - دولة (${country}) - اسمي: ${user}`;
+            const country = JSON.parse(localStorage.getItem('currencyData'))?.countryName || 'Unknown';
+            const msg = `مرحباً نصيب العالمي،\nأرغب في الاشتراك في (${planName}).\n\nالاسم: ${user}\nالدولة: ${country}`;
             window.open(`https://wa.me/249127910778?text=${encodeURIComponent(msg)}`, '_blank');
         }
+
+        window.onload = async () => {
+            await initializeCurrency();
+            // Initial language setup
+            const initialLang = currentLang;
+            currentLang = initialLang === 'ar' ? 'en' : 'ar'; // Flip to force update
+            toggleLang(); // Flip back to apply texts
+        };
     </script>
 </body>
 </html>
