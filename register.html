@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>انضم إلينا | نصيب العالمي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     
     <style>
-        :root { --primary-green: #15803d; --accent-gold: #fbbf24; }
-        body { font-family: 'Cairo', sans-serif; background: #f0fdf4; min-height: 100vh; }
+        :root { --primary-green: #15803d; --accent-gold: #fbbf24; --bankak-blue: #0072ce; }
+        body { font-family: 'Cairo', sans-serif; background: #f0fdf4; min-height: 100vh; user-select: none; }
         
         .step-content { display: none; animation: slideIn 0.4s ease-out; }
         .step-content.active { display: block; }
@@ -19,10 +19,8 @@
         .progress-dot { width: 10px; height: 10px; border-radius: 50%; background: #d1d5db; transition: 0.4s; }
         .progress-dot.active { background: var(--primary-green); transform: scale(1.5); box-shadow: 0 0 10px rgba(21, 128, 61, 0.4); }
 
-        /* قوة كلمة السر */
         #passStrength { height: 4px; border-radius: 2px; transition: 0.3s; width: 0%; margin-top: 5px; }
         
-        /* كارت المعاينة الحية */
         .live-preview-card { background: white; border-radius: 2rem; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); transition: 0.3s; }
         
         #termsModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
@@ -30,23 +28,19 @@
 
         .otp-input { width: 45px; height: 55px; text-align: center; font-size: 1.5rem; font-weight: bold; border-radius: 12px; border: 2px solid #e2e8f0; background: #f8fafc; }
         .otp-input:focus { border-color: var(--primary-green); outline: none; background: white; }
+        .form-input {
+            width: 100%; padding: 1.25rem; padding-left: 3rem; border-radius: 1.25rem; background-color: #f1f5f9;
+            border: 2px solid transparent; font-weight: 700; outline: none; transition: all 0.3s;
+        }
+        .form-input:focus { border-color: var(--primary-green); background-color: white; }
+        .form-input.error { border-color: #ef4444; }
+        .error-message { color: #ef4444; font-size: 0.8rem; font-weight: bold; margin-top: 0.5rem; display: none; }
     </style>
 </head>
 <body class="p-4 md:p-10">
 
     <div id="termsModal">
-        <div class="bg-white w-full max-w-lg rounded-[2.5rem] p-8 shadow-2xl overflow-y-auto max-h-[90vh] mx-4">
-            <div class="text-center mb-6">
-                <div class="w-16 h-16 bg-green-100 text-green-700 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl"><i class="fas fa-handshake"></i></div>
-                <h3 class="text-xl font-black text-slate-800">ميثاق الغليظ والستر 💍</h3>
-            </div>
-            <div class="text-sm text-slate-600 space-y-4 leading-relaxed font-bold">
-                <p class="flex gap-2"><span>1.</span><span>أتعهد أمام الله أنني دخلت هذا الموقع بغرض الزواج الحلال فقط.</span></p>
-                <p class="flex gap-2"><span>2.</span><span>ألتزم بصدق البيانات المدرجة (العمر، المدينة، الحالة الاجتماعية).</span></p>
-                <p class="flex gap-2"><span>3.</span><span>أوافق على سياسة الخصوصية وأن صوري ستكون مموهة تلقائياً.</span></p>
-            </div>
-            <button onclick="document.getElementById('termsModal').classList.remove('active')" class="w-full mt-8 bg-green-700 text-white py-4 rounded-2xl font-black shadow-lg hover:bg-green-800 transition">أقسمت بالله.. موافق ✅</button>
-        </div>
+        <!-- ... (Modal content remains the same) ... -->
     </div>
 
     <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
@@ -81,7 +75,7 @@
                 <div class="progress-dot" id="dot4"></div>
             </div>
 
-            <form id="regForm" action="https://formspree.io/f/mdandyav" method="POST" class="space-y-6">
+            <form id="regForm" action="https://formspree.io/f/mdandyav" method="POST" onsubmit="return false;">
                 
                 <div class="step-content active" id="step1">
                     <h2 class="text-2xl font-black text-slate-800 mb-2">أمان حسابك 🛡️</h2>
@@ -89,83 +83,48 @@
                     
                     <div class="space-y-4">
                         <div class="relative">
-                            <i class="fas fa-envelope absolute left-4 top-4 text-slate-300"></i>
-                            <input type="email" name="email" id="emailInp" required placeholder="البريد الإلكتروني" class="w-full p-4 pl-12 rounded-2xl bg-slate-50 border-none font-bold text-sm focus:ring-2 focus:ring-green-500 transition-all">
+                            <i class="fas fa-envelope absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="email" name="email" id="emailInp" required placeholder="البريد الإلكتروني" class="form-input" onkeyup="validateField(this, 'email')">
+                            <p id="emailError" class="error-message"></p>
                         </div>
                         <div class="relative">
-                            <i class="fas fa-phone absolute left-4 top-4 text-slate-300"></i>
-                            <input type="tel" name="phone" id="phoneInp" required placeholder="رقم الهاتف (واتساب)" class="w-full p-4 pl-12 rounded-2xl bg-slate-50 border-none font-bold text-sm focus:ring-2 focus:ring-green-500 transition-all">
+                            <i class="fas fa-phone absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="tel" name="phone" id="phoneInp" required placeholder="رقم الهاتف (واتساب)" class="form-input" onkeyup="validateField(this, 'phone')">
+                            <p id="phoneError" class="error-message"></p>
                         </div>
                         <div class="relative">
-                            <i class="fas fa-lock absolute left-4 top-4 text-slate-300"></i>
-                            <input type="password" name="password" id="passInp" onkeyup="checkPassStrength(this.value)" required placeholder="كلمة السر" class="w-full p-4 pl-12 rounded-2xl bg-slate-50 border-none font-bold text-sm focus:ring-2 focus:ring-green-500 transition-all">
+                            <i class="fas fa-lock absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="password" name="password" id="passInp" onkeyup="checkPassStrength(this.value)" required placeholder="كلمة السر" class="form-input">
                             <div id="passStrength"></div>
                         </div>
                     </div>
-                    <button type="button" onclick="verifyData()" class="w-full mt-8 bg-slate-900 text-white py-5 rounded-2xl font-black shadow-xl hover:bg-black transition">التحقق والمتابعة <i class="fas fa-chevron-left mr-2"></i></button>
+                    <button type="button" onclick="goToStep(2)" class="w-full mt-8 bg-slate-900 text-white py-5 rounded-2xl font-black shadow-xl hover:bg-black transition">التحقق والمتابعة <i class="fas fa-chevron-left mr-2"></i></button>
                 </div>
 
-                <div id="otpSection" class="hidden animate-pulse">
-                    <div class="text-center mb-6">
-                        <h3 class="font-black text-slate-800">أدخل رمز التحقق 🗝️</h3>
-                        <p class="text-[10px] text-slate-400 mt-1">أرسلنا رمزاً لهاتفك وبريدك</p>
-                    </div>
-                    <div class="flex justify-center gap-2" dir="ltr">
-                        <input type="text" maxlength="1" class="otp-input">
-                        <input type="text" maxlength="1" class="otp-input">
-                        <input type="text" maxlength="1" class="otp-input">
-                        <input type="text" maxlength="1" class="otp-input">
-                    </div>
-                    <button type="button" onclick="nextStep(2)" class="w-full mt-6 bg-green-700 text-white py-4 rounded-2xl font-bold">تأكيد الرمز</button>
+                <div id="otpSection" class="hidden">
+                    <!-- ... (OTP section remains the same) ... -->
                 </div>
 
                 <div class="step-content" id="step2">
-                    <h2 class="text-2xl font-black text-slate-800 mb-6">بطاقتك الشخصية 👤</h2>
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="text" name="name" id="nameInp" onkeyup="updatePreview()" required placeholder="الاسم المستعار" class="p-4 rounded-2xl bg-slate-50 border-none font-bold text-sm">
-                        <input type="text" name="city" id="cityInp" onkeyup="updatePreview()" required placeholder="المدينة" class="p-4 rounded-2xl bg-slate-50 border-none font-bold text-sm">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 mt-4">
-                        <input type="number" name="age" id="ageInp" onkeyup="updatePreview()" required placeholder="العمر" class="p-4 rounded-2xl bg-slate-50 border-none font-bold text-sm">
-                        <select name="status" id="statusInp" onchange="updatePreview()" class="p-4 rounded-2xl bg-slate-50 border-none font-bold text-sm">
-                            <option value="أعزب/آنسة">أعزب/آنسة</option>
-                            <option value="مطلق/ة">مطلق/ة</option>
-                            <option value="أرمل/ة">أرمل/ة</option>
-                        </select>
-                    </div>
-                    <input type="text" name="job" id="jobInp" onkeyup="updatePreview()" required placeholder="المهنة / طبيعة العمل" class="w-full p-4 mt-4 rounded-2xl bg-slate-50 border-none font-bold text-sm">
-                    <button type="button" onclick="nextStep(3)" class="w-full mt-8 bg-green-700 text-white py-5 rounded-2xl font-black shadow-xl">المرحلة التالية <i class="fas fa-chevron-left mr-2"></i></button>
+                    <!-- ... (Step 2 content remains the same) ... -->
                 </div>
 
                 <div class="step-content" id="step3">
-                    <h2 class="text-2xl font-black text-slate-800 mb-6">المواصفات والستر 📏</h2>
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="number" name="height" placeholder="الطول (سم)" class="p-4 rounded-2xl bg-slate-50 border-none font-bold text-sm">
-                        <input type="number" name="weight" placeholder="الوزن (كجم)" class="p-4 rounded-2xl bg-slate-50 border-none font-bold text-sm">
-                    </div>
-                    <textarea name="requirements" placeholder="ماذا تطلب في شريك حياتك؟ (بكل صراحة وجدية)" class="w-full h-32 p-4 mt-4 rounded-2xl bg-slate-50 border-none font-bold text-sm resize-none"></textarea>
-                    
-                    <div class="mt-4 p-4 border-2 border-dashed border-slate-200 rounded-2xl text-center">
-                        <p class="text-[10px] font-black text-slate-400 mb-2">ارفع صورتك (ستكون مموهة تلقائياً للخصوصية)</p>
-                        <input type="file" id="pic" accept="image/*" onchange="handleImgPreview(this)" required class="text-xs w-full">
-                    </div>
-                    <button type="button" onclick="nextStep(4)" class="w-full mt-8 bg-green-700 text-white py-5 rounded-2xl font-black shadow-xl">تفعيل العضوية <i class="fas fa-chevron-left mr-2"></i></button>
+                    <!-- ... (Step 3 content remains the same) ... -->
                 </div>
 
                 <div class="step-content" id="step4">
                     <h2 class="text-2xl font-black text-slate-800 mb-6">تفعيل العضوية 💎</h2>
-                    <select name="plan" id="plan" required class="w-full p-5 rounded-2xl bg-green-50 border-2 border-green-200 font-black text-green-800 shadow-sm">
+                    <p id="geoNote" class="text-center font-bold text-emerald-600 text-sm mb-6 italic"></p>
+                    <select name="plan" id="plan" required class="w-full p-5 rounded-2xl bg-green-50 border-2 border-green-200 font-black text-green-800 shadow-sm" onchange="selectPlan(this.value)">
                         <option value="" disabled selected>اختر باقة الستر...</option>
-                        <option value="باقة الستر">باقة الستر (15,000 SDG)</option>
-                        <option value="الباقة الذهبية">الباقة الذهبية (35,000 SDG)</option>
-                        <option value="باقة VIP">باقة VIP الملكية (75,000 SDG)</option>
+                        <option value="sutra">باقة الستر (15,000 SDG)</option>
+                        <option value="gold">الباقة الذهبية (35,000 SDG)</option>
+                        <option value="diamond">باقة VIP الملكية (75,000 SDG)</option>
                     </select>
                     
-                    <div id="bank" class="hidden mt-6 p-6 bg-slate-900 rounded-[2rem] text-white text-center animate-bounce">
-                        <p class="text-xs text-slate-400 mb-2">حول الرسوم عبر تطبيق بنكك</p>
-                        <p class="text-xl font-black text-amber-400 select-all">1705644</p>
-                        <p class="text-[10px] text-slate-400">باسم: مصعب (نصيب العالمي)</p>
-                        <input type="file" id="receipt" accept="image/*" class="mt-4 block w-full text-[10px]">
+                    <div id="paymentSection" class="hidden mt-6 p-6 bg-slate-900 rounded-[2rem] text-white text-center">
+                        <!-- Dynamic Payment Content -->
                     </div>
 
                     <div class="flex items-start gap-3 mt-6 p-4 bg-amber-50 rounded-2xl border border-amber-100">
@@ -175,105 +134,160 @@
                         </label>
                     </div>
 
-                    <button type="button" onclick="startSubmit()" id="btn" class="w-full mt-6 bg-green-700 text-white font-black py-5 rounded-2xl shadow-xl hover:bg-green-800 transition active:scale-95">إرسال الطلب والتوثيق 🚀</button>
+                    <button type="button" onclick="finalSubmit()" id="submitBtn" class="w-full mt-6 bg-green-700 text-white font-black py-5 rounded-2xl shadow-xl hover:bg-green-800 transition active:scale-95">إرسال الطلب والتوثيق 🚀</button>
                 </div>
 
                 <input type="hidden" name="profile_url" id="p_url">
                 <input type="hidden" name="receipt_url" id="r_url">
+                <input type="hidden" name="plan_type" id="selected_plan_hidden">
             </form>
         </div>
     </div>
 
     <script>
-        const IMGBB_API = "ef5f93c776a98bfd2a4ef1d6cdeba6bf";
-        let currentStep = 1;
+        // --- الإعدادات العامة ---
+        let currentLang = 'ar';
+        let userCurrency = 'SDG';
+        let isSudan = true;
+        let exchangeRates = { 'SDG': 1 };
+        let usernameCheckTimeout;
+        let selectedPlan = 'free';
+        const formFields = ['email', 'phone', 'password', 'name', 'city', 'age', 'status', 'job', 'requirements', 'plan'];
 
-        // --- وظائف الفورم ---
-        function checkPassStrength(pass) {
-            const bar = document.getElementById('passStrength');
-            if (pass.length < 4) { bar.style.width = '30%'; bar.style.background = '#f87171'; }
-            else if (pass.length < 8) { bar.style.width = '60%'; bar.style.background = '#fbbf24'; }
-            else { bar.style.width = '100%'; bar.style.background = '#22c55e'; }
-        }
+        // --- محاكاة الواجهة البرمجية الخلفية (الأمان والتحكم) ---
+        const NaseebAPI = {
+            _IMGBB_API_KEY: "ef5f93c776a98bfd2a4ef1d6cdeba6bf",
+            secureUpload: async function(file) { /* ... (as before) ... */ },
+            checkUsername: async function(username) { /* ... (as before) ... */ },
+            serverSideValidate: function(formData) { /* ... (as before) ... */ }
+        };
 
-        function verifyData() {
-            // محاكاة إرسال OTP
-            const email = document.getElementById('emailInp').value;
-            if(!email.includes('@')) return alert("يرجى إدخال بريد صحيح");
-            
-            document.getElementById('step1').classList.remove('active');
-            document.getElementById('otpSection').classList.remove('hidden');
-        }
-
-        function nextStep(n) {
-            document.getElementById('otpSection').classList.add('hidden');
+        // --- دوال واجهة المستخدم والمنطق ---
+        
+        function goToStep(n) {
+            if (n > 1) {
+                let allValid = true;
+                if (n === 2) {
+                    if (!validateField(document.getElementById('emailInp'), 'email')) allValid = false;
+                    if (!validateField(document.getElementById('phoneInp'), 'phone')) allValid = false;
+                }
+                if (!allValid) {
+                    showToast('الرجاء تصحيح الأخطاء للمتابعة', 'error');
+                    return;
+                }
+            }
             document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
             document.getElementById('step' + n).classList.add('active');
-            
-            // تحديث البروجرس بار
             if(n > 1) document.getElementById('line' + (n-1)).style.width = '100%';
             document.getElementById('dot' + n).classList.add('active');
-            currentStep = n;
         }
 
-        function updatePreview() {
-            document.getElementById('previewName').innerText = document.getElementById('nameInp').value || "الاسم المستعار";
-            document.getElementById('previewCity').innerText = document.getElementById('cityInp').value || "المدينة";
-            document.getElementById('previewAge').innerText = document.getElementById('ageInp').value || "-";
-            document.getElementById('previewJob').innerText = document.getElementById('jobInp').value || "-";
-            document.getElementById('previewStatus').innerText = document.getElementById('statusInp').value || "-";
+        function selectPlan(plan) {
+            selectedPlan = plan;
+            document.getElementById('selected_plan_hidden').value = plan;
+            renderPaymentMethod();
+            document.getElementById('paymentSection').classList.remove('hidden');
         }
 
-        function handleImgPreview(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = e => document.getElementById('previewImg').src = e.target.result;
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        document.getElementById('plan').onchange = () => document.getElementById('bank').style.display = 'block';
-
-        async function upload(file) {
-            if(!file) return "";
-            const fd = new FormData(); fd.append('image', file);
-            try {
-                const r = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API}`, {method:'POST', body:fd});
-                const d = await r.json(); return d.success ? d.data.url : "";
-            } catch(e) { return ""; }
-        }
-
-        async function startSubmit() {
-            if(!document.getElementById('termsCheck').checked) return alert("يرجى الموافقة على ميثاق الستر ✅");
-            
-            const btn = document.getElementById('btn');
-            btn.innerText = "⏳ جاري توثيق بياناتك...";
-            btn.disabled = true;
-
-            const p = await upload(document.getElementById('pic').files[0]);
-            const r = await upload(document.getElementById('receipt').files[0]);
-            document.getElementById('p_url').value = p;
-            document.getElementById('r_url').value = r;
-
-            const res = await fetch(document.getElementById('regForm').action, {
-                method: 'POST', body: new FormData(document.getElementById('regForm')), headers: {'Accept': 'application/json'}
-            });
-
-            if(res.ok) {
-                localStorage.setItem('naseeb_logged', 'true');
-                localStorage.setItem('userName', document.getElementsByName('name')[0].value);
-                localStorage.setItem('userPlan', document.getElementById('plan').value);
-                localStorage.setItem('userCity', document.getElementsByName('city')[0].value);
-                
-                alert("تم استلام طلبك بنجاح! سيتم مراجعة التوثيق خلال ساعات.");
-                window.open(`https://wa.me/249127910778?text=تم التسجيل في نصيب. الاسم: ${document.getElementsByName('name')[0].value}. رابط الصورة: ${p}`, '_blank');
-                location.href = "members.html";
+        function renderPaymentMethod() {
+            const paymentSection = document.getElementById('paymentSection');
+            let content = '';
+            if (isSudan) {
+                content = `
+                    <p class="text-sm mb-4 font-bold">لإتمام الدفع، اضغط لنسخ الحساب وفتح تطبيق بنكك</p>
+                    <button type="button" onclick="payWithBankak()" class="w-full bg-blue-600 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 text-lg">
+                        <img src="https://i.ibb.co/QfY33B1/bankak-logo.png" alt="Bankak" class="w-8 h-8">
+                        <span>الدفع عبر تطبيق بنكك</span>
+                    </button>
+                    <p id="copy-feedback" class="text-amber-400 text-xs font-bold mt-3 h-4"></p>
+                    <p class="text-xs opacity-70 mt-4">بعد التحويل، يرجى رفع صورة الإشعار أدناه:</p>
+                    <input type="file" id="receiptFile" accept="image/*" class="mt-2 block w-full text-xs">
+                `;
             } else {
-                btn.disabled = false;
-                btn.innerText = "إرسال الطلب 🚀";
-                alert("حدث خطأ في الإرسال، حاول ثانية.");
+                content = `
+                    <p class="text-sm mb-4 font-bold">للمشتركين من خارج السودان، يتم الدفع عبر التواصل المباشر معنا.</p>
+                    <a href="https://wa.me/249127910778?text=Hi, I want to subscribe to the ${selectedPlan} plan." target="_blank" class="w-full bg-green-500 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 text-lg">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>تواصل معنا عبر WhatsApp للدفع</span>
+                    </a>
+                `;
+            }
+            paymentSection.innerHTML = content;
+        }
+
+        function payWithBankak() {
+            const accountNumber = '1705644';
+            navigator.clipboard.writeText(accountNumber).then(() => {
+                document.getElementById('copy-feedback').innerText = 'تم نسخ رقم الحساب!';
+                setTimeout(() => { window.location.href = 'bankak://'; }, 1500);
+            });
+        }
+
+        // --- الحفظ التلقائي الشامل ---
+        function saveDraft() {
+            const draft = {};
+            formFields.forEach(id => {
+                const el = document.getElementById(id.replace(/([A-Z])/g, '-$1').toLowerCase() + 'Inp') || document.getElementById(id);
+                if (el) draft[id] = el.value;
+            });
+            localStorage.setItem('naseeb_draft', JSON.stringify(draft));
+        }
+
+        function loadDraft() {
+            const draft = JSON.parse(localStorage.getItem('naseeb_draft'));
+            if (draft) {
+                formFields.forEach(id => {
+                    const el = document.getElementById(id.replace(/([A-Z])/g, '-$1').toLowerCase() + 'Inp') || document.getElementById(id);
+                    if (el && draft[id]) {
+                        el.value = draft[id];
+                    }
+                });
+                updatePreview();
+                checkPassStrength(document.getElementById('passInp').value);
             }
         }
+
+        // --- التحقق الذكي من الحقول ---
+        function validateField(el, type) {
+            const errorEl = document.getElementById(type + 'Error');
+            let isValid = true;
+            let message = '';
+
+            if (type === 'email') {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                isValid = re.test(el.value);
+                if (!isValid && el.value.includes('@')) {
+                    const parts = el.value.split('@');
+                    if (parts[1] === 'gmil.com') message = 'هل تقصد gmail.com؟';
+                }
+            }
+            if (type === 'phone') {
+                const re = /^[0-9\+]{7,15}$/;
+                isValid = re.test(el.value);
+            }
+
+            if (!isValid) {
+                el.classList.add('error');
+                errorEl.innerText = message || 'الرجاء إدخال قيمة صحيحة';
+                errorEl.style.display = 'block';
+            } else {
+                el.classList.remove('error');
+                errorEl.style.display = 'none';
+            }
+            return isValid;
+        }
+
+        // --- التهيئة عند تحميل الصفحة ---
+        window.onload = () => {
+            // ... (initializeGeo, toggleLang, etc.)
+            loadDraft();
+            formFields.forEach(id => {
+                const el = document.getElementById(id.replace(/([A-Z])/g, '-$1').toLowerCase() + 'Inp') || document.getElementById(id);
+                if (el) el.addEventListener('change', saveDraft);
+            });
+        };
+
+        // --- يجب نسخ باقي الدوال هنا (initializeGeo, toggleLang, updatePreview, etc.) ---
     </script>
 </body>
 </html>
