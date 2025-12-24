@@ -2,353 +2,361 @@
 <html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="mainTitle">نصيب العالمي | المنصة السودانية الأولى للستر والزواج الحلال</title>
-    <meta name="description" content="نصيب العالمي هي المنصة الرائدة في السودان لتوفيق الرأسين بالحلال.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>نصيب العالمي | المنصة السودانية الأولى للستر والزواج الحلال</title>
+    <meta name="description" content="منصة نصيب العالمي هي الخيار الأول للسودانيين في الداخل والخارج للبحث عن شريك الحياة بالستر والحلال. خصوصية تامة، أعضاء موثقون، وقصص نجاح حقيقية.">
+    <meta name="keywords" content="زواج سوداني, نصيب, خطابة سودانية, زواج المغتربين السودانيين, الستر, حلال, سودانيز زواج, زواج الخرطوم">
+    <meta name="author" content="نصيب للحلول الرقمية">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="نصيب العالمي - منصة الستر والزواج الحلال">
+    <meta property="og:description" content="ابحث عن نصيبك في بيئة آمنة وموثوقة. أكثر من 8000 عضو في انتظارك.">
+    <meta property="og:image" content="https://naseeb-global.com/og-image.jpg"> 
+    <meta property="og:url" content="https://naseeb-global.com">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "نصيب العالمي",
+      "url": "https://naseeb-global.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://naseeb-global.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        :root { --main-font: 'Cairo', sans-serif; }
-        [dir="ltr"] { --main-font: 'Poppins', sans-serif; }
-        body { font-family: var(--main-font); background: #fafafa; overflow-x: hidden; scroll-behavior: smooth; transition: background 0.3s; }
-        .hero-gradient { background: linear-gradient(135deg, #15803d 0%, #14532d 100%); }
-        .pulse-btn { animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(21, 128, 61, 0); } 100% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0); } }
+        body { font-family: 'Cairo', sans-serif; background: #ffffff; scroll-behavior: smooth; overflow-x: hidden; }
+        .hero-mesh { background: radial-gradient(at 0% 0%, rgba(21, 128, 61, 0.15) 0, transparent 50%), radial-gradient(at 50% 0%, rgba(251, 191, 36, 0.1) 0, transparent 50%); }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .btn-premium { background: linear-gradient(45deg, #15803d, #166534); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .btn-premium:hover { transform: scale(1.05); box-shadow: 0 15px 30px -10px rgba(21, 128, 61, 0.5); }
         
-        /* Toast Notification Styles */
-        #liveToast { position: fixed; bottom: 20px; right: 20px; z-index: 200; transform: translateY(150%); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        #liveToast.show { transform: translateY(0); }
-
-        /* FAQ & Stories Styles */
-        .faq-item { @apply bg-white rounded-2xl border border-slate-100 mb-4 overflow-hidden transition-all; }
-        .faq-question { @apply p-6 flex justify-between items-center cursor-pointer font-bold text-slate-700; }
-        .faq-answer { @apply px-6 overflow-hidden max-h-0 transition-all duration-300 text-slate-500 text-sm; }
-        .faq-item.active .faq-answer { @apply pb-6 max-h-40; }
-        .faq-item.active i { transform: rotate(180deg); }
-
-        .story-card { @apply bg-white p-8 rounded-[2.5rem] shadow-xl border border-green-50 relative; }
-        .lang-switcher {
-            position: fixed; top: 100px; left: 20px; z-index: 100;
-            background: white; padding: 10px 20px; border-radius: 50px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #eee;
-            cursor: pointer; font-weight: 900; font-size: 14px; transition: 0.3s; color: #15803d;
-        }
-        [dir="ltr"] .lang-switcher { left: auto; right: 20px; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slide-up { animation: slideUp 0.6s ease-out forwards; }
         
-        /* Features Badges */
-        .feature-badge { @apply flex flex-col items-center p-6 bg-white rounded-3xl shadow-sm border border-slate-50 hover:shadow-md transition-all; }
+        #liveToast { position: fixed; bottom: 30px; right: 20px; z-index: 5000; transform: translateX(120%); transition: 0.6s ease; }
+        #liveToast.show { transform: translateX(0); }
+        
+        .stat-badge { @apply bg-white/50 backdrop-blur-sm border border-green-100 px-4 py-2 rounded-2xl text-xs font-black text-green-800 flex items-center gap-2 shadow-sm; }
+        .search-input { @apply bg-white border border-slate-200 p-4 rounded-2xl w-full outline-none focus:border-green-500 font-bold text-slate-700 transition-all; }
+        
+        /* تحسين أزرار التواصل الاجتماعي */
+        .social-btn { @apply w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110; }
     </style>
 </head>
-<body>
+<body class="hero-mesh">
 
-    <div id="liveToast" class="bg-white/90 backdrop-blur-md shadow-2xl border border-green-100 p-4 rounded-2xl flex items-center gap-4 min-w-[300px]">
-        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-2xl">💍</div>
-        <div>
-            <p id="toastUser" class="font-bold text-slate-800 text-sm">محمد من الخرطوم</p>
-            <p id="toastAction" class="text-xs text-green-600 font-bold">انضم إلى مجتمع الستر الآن</p>
-        </div>
-    </div>
-
-    <div id="loadingOverlay">
+    <div id="liveToast" class="glass-card shadow-2xl p-4 rounded-3xl flex items-center gap-4 min-w-[280px] border-l-4 border-green-600">
         <div class="relative">
-            <div class="w-20 h-20 border-4 border-green-100 rounded-full"></div>
-            <div class="w-20 h-20 border-4 border-green-700 border-t-transparent rounded-full animate-spin absolute top-0"></div>
+            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-xl">💍</div>
+            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
         </div>
-        <p class="mt-6 font-bold text-green-800 text-lg animate-pulse" data-ar="جاري تأمين الاتصال..." data-en="Securing connection...">جاري تأمين الاتصال...</p>
+        <div>
+            <p id="toastUser" class="font-black text-slate-800 text-sm"></p>
+            <p class="text-[10px] text-slate-500 font-bold">وجد شريك حياته الآن عبر نصيب</p>
+        </div>
     </div>
 
-    <div onclick="toggleLang()" id="langBtn" class="lang-switcher hover:scale-110 active:scale-90 shadow-xl">English</div>
-
-    <nav class="bg-white/90 backdrop-blur-lg shadow-sm p-4 sticky top-0 z-50 border-b border-gray-100">
-        <div class="container mx-auto flex justify-between items-center px-4">
-            <div class="flex items-center gap-2 group cursor-pointer" onclick="window.scrollTo(0,0)">
-                <span class="text-3xl group-hover:rotate-12 transition">💍</span>
-                <span class="font-black text-green-800 text-xl tracking-tight" data-ar="نصيب العالمي" data-en="Naseeb Global">نصيب العالمي</span>
+    <nav class="sticky top-0 z-[1000] glass-card px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <div class="w-10 h-10 bg-green-700 rounded-2xl flex items-center justify-center text-white shadow-lg rotate-3"><i class="fas fa-ring text-lg"></i></div>
+                <span class="font-black text-green-900 text-2xl tracking-tighter">نصيب</span>
             </div>
-            <div class="flex items-center gap-4 text-sm font-bold">
-                <div class="hidden lg:flex items-center gap-6 ml-4 text-slate-600">
-                    <a href="#about" class="hover:text-green-700 transition" data-ar="من نحن" data-en="About Us">من نحن</a>
-                    <a href="#pricing" class="hover:text-green-700 transition" data-ar="الباقات" data-en="Pricing">الباقات</a>
-                    <a href="#stories" class="hover:text-green-700 transition" data-ar="قصص نجاح" data-en="Success Stories">قصص نجاح</a>
-                    <a href="#faq" class="hover:text-green-700 transition" data-ar="الأسئلة" data-en="FAQ">الأسئلة</a>
-                </div>
-                <div id="userSection" class="hidden flex items-center gap-3 bg-green-50/50 px-4 py-2 rounded-2xl border border-green-100 shadow-inner"></div>
-                <button id="loginBtnNav" onclick="toggleModal(true)" class="bg-green-700 text-white px-7 py-2.5 rounded-full pulse-btn hover:bg-green-800 transition" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</button>
+            <div class="hidden md:flex gap-8 items-center">
+                <a href="#features" class="font-bold text-slate-600 hover:text-green-700">المميزات</a>
+                <a href="#stories" class="font-bold text-slate-600 hover:text-green-700">قصص النجاح</a>
+                <a href="#pricing" class="font-bold text-slate-600 hover:text-green-700">الباقات</a>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="toggleModal('regModal', true)" class="hidden md:block bg-slate-100 text-slate-800 px-6 py-2 rounded-full font-black hover:bg-slate-200 transition">دخول</button>
+                <button onclick="toggleModal('regModal', true)" class="btn-premium text-white px-8 py-2.5 rounded-full font-black shadow-lg">ابدأ مجاناً</button>
             </div>
         </div>
     </nav>
 
-    <header class="hero-gradient text-white py-32 px-6 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');"></div>
-        <div class="container mx-auto relative z-10 text-center">
-            <div class="inline-flex items-center gap-2 bg-black/20 backdrop-blur-md px-4 py-2 rounded-full mb-8 text-xs font-bold border border-white/10">
-                <span class="w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
-                <span id="visitorCount">1,240</span> 
-                <span data-ar="شخص يتصفح المنصة الآن" data-en="browsing now">شخص يتصفح المنصة الآن</span>
-            </div>
-            <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight">
-                <span data-ar="مُحيطك للستر والحلال" data-en="Your Path to Halal Marriage">مُحيطك للستر والحلال</span>
-                <br>
-                <span class="text-green-300 font-light text-3xl md:text-5xl" data-ar="بمعايير إسلامية وخصوصية فائقة" data-en="Islamic Privacy Standards">بمعايير إسلامية وخصوصية فائقة</span>
-            </h1>
-            <button onclick="toggleRegModal(true)" class="bg-white text-green-800 px-14 py-4 rounded-2xl font-bold text-xl shadow-2xl hover:scale-105 transition" data-ar="ابدأ رحلتك الآن" data-en="Start Now">ابدأ رحلتك الآن</button>
+    <section class="container mx-auto px-6 py-16 md:py-24 text-center relative overflow-hidden">
+        <div class="inline-flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full mb-6 border border-green-100">
+            <span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span></span>
+            <span class="text-xs font-black text-green-800" id="liveCounter">14,203 مشترك متصل الآن</span>
         </div>
-    </header>
+        
+        <h1 class="text-5xl md:text-7xl font-black text-slate-900 leading-tight mb-6 animate-slide-up">
+            نصيب العالمي..<br><span class="text-green-700">حيث تلتقي القلوب الجادة للستر</span>
+        </h1>
 
-    <section id="about" class="py-24 bg-white px-6">
-        <div class="container mx-auto max-w-6xl">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                <div class="relative">
-                    <div class="bg-green-100 w-full h-full absolute -top-4 -right-4 rounded-[3rem] -z-10"></div>
-                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" class="rounded-[3rem] shadow-2xl" alt="About Naseeb">
+        <div class="flex flex-wrap justify-center gap-3 mb-10">
+            <div class="stat-badge"><i class="fas fa-heart text-red-500"></i> 452 حالة زواج تمت هذا العام</div>
+            <div class="stat-badge"><i class="fas fa-user-shield text-blue-500"></i> 8,000 عضو موثق</div>
+            <div class="stat-badge"><i class="fas fa-map-marker-alt text-orange-500"></i> يتواجد الآن 120 عضو من مدينتك</div>
+        </div>
+
+        <div class="max-w-4xl mx-auto glass-card p-6 rounded-[2.5rem] shadow-2xl border-white mb-12 animate-slide-up" style="animation-delay: 0.2s">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-right text-xs font-black text-slate-400 mb-2 mr-2">أنا</label>
+                    <select class="search-input"><option>رجل</option><option>امرأة</option></select>
                 </div>
                 <div>
-                    <h2 class="text-4xl font-black text-slate-800 mb-6" data-ar="من نحن؟" data-en="Who We Are?">من نحن؟</h2>
-                    <p class="text-lg text-slate-600 leading-relaxed mb-6" data-ar="نصيب العالمي هي المنصة السودانية الأولى المتخصصة في تيسير الزواج الحلال (الستر). نؤمن بأن العثور على شريك الحياة يجب أن يتم في بيئة آمنة، محترمة، وتحفظ خصوصية الجميع." data-en="Naseeb Global is the first Sudanese platform specializing in Halal marriage. We believe finding a partner should be secure and private.">نصيب العالمي هي المنصة السودانية الأولى المتخصصة في تيسير الزواج الحلال (الستر). نؤمن بأن العثور على شريك الحياة يجب أن يتم في بيئة آمنة، محترمة، وتحفظ خصوصية الجميع.</p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="feature-badge">
-                            <i class="fas fa-shield-alt text-green-600 text-2xl mb-2"></i>
-                            <span class="font-bold text-sm text-slate-800" data-ar="خصوصية كاملة" data-en="Full Privacy">خصوصية كاملة</span>
-                        </div>
-                        <div class="feature-badge">
-                            <i class="fas fa-check-circle text-green-600 text-2xl mb-2"></i>
-                            <span class="font-bold text-sm text-slate-800" data-ar="تدقيق يدوي" data-en="Manual Check">تدقيق يدوي</span>
-                        </div>
+                    <label class="block text-right text-xs font-black text-slate-400 mb-2 mr-2">أبحث عن</label>
+                    <select class="search-input"><option>امرأة</option><option>رجل</option></select>
+                </div>
+                <div>
+                    <label class="block text-right text-xs font-black text-slate-400 mb-2 mr-2">التواجد</label>
+                    <select class="search-input"><option>داخل السودان 🇸🇩</option><option>المغتربين 🌍</option></select>
+                </div>
+                <div class="flex items-end">
+                    <button onclick="toggleModal('regModal', true)" class="w-full btn-premium text-white h-[58px] rounded-2xl font-black text-lg">ابحث الآن</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-20 bg-slate-50 px-6">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-black mb-16">لماذا يختار الجادون منصة نصيب؟</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-right">
+                <div class="bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-md transition">
+                    <div class="w-16 h-16 bg-green-100 text-green-700 rounded-2xl flex items-center justify-center text-3xl mb-6"><i class="fas fa-eye-slash"></i></div>
+                    <h3 class="font-black text-xl mb-4">خصوصية سودانية</h3>
+                    <p class="text-slate-500 font-bold text-sm leading-relaxed">صور محمية بنظام الـ Blur المطور، لا يراها إلا من تأذن له وبعد التأكد من جديته التامة.</p>
+                </div>
+                <div class="bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-md transition">
+                    <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mb-6"><i class="fas fa-filter"></i></div>
+                    <h3 class="font-black text-xl mb-4">فلترة الجادين</h3>
+                    <p class="text-slate-500 font-bold text-sm leading-relaxed">نظام اشتراكات ذكي يمنع المتلاعبين ويضمن وجود النخبة الباحثة عن الحلال فقط في مجتمعنا.</p>
+                </div>
+                <div class="bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-md transition">
+                    <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-6"><i class="fas fa-check-double"></i></div>
+                    <h3 class="font-black text-xl mb-4">توثيق الهوية</h3>
+                    <p class="text-slate-500 font-bold text-sm leading-relaxed">نمنح العلامة الزرقاء للأعضاء الموثقين بالرقم الوطني أو جواز السفر لزيادة الثقة والأمان.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stories" class="py-24 px-6 container mx-auto overflow-hidden">
+        <h2 class="text-3xl font-black text-center mb-16">قصص نجاح من قلب الواقع</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="glass-card p-10 rounded-[3rem] border-green-50 relative">
+                <i class="fas fa-quote-right absolute top-8 left-8 text-green-100 text-6xl"></i>
+                <p class="text-slate-600 font-bold italic mb-8 relative z-10 leading-relaxed">"بفضل الله ثم نصيب، وجدت شريك حياتي المغترب في قطر وتم العقد في شهر واحد. الخصوصية كانت أهم شيء بالنسبة لي."</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-green-700 rounded-full flex items-center justify-center text-white font-black">م. أ</div>
+                    <span class="font-black text-slate-800 underline">عروس من الخرطوم</span>
+                </div>
+            </div>
+            <div class="glass-card p-10 rounded-[3rem] border-green-50 relative">
+                <i class="fas fa-quote-right absolute top-8 left-8 text-green-100 text-6xl"></i>
+                <p class="text-slate-600 font-bold italic mb-8 relative z-10 leading-relaxed">"كنت متخوف من المواقع، لكن نصيب غير نظرتي. الجدية والتوثيق الموجود يخليك تختار وأنت مرتاح البال."</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-white font-black">ع. س</div>
+                    <span class="font-black text-slate-800 underline">مغترب في السعودية</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-slate-900 py-20 px-6 text-white text-center">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-3xl font-black mb-6">اختبر فرصة عثورك على شريك حياتك ⚡</h2>
+            <div id="quizBox" class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10">
+                <div id="quizStep">
+                    <p class="text-slate-400 mb-6 font-bold">ما هو عمرك الحالي؟</p>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button onclick="runQuiz()" class="bg-white/10 p-4 rounded-xl hover:bg-green-700 transition font-black">20-30</button>
+                        <button onclick="runQuiz()" class="bg-white/10 p-4 rounded-xl hover:bg-green-700 transition font-black">30-40</button>
+                        <button onclick="runQuiz()" class="bg-white/10 p-4 rounded-xl hover:bg-green-700 transition font-black">40+</button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="stories" class="py-24 bg-slate-50 px-6">
-        <div class="container mx-auto max-w-6xl">
-            <h2 class="text-center text-3xl font-black text-slate-800 mb-16" data-ar="قصص نجاح وتوفيق" data-en="Success Stories">قصص نجاح وتوفيق</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="story-card">
-                    <div class="text-4xl mb-4 text-green-600 opacity-20 absolute top-4 right-8 italic font-serif">"</div>
-                    <p class="text-slate-600 leading-relaxed mb-6 italic" data-ar="بفضل الله ثم منصة نصيب، وجدت شريكة حياتي التي تناسب قيمي السودانية رغم أني أعيش في كندا. التوفيق تم بخصوصية كاملة." data-en="Thanks to Naseeb, I found my life partner who matches my values even while living in Canada.">"بفضل الله ثم منصة نصيب، وجدت شريكة حياتي التي تناسب قيمي السودانية رغم أني أعيش في كندا. التوفيق تم بخصوصية كاملة."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center font-bold text-green-700">أ.م</div>
-                        <span class="font-bold text-slate-800 text-sm">أحمد (مغترب)</span>
-                    </div>
-                </div>
-                <div class="story-card">
-                    <div class="text-4xl mb-4 text-green-600 opacity-20 absolute top-4 right-8 italic font-serif">"</div>
-                    <p class="text-slate-600 leading-relaxed mb-6 italic" data-ar="أكثر ما أعجبني هو الجدية والستر. الإدارة حريصة جداً على التأكد من هوية المشتركين وهذا ما جعلني أشعر بالأمان." data-en="What I liked most was the seriousness and privacy. The administration is very keen on verifying identities.">"أكثر ما أعجبني هو الجدية والستر. الإدارة حريصة جداً على التأكد من هوية المشتركين وهذا ما جعلني أشعر بالأمان."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center font-bold text-pink-700">س.ح</div>
-                        <span class="font-bold text-slate-800 text-sm">سارة (بورتسودان)</span>
-                    </div>
+                <div id="quizResult" class="hidden animate-pulse">
+                    <p class="text-green-400 font-black text-3xl mb-2">هناك 150 شخص!</p>
+                    <p class="text-slate-300 font-bold mb-6">يطابقون مواصفاتك في نصيب الآن</p>
+                    <button onclick="toggleModal('regModal', true)" class="bg-white text-slate-900 px-8 py-3 rounded-full font-black">سجل لرؤيتهم</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="pricing" class="py-24 bg-white px-6">
-        <div class="container mx-auto max-w-6xl">
-            <h2 class="text-center text-3xl font-black text-slate-800 mb-16" data-ar="اختر باقة الستر" data-en="Choose Plan">اختر باقة الستر</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="bg-white p-10 rounded-[3rem] shadow-xl text-center border border-slate-100">
-                    <h3 class="font-bold text-xl mb-4" data-ar="باقة الستر" data-en="Sutra Plan">باقة الستر</h3>
-                    <div class="text-3xl font-black text-green-700 mb-8" id="price-sutra">...</div>
-                    <button onclick="safeRedirect('Sutra')" class="w-full py-3 rounded-xl bg-slate-100 font-bold hover:bg-green-700 hover:text-white transition" data-ar="اختيار" data-en="Select">اختيار</button>
-                </div>
-                <div class="bg-white p-10 rounded-[3rem] shadow-2xl text-center border-2 border-green-500 scale-105">
-                    <h3 class="font-bold text-xl mb-4" data-ar="الباقة الذهبية" data-en="Gold Plan">الباقة الذهبية</h3>
-                    <div class="text-3xl font-black text-green-700 mb-8" id="price-gold">...</div>
-                    <button onclick="safeRedirect('Gold')" class="w-full py-3 rounded-xl bg-green-700 text-white font-bold hover:bg-green-800 transition" data-ar="اشترك الآن" data-en="Join Now">اشترك الآن</button>
-                </div>
-                <div class="bg-slate-900 p-10 rounded-[3rem] shadow-xl text-center text-white">
-                    <h3 class="font-bold text-xl mb-4" data-ar="باقة VIP" data-en="VIP Plan">باقة VIP</h3>
-                    <div class="text-3xl font-black text-green-400 mb-8" id="price-vip">...</div>
-                    <button onclick="safeRedirect('VIP')" class="w-full py-3 rounded-xl bg-green-600 font-bold hover:bg-green-500 transition" data-ar="طلب الخدمة" data-en="Order">طلب الخدمة</button>
-                </div>
+    <section id="pricing" class="py-24 px-6 container mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-black text-slate-900 mb-4">باقات تناسب رحلتك</h2>
+            <div class="inline-flex bg-slate-100 p-1 rounded-2xl mt-8">
+                <button id="currBtnSDG" onclick="switchCurrency('SD')" class="px-6 py-2 rounded-xl bg-white shadow-sm font-black text-green-700">جنيه سوداني</button>
+                <button id="currBtnSAR" onclick="switchCurrency('SA')" class="px-6 py-2 rounded-xl font-black text-slate-500">ريال سعودي</button>
+                <button id="currBtnUSD" onclick="switchCurrency('DEFAULT')" class="px-6 py-2 rounded-xl font-black text-slate-500">دولار أمريكي</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card p-10 rounded-[3rem] border-slate-100">
+                <h3 class="text-xl font-black mb-4">باقة الستر</h3>
+                <div class="my-6"><span class="text-4xl font-black text-green-700" id="priceSutra">...</span></div>
+                <ul class="space-y-4 text-sm font-bold text-slate-600 mb-10 text-right">
+                    <li><i class="fas fa-check text-green-500 ml-2"></i> رؤية جميع الملفات</li>
+                    <li><i class="fas fa-check text-green-500 ml-2"></i> 10 إعجابات يومياً</li>
+                </ul>
+                <button onclick="buyPlan('الستر')" class="w-full py-4 rounded-2xl bg-slate-900 text-white font-black">اشترك الآن</button>
+            </div>
+            <div class="bg-green-800 p-10 rounded-[3rem] shadow-2xl relative scale-105 border-4 border-amber-400 text-white">
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-amber-400 text-green-900 px-6 py-1 rounded-full text-xs font-black">الأكثر طلباً 🔥</div>
+                <h3 class="text-xl font-black mb-4">الباقة الذهبية</h3>
+                <div class="my-6"><span class="text-4xl font-black text-white" id="priceGold">...</span></div>
+                <ul class="space-y-4 text-sm font-bold text-green-100 mb-10 text-right">
+                    <li><i class="fas fa-star text-amber-400 ml-2"></i> تمييز الملف بإطار ذهبي</li>
+                    <li><i class="fas fa-check text-amber-400 ml-2"></i> 100 محادثة شهرياً</li>
+                </ul>
+                <button onclick="buyPlan('الذهبية')" class="w-full py-4 rounded-2xl bg-white text-green-800 font-black">فعل الآن</button>
+            </div>
+            <div class="bg-slate-900 p-10 rounded-[3rem] text-white">
+                <h3 class="text-xl font-black mb-4">باقة VIP</h3>
+                <div class="my-6"><span class="text-4xl font-black text-amber-400" id="priceVIP">...</span></div>
+                <ul class="space-y-4 text-sm font-bold text-slate-400 mb-10 text-right">
+                    <li><i class="fas fa-crown text-amber-500 ml-2"></i> خطابة خاصة للملف</li>
+                    <li><i class="fas fa-check text-amber-500 ml-2"></i> تواصل غير محدود</li>
+                </ul>
+                <button onclick="buyPlan('VIP')" class="w-full py-4 rounded-2xl bg-amber-500 text-slate-900 font-black">اطلب الخدمة</button>
             </div>
         </div>
     </section>
 
-    <section id="faq" class="py-24 bg-slate-50 px-6">
-        <div class="container mx-auto max-w-3xl">
-            <h2 class="text-center text-3xl font-black text-slate-800 mb-12" data-ar="الأسئلة الشائعة" data-en="FAQ">الأسئلة الشائعة</h2>
-            <div class="faq-container">
-                <div class="faq-item" onclick="this.classList.toggle('active')">
-                    <div class="faq-question"><span data-ar="كيف تضمنون الجدية؟" data-en="Verification?">كيف تضمنون الجدية؟</span><i class="fas fa-chevron-down text-xs"></i></div>
-                    <div class="faq-answer" data-ar="بمراجعة يدوية ونظام اشتراكات جاد لضمان أن كل شخص موجود هنا يبحث فعلاً عن الستر." data-en="Via manual review and paid system to ensure everyone here is serious.">بمراجعة يدوية ونظام اشتراكات جاد لضمان أن كل شخص موجود هنا يبحث فعلاً عن الستر.</div>
-                </div>
+    <footer class="bg-white border-t py-12 text-center">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="https://facebook.com/naseeb" class="social-btn bg-blue-600 text-white shadow-lg"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/naseeb" class="social-btn bg-sky-500 text-white shadow-lg"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com/naseeb" class="social-btn bg-pink-600 text-white shadow-lg"><i class="fab fa-instagram"></i></a>
+                <a href="https://t.me/naseeb_sudan" class="social-btn bg-blue-400 text-white shadow-lg"><i class="fab fa-telegram-plane"></i></a>
+                <a href="https://wa.me/249127910778" class="social-btn bg-green-500 text-white shadow-lg"><i class="fab fa-whatsapp"></i></a>
             </div>
-        </div>
-    </section>
-
-    <footer class="bg-slate-900 text-white py-20 px-6 text-center">
-        <div class="container mx-auto max-w-6xl">
-            <div class="flex justify-center gap-6 mb-12">
-                <a href="https://wa.me/249127910778" target="_blank" class="bg-green-600 px-8 py-3 rounded-2xl font-bold hover:bg-green-500 transition"><i class="fab fa-whatsapp ml-2"></i>واتساب</a>
+            <div class="mb-6 flex flex-wrap justify-center gap-6 text-sm font-bold text-slate-500">
+                <a href="#" class="hover:text-green-700">سياسة الخصوصية</a>
+                <a href="#" class="hover:text-green-700">شروط الاستخدام</a>
+                <a href="#" class="hover:text-green-700">اتصل بنا</a>
+                <a href="#" class="hover:text-green-700">الأسئلة الشائعة</a>
             </div>
-            <p class="text-slate-500 text-xs">© 2025 Naseeb Global. <span data-ar="جميع الحقوق محفوظة" data-en="All rights reserved">جميع الحقوق محفوظة</span></p>
+            <p class="text-slate-400 text-xs font-bold">© 2025 منصة نصيب العالمي. جميع الحقوق محفوظة لشركة الستر للحلول الرقمية.</p>
         </div>
     </footer>
 
-    <div id="regModal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] flex items-center justify-center p-4 opacity-0 overflow-y-auto">
-        <div class="bg-white w-full max-w-lg rounded-[2.5rem] p-10 shadow-2xl relative text-right">
-            <button onclick="toggleRegModal(false)" class="absolute top-8 left-8 text-slate-300 hover:text-red-500"><i class="fas fa-times-circle text-2xl"></i></button>
-            <form id="regForm" class="grid grid-cols-2 gap-5" onsubmit="return false;">
-                <div class="col-span-2"><label class="form-label" data-ar="الاسم (سري)" data-en="Name">الاسم (سري)</label><input type="text" id="regName" class="form-input bg-slate-50 p-3 rounded-xl w-full border border-slate-100 outline-none focus:border-green-500" required></div>
-                <div class="col-span-1"><label class="form-label" data-ar="العمر" data-en="Age">العمر</label><input type="number" id="regAge" class="form-input bg-slate-50 p-3 rounded-xl w-full border border-slate-100 outline-none" required></div>
-                <div class="col-span-1"><label class="form-label" data-ar="الطول" data-en="Height">الطول</label><input type="number" id="regHeight" class="form-input bg-slate-50 p-3 rounded-xl w-full border border-slate-100 outline-none" required></div>
-                <div class="col-span-2"><label class="form-label" data-ar="كلمة السر" data-en="Password">كلمة السر</label><input type="password" id="regPass" class="form-input bg-slate-50 p-3 rounded-xl w-full border border-slate-100 outline-none" required></div>
-                <div class="col-span-2">
-                    <input type="file" id="regPhoto" class="hidden" onchange="updateFileName(this)">
-                    <label for="regPhoto" class="block bg-slate-50 border-2 border-dashed p-4 rounded-xl text-center cursor-pointer">
-                        <i class="fas fa-camera text-slate-400 mb-2"></i><p id="fileNameText" class="text-xs text-slate-500" data-ar="اضغط لرفع الصورة الشخصية" data-en="Upload Photo">اضغط لرفع الصورة الشخصية</p>
-                    </label>
-                </div>
-                <button type="button" onclick="secureSubmit()" class="col-span-2 bg-green-700 text-white py-4 rounded-2xl font-black shadow-xl hover:bg-green-800 transition" data-ar="تأكيد طلب الانضمام 🛡️" data-en="Confirm Join">تأكيد طلب الانضمام 🛡️</button>
-            </form>
-        </div>
-    </div>
+    <div id="regModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-md z-[5000] flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-[3rem] p-10 shadow-2xl relative">
+            <button onclick="toggleModal('regModal', false)" class="absolute top-6 left-6 text-slate-300 hover:text-red-500"><i class="fas fa-times-circle text-2xl"></i></button>
+            <h3 class="text-2xl font-black mb-2 text-center">مرحباً بك في نصيب 💍</h3>
+            <p class="text-center text-slate-500 text-sm font-bold mb-8">اختر الطريقة الأنسب للانضمام إلينا</p>
+            
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <button onclick="socialLogin('Google')" class="flex items-center justify-center gap-2 border border-slate-200 p-3 rounded-2xl hover:bg-slate-50 transition font-bold text-sm">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="قوقل"> قوقل
+                </button>
+                <button onclick="socialLogin('Facebook')" class="flex items-center justify-center gap-2 bg-[#1877F2] text-white p-3 rounded-2xl hover:bg-blue-700 transition font-bold text-sm">
+                    <i class="fab fa-facebook text-lg"></i> فيسبوك
+                </button>
+            </div>
 
-    <div id="loginModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 opacity-0">
-        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl text-center">
-            <h3 class="text-2xl font-black mb-8" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</h3>
-            <input type="text" id="loginName" class="form-input bg-slate-50 p-4 rounded-xl w-full mb-4 border border-slate-100 outline-none" placeholder="Name">
-            <input type="password" id="loginPass" class="form-input bg-slate-50 p-4 rounded-xl w-full mb-6 border border-slate-100 outline-none" placeholder="Password">
-            <button onclick="handleLogin()" class="w-full bg-green-700 text-white py-4 rounded-2xl font-bold" data-ar="دخول" data-en="Login">دخول</button>
+            <div class="relative mb-8 text-center">
+                <span class="bg-white px-4 relative z-10 text-xs font-bold text-slate-400">أو عبر البريد</span>
+                <hr class="absolute top-1/2 w-full border-slate-100">
+            </div>
+
+            <input type="text" id="regName" placeholder="الاسم الكامل" class="search-input mb-4">
+            <input type="password" id="regPass" placeholder="كلمة المرور" class="search-input mb-6">
+            <button onclick="processRegistration()" class="w-full btn-premium text-white py-5 rounded-[2rem] font-black shadow-xl">تأكيد التسجيل</button>
         </div>
     </div>
 
     <script>
-        const CONFIG = {
-            sheetUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv",
-            imgbbKey: "847040441499990666014e2d31221b21",
-            lang: localStorage.getItem('app_lang') || 'ar',
-            adminPhone: "249127910778",
-            pricingMatrix: {
-                "SD": { currency: "SDG", sutra: "15,000", gold: "35,000", vip: "75,000" },
-                "SA": { currency: "SAR", sutra: "100", gold: "250", vip: "500" },
-                "DEFAULT": { currency: "USD", sutra: "25", gold: "60", vip: "125" }
-            },
-            userCountry: "DEFAULT"
+        const PRICING = {
+            'SD': { curr: 'ج.س', sutra: '15,000', gold: '45,000', vip: '95,000' },
+            'SA': { curr: 'ر.س', sutra: '150', gold: '450', vip: '900' },
+            'DEFAULT': { curr: '$', sutra: '35', gold: '99', vip: '199' }
         };
 
-        function startVisitorCounter() {
-            let count = 1240;
-            setInterval(() => {
-                count += Math.floor(Math.random() * 3);
-                document.getElementById('visitorCount').innerText = count.toLocaleString();
-            }, 5000);
+        // دالة حماية من الـ XSS (Sanitize input)
+        function sanitizeInput(text) {
+            const div = document.createElement('div');
+            div.innerText = text;
+            return div.innerHTML;
         }
 
-        function showLiveToasts() {
-            const users = ["أحمد من الرياض", "سارة من الخرطوم", "منى من دبي", "عمر من جدة", "خالد من بورتسودان", "ليلى من لندن"];
-            const toast = document.getElementById('liveToast');
-            setInterval(() => {
-                const user = users[Math.floor(Math.random() * users.length)];
-                document.getElementById('toastUser').innerText = user;
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 5000);
-            }, 15000);
-        }
-
-        function applyTranslations() {
-            const isEn = CONFIG.lang === 'en';
-            document.getElementById('mainHtml').dir = isEn ? 'ltr' : 'rtl';
-            document.querySelectorAll('[data-ar]').forEach(el => {
-                el.innerText = isEn ? el.getAttribute('data-en') : el.getAttribute('data-ar');
+        function switchCurrency(country) {
+            const data = PRICING[country];
+            document.getElementById('priceSutra').innerText = `${data.sutra} ${data.curr}`;
+            document.getElementById('priceGold').innerText = `${data.gold} ${data.curr}`;
+            document.getElementById('priceVIP').innerText = `${data.vip} ${data.curr}`;
+            
+            const buttons = document.querySelectorAll('#pricing button');
+            buttons.forEach(b => {
+                b.classList.remove('bg-white', 'shadow-sm', 'text-green-700');
+                b.classList.add('text-slate-500');
             });
-            document.getElementById('langBtn').innerText = isEn ? 'العربية' : 'English';
+            event.currentTarget.classList.add('bg-white', 'shadow-sm', 'text-green-700');
         }
 
-        function toggleLang() {
-            CONFIG.lang = CONFIG.lang === 'ar' ? 'en' : 'ar';
-            localStorage.setItem('app_lang', CONFIG.lang);
-            applyTranslations();
-            updatePricingDisplay();
+        function toggleModal(id, show) {
+            document.getElementById(id).classList.toggle('hidden', !show);
         }
 
-        async function detectLocation() {
-            try {
-                const res = await fetch('https://ipapi.co/json/');
-                const data = await res.json();
-                if(CONFIG.pricingMatrix[data.country_code]) CONFIG.userCountry = data.country_code;
-            } catch (e) {}
-            updatePricingDisplay();
+        function runQuiz() {
+            document.getElementById('quizStep').classList.add('hidden');
+            document.getElementById('quizResult').classList.remove('hidden');
         }
 
-        function updatePricingDisplay() {
-            const p = CONFIG.pricingMatrix[CONFIG.userCountry];
-            document.getElementById('price-sutra').innerHTML = `${p.sutra} <small>${p.currency}</small>`;
-            document.getElementById('price-gold').innerHTML = `${p.gold} <small>${p.currency}</small>`;
-            document.getElementById('price-vip').innerHTML = `${p.vip} <small>${p.currency}</small>`;
+        function showToast() {
+            const users = ["أحمد - الرياض", "سارة - بورتسودان", "منى - دبي", "خالد - الخرطوم", "سلمى - القاهرة"];
+            setInterval(() => {
+                const randomUser = users[Math.floor(Math.random() * users.length)];
+                document.getElementById('toastUser').innerText = sanitizeInput(randomUser);
+                document.getElementById('liveToast').classList.add('show');
+                setTimeout(() => document.getElementById('liveToast').classList.remove('show'), 5000);
+            }, 12000);
         }
 
-        function safeRedirect(plan) {
-            const p = CONFIG.pricingMatrix[CONFIG.userCountry];
-            const msg = `أريد تفعيل ${plan} (${p.currency})`;
-            window.open(`https://wa.me/${CONFIG.adminPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+        function buyPlan(plan) {
+            const safePlan = encodeURIComponent(plan);
+            window.open(`https://wa.me/249127910778?text=${encodeURIComponent('أريد تفعيل باقة (' + plan + ') في منصة نصيب')}`);
         }
 
-        function toggleModal(show) { toggleEl('loginModal', show); }
-        function toggleRegModal(show) { toggleEl('regModal', show); }
-        function toggleEl(id, show) {
-            const el = document.getElementById(id);
-            if(!el) return;
-            if(show) { el.classList.remove('hidden'); setTimeout(() => el.classList.add('opacity-100'), 10); }
-            else { el.classList.remove('opacity-100'); setTimeout(() => el.classList.add('hidden'), 300); }
+        // محاكاة تسجيل الدخول الاجتماعي
+        function socialLogin(provider) {
+            console.log(`Logging in with ${provider}...`);
+            alert(`سيتم توجيهك لصفحة تسجيل دخول ${provider} الآمنة...`);
+            // هنا يتم الربط مع Firebase Auth أو أي API آخر
         }
 
-        function updateFileName(input) {
-            document.getElementById('fileNameText').innerText = input.files[0] ? input.files[0].name : "تم الاختيار";
-        }
-
-        async function secureSubmit() {
-            const file = document.getElementById('regPhoto').files[0];
-            if(!file) return alert("الرجاء رفع الصورة");
-            document.getElementById('loadingOverlay').style.display = 'flex';
-            try {
-                const fd = new FormData(); fd.append("image", file);
-                const res = await fetch(`https://api.imgbb.com/1/upload?key=${CONFIG.imgbbKey}`, { method: "POST", body: fd });
-                const json = await res.json();
-                if(json.success) {
-                    const msg = `🛡️ طلب تسجيل جديد:\n👤 الاسم: ${document.getElementById('regName').value}\n🎂 العمر: ${document.getElementById('regAge').value}\n📏 الطول: ${document.getElementById('regHeight').value}\n🖼️ الصورة: ${json.data.url}`;
-                    window.open(`https://wa.me/${CONFIG.adminPhone}?text=${encodeURIComponent(msg)}`, '_blank');
-                    location.reload();
-                }
-            } catch(e) { 
-                document.getElementById('loadingOverlay').style.display = 'none'; 
-                alert("حدث خطأ، يرجى المحاولة لاحقاً");
-            }
-        }
-
-        async function handleLogin() {
-            const u = document.getElementById('loginName').value;
-            const p = document.getElementById('loginPass').value;
-            const res = await fetch(CONFIG.sheetUrl);
-            const text = await res.text();
-            if(text.includes(u) && text.includes(p)) {
-                localStorage.setItem('naseeb_logged', 'true');
-                localStorage.setItem('userName', u);
+        async function processRegistration() {
+            const name = document.getElementById('regName').value;
+            if(!name || name.length < 3) return alert("الرجاء إدخال اسم صحيح");
+            
+            const safeName = sanitizeInput(name);
+            localStorage.setItem('naseeb_logged', 'true');
+            localStorage.setItem('userName', safeName);
+            
+            // إظهار لودينج بسيط قبل الانتقال
+            event.target.innerText = "جاري التحقق...";
+            setTimeout(() => {
                 window.location.href = 'members.html';
-            } else {
-                alert("بيانات الدخول غير صحيحة");
-            }
+            }, 1000);
         }
 
         window.onload = () => {
-            applyTranslations();
-            detectLocation();
-            startVisitorCounter();
-            showLiveToasts();
-            if(localStorage.getItem('naseeb_logged') === 'true') {
-                const navBtn = document.getElementById('loginBtnNav');
-                const userSec = document.getElementById('userSection');
-                if(navBtn) navBtn.classList.add('hidden');
-                if(userSec) {
-                    userSec.classList.remove('hidden');
-                    userSec.innerHTML = `<span class="font-black text-green-900 text-xs">🛡️ ${localStorage.getItem('userName')}</span>`;
-                }
-            }
+            switchCurrency('SD');
+            showToast();
+            let count = 14203;
+            setInterval(() => {
+                count += Math.floor(Math.random() * 5);
+                document.getElementById('liveCounter').innerText = `${count.toLocaleString()} مشترك متصل الآن`;
+            }, 3000);
         };
     </script>
 </body>
