@@ -11,7 +11,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     
     <style>
         :root { --main-font: 'Cairo', sans-serif; --primary-green: #15803d; --accent-gold: #fbbf24; }
@@ -46,6 +46,8 @@
         
         .verified-badge { color: #3b82f6; font-size: 1.2rem; }
         .locked-gallery { background: #f1f5f9; border: 2px dashed #cbd5e1; height: 150px; border-radius: 2rem; display: flex; flex-direction: column; items-center justify-content: center; gap-2; }
+        @keyframes animate-slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slide-up { animation: animate-slide-up 0.5s ease-out forwards; }
     </style>
 </head>
 <body class="p-4 md:p-8">
