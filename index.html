@@ -3,360 +3,350 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <title>نصيب العالمي | المنصة السودانية الأولى للستر والزواج الحلال</title>
-    <meta name="description" content="منصة نصيب العالمي هي الخيار الأول للسودانيين في الداخل والخارج للبحث عن شريك الحياة بالستر والحلال. خصوصية تامة، أعضاء موثقون، وقصص نجاح حقيقية.">
-    <meta name="keywords" content="زواج سوداني, نصيب, خطابة سودانية, زواج المغتربين السودانيين, الستر, حلال, سودانيز زواج, زواج الخرطوم">
-    <meta name="author" content="نصيب للحلول الرقمية">
-    <meta name="robots" content="index, follow">
-    
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="نصيب العالمي - منصة الستر والزواج الحلال">
-    <meta property="og:description" content="ابحث عن نصيبك في بيئة آمنة وموثوقة. أكثر من 8000 عضو في انتظارك.">
-    <meta property="og:image" content="https://naseeb-global.com/og-image.jpg"> 
-    <meta property="og:url" content="https://naseeb-global.com">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "نصيب العالمي",
-      "url": "https://naseeb-global.com/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://naseeb-global.com/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-
+    <title id="pageTitle">انضم إلينا | نصيب العالمي</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        body { font-family: 'Cairo', sans-serif; background: #ffffff; scroll-behavior: smooth; overflow-x: hidden; }
-        .hero-mesh { background: radial-gradient(at 0% 0%, rgba(21, 128, 61, 0.15) 0, transparent 50%), radial-gradient(at 50% 0%, rgba(251, 191, 36, 0.1) 0, transparent 50%); }
-        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
-        .btn-premium { background: linear-gradient(45deg, #15803d, #166534); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .btn-premium:hover { transform: scale(1.05); box-shadow: 0 15px 30px -10px rgba(21, 128, 61, 0.5); }
+        :root { --primary: #065f46; --accent: #d97706; --bg-light: #f0fdf4; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg-light); min-height: 100vh; transition: 0.3s; -webkit-tap-highlight-color: transparent; }
+        [dir="ltr"] { font-family: 'Poppins', sans-serif; }
         
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-slide-up { animation: slideUp 0.6s ease-out forwards; }
+        /* منع تصوير أو سحب الصور للخصوصية */
+        img { pointer-events: none; user-select: none; -webkit-user-drag: none; }
+
+        .step-content { display: none; animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .step-content.active { display: block; }
+        @keyframes slideIn { from { transform: translateX(30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        .progress-dot { width: 12px; height: 12px; border-radius: 50%; background: #d1d5db; transition: 0.4s; position: relative; }
+        .progress-dot.active { background: var(--primary); transform: scale(1.4); box-shadow: 0 0 15px rgba(6, 95, 70, 0.3); }
         
-        #liveToast { position: fixed; bottom: 30px; right: 20px; z-index: 5000; transform: translateX(120%); transition: 0.6s ease; }
-        #liveToast.show { transform: translateX(0); }
+        /* قوة كلمة السر محسنة */
+        #passStrength { height: 6px; border-radius: 10px; transition: 0.5s; width: 0%; margin-top: 8px; background: #e2e8f0; }
         
-        .stat-badge { @apply bg-white/50 backdrop-blur-sm border border-green-100 px-4 py-2 rounded-2xl text-xs font-black text-green-800 flex items-center gap-2 shadow-sm; }
-        .search-input { @apply bg-white border border-slate-200 p-4 rounded-2xl w-full outline-none focus:border-green-500 font-bold text-slate-700 transition-all; }
+        .live-preview-card { background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.8); transition: 0.4s transform; }
+        .live-preview-card:hover { transform: translateY(-5px); }
+
+        #termsModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(12px); }
+        #termsModal.active { display: flex; }
+
+        .otp-input { width: 50px; height: 60px; text-align: center; font-size: 1.5rem; font-weight: 800; border-radius: 15px; border: 2px solid #e2e8f0; background: #fff; transition: 0.3s; }
+        .otp-input:focus { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); outline: none; }
+
+        .glass-btn { background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); border: 1px solid #e2e8f0; }
         
-        /* تحسين أزرار التواصل الاجتماعي */
-        .social-btn { @apply w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110; }
+        /* تحسين مظهر البنك */
+        #bank { border: 2px dashed rgba(251, 191, 36, 0.3); }
     </style>
 </head>
-<body class="hero-mesh">
+<body class="p-4 md:p-8">
 
-    <div id="liveToast" class="glass-card shadow-2xl p-4 rounded-3xl flex items-center gap-4 min-w-[280px] border-l-4 border-green-600">
-        <div class="relative">
-            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-xl">💍</div>
-            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
-        </div>
-        <div>
-            <p id="toastUser" class="font-black text-slate-800 text-sm"></p>
-            <p class="text-[10px] text-slate-500 font-bold">وجد شريك حياته الآن عبر نصيب</p>
+    <button onclick="toggleLang()" class="fixed top-5 left-5 z-[100] glass-btn px-5 py-2 rounded-full font-black text-xs shadow-lg flex items-center gap-2 hover:bg-emerald-800 hover:text-white transition-all active:scale-90">
+        <i class="fas fa-globe"></i>
+        <span id="langLabel">English</span>
+    </button>
+
+    <div id="termsModal">
+        <div class="bg-white w-full max-w-lg rounded-[3rem] p-10 shadow-2xl overflow-y-auto max-h-[90vh] mx-4 border-t-[12px] border-emerald-900">
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-emerald-50 text-emerald-800 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner"><i class="fas fa-hand-holding-heart"></i></div>
+                <h3 class="text-2xl font-black text-slate-800" data-ar="ميثاق الغليظ والستر 💍" data-en="The Covenant of Honor 💍">ميثاق الغليظ والستر 💍</h3>
+            </div>
+            <div id="termsContent" class="text-sm text-slate-600 space-y-5 leading-relaxed font-bold"></div>
+            <button onclick="document.getElementById('termsModal').classList.remove('active')" class="w-full mt-10 bg-emerald-800 text-white py-5 rounded-2xl font-black shadow-xl hover:bg-emerald-900 transition-all active:scale-95" data-ar="أقسمت بالله.. موافق ✅" data-en="I Swear.. I Agree ✅">أقسمت بالله.. موافق ✅</button>
         </div>
     </div>
 
-    <nav class="sticky top-0 z-[1000] glass-card px-6 py-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
-                <div class="w-10 h-10 bg-green-700 rounded-2xl flex items-center justify-center text-white shadow-lg rotate-3"><i class="fas fa-ring text-lg"></i></div>
-                <span class="font-black text-green-900 text-2xl tracking-tighter">نصيب</span>
-            </div>
-            <div class="hidden md:flex gap-8 items-center">
-                <a href="#features" class="font-bold text-slate-600 hover:text-green-700">المميزات</a>
-                <a href="#stories" class="font-bold text-slate-600 hover:text-green-700">قصص النجاح</a>
-                <a href="#pricing" class="font-bold text-slate-600 hover:text-green-700">الباقات</a>
-            </div>
-            <div class="flex gap-3">
-                <button onclick="toggleModal('regModal', true)" class="hidden md:block bg-slate-100 text-slate-800 px-6 py-2 rounded-full font-black hover:bg-slate-200 transition">دخول</button>
-                <button onclick="toggleModal('regModal', true)" class="btn-premium text-white px-8 py-2.5 rounded-full font-black shadow-lg">ابدأ مجاناً</button>
-            </div>
-        </div>
-    </nav>
-
-    <section class="container mx-auto px-6 py-16 md:py-24 text-center relative overflow-hidden">
-        <div class="inline-flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full mb-6 border border-green-100">
-            <span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span></span>
-            <span class="text-xs font-black text-green-800" id="liveCounter">14,203 مشترك متصل الآن</span>
-        </div>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mt-12">
         
-        <h1 class="text-5xl md:text-7xl font-black text-slate-900 leading-tight mb-6 animate-slide-up">
-            نصيب العالمي..<br><span class="text-green-700">حيث تلتقي القلوب الجادة للستر</span>
-        </h1>
-
-        <div class="flex flex-wrap justify-center gap-3 mb-10">
-            <div class="stat-badge"><i class="fas fa-heart text-red-500"></i> 452 حالة زواج تمت هذا العام</div>
-            <div class="stat-badge"><i class="fas fa-user-shield text-blue-500"></i> 8,000 عضو موثق</div>
-            <div class="stat-badge"><i class="fas fa-map-marker-alt text-orange-500"></i> يتواجد الآن 120 عضو من مدينتك</div>
-        </div>
-
-        <div class="max-w-4xl mx-auto glass-card p-6 rounded-[2.5rem] shadow-2xl border-white mb-12 animate-slide-up" style="animation-delay: 0.2s">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                    <label class="block text-right text-xs font-black text-slate-400 mb-2 mr-2">أنا</label>
-                    <select class="search-input"><option>رجل</option><option>امرأة</option></select>
-                </div>
-                <div>
-                    <label class="block text-right text-xs font-black text-slate-400 mb-2 mr-2">أبحث عن</label>
-                    <select class="search-input"><option>امرأة</option><option>رجل</option></select>
-                </div>
-                <div>
-                    <label class="block text-right text-xs font-black text-slate-400 mb-2 mr-2">التواجد</label>
-                    <select class="search-input"><option>داخل السودان 🇸🇩</option><option>المغتربين 🌍</option></select>
-                </div>
-                <div class="flex items-end">
-                    <button onclick="toggleModal('regModal', true)" class="w-full btn-premium text-white h-[58px] rounded-2xl font-black text-lg">ابحث الآن</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="features" class="py-20 bg-slate-50 px-6">
-        <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-black mb-16">لماذا يختار الجادون منصة نصيب؟</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-right">
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-md transition">
-                    <div class="w-16 h-16 bg-green-100 text-green-700 rounded-2xl flex items-center justify-center text-3xl mb-6"><i class="fas fa-eye-slash"></i></div>
-                    <h3 class="font-black text-xl mb-4">خصوصية سودانية</h3>
-                    <p class="text-slate-500 font-bold text-sm leading-relaxed">صور محمية بنظام الـ Blur المطور، لا يراها إلا من تأذن له وبعد التأكد من جديته التامة.</p>
-                </div>
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-md transition">
-                    <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mb-6"><i class="fas fa-filter"></i></div>
-                    <h3 class="font-black text-xl mb-4">فلترة الجادين</h3>
-                    <p class="text-slate-500 font-bold text-sm leading-relaxed">نظام اشتراكات ذكي يمنع المتلاعبين ويضمن وجود النخبة الباحثة عن الحلال فقط في مجتمعنا.</p>
-                </div>
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-md transition">
-                    <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-6"><i class="fas fa-check-double"></i></div>
-                    <h3 class="font-black text-xl mb-4">توثيق الهوية</h3>
-                    <p class="text-slate-500 font-bold text-sm leading-relaxed">نمنح العلامة الزرقاء للأعضاء الموثقين بالرقم الوطني أو جواز السفر لزيادة الثقة والأمان.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="stories" class="py-24 px-6 container mx-auto overflow-hidden">
-        <h2 class="text-3xl font-black text-center mb-16">قصص نجاح من قلب الواقع</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="glass-card p-10 rounded-[3rem] border-green-50 relative">
-                <i class="fas fa-quote-right absolute top-8 left-8 text-green-100 text-6xl"></i>
-                <p class="text-slate-600 font-bold italic mb-8 relative z-10 leading-relaxed">"بفضل الله ثم نصيب، وجدت شريك حياتي المغترب في قطر وتم العقد في شهر واحد. الخصوصية كانت أهم شيء بالنسبة لي."</p>
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-green-700 rounded-full flex items-center justify-center text-white font-black">م. أ</div>
-                    <span class="font-black text-slate-800 underline">عروس من الخرطوم</span>
-                </div>
-            </div>
-            <div class="glass-card p-10 rounded-[3rem] border-green-50 relative">
-                <i class="fas fa-quote-right absolute top-8 left-8 text-green-100 text-6xl"></i>
-                <p class="text-slate-600 font-bold italic mb-8 relative z-10 leading-relaxed">"كنت متخوف من المواقع، لكن نصيب غير نظرتي. الجدية والتوثيق الموجود يخليك تختار وأنت مرتاح البال."</p>
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-white font-black">ع. س</div>
-                    <span class="font-black text-slate-800 underline">مغترب في السعودية</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="bg-slate-900 py-20 px-6 text-white text-center">
-        <div class="max-w-2xl mx-auto">
-            <h2 class="text-3xl font-black mb-6">اختبر فرصة عثورك على شريك حياتك ⚡</h2>
-            <div id="quizBox" class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10">
-                <div id="quizStep">
-                    <p class="text-slate-400 mb-6 font-bold">ما هو عمرك الحالي؟</p>
-                    <div class="grid grid-cols-3 gap-3">
-                        <button onclick="runQuiz()" class="bg-white/10 p-4 rounded-xl hover:bg-green-700 transition font-black">20-30</button>
-                        <button onclick="runQuiz()" class="bg-white/10 p-4 rounded-xl hover:bg-green-700 transition font-black">30-40</button>
-                        <button onclick="runQuiz()" class="bg-white/10 p-4 rounded-xl hover:bg-green-700 transition font-black">40+</button>
+        <div class="hidden lg:block sticky top-10">
+            <p class="text-emerald-800 font-black mb-6 text-center text-sm animate-pulse" data-ar="معاينة بروفايلك العالمي 🤳" data-en="Global Profile Preview 🤳">معاينة بروفايلك العالمي 🤳</p>
+            <div class="live-preview-card">
+                <div class="relative h-[450px] bg-slate-100 overflow-hidden">
+                    <img id="previewImg" src="https://ui-avatars.com/api/?name=User&background=065f46&color=fff" class="w-full h-full object-cover blur-[35px] transition-all duration-1000">
+                    <div class="absolute inset-0 bg-gradient-to-t from-emerald-950 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 w-full p-8 text-white">
+                        <div class="flex items-center gap-2 mb-2">
+                            <h3 id="previewName" class="text-3xl font-black">...</h3>
+                            <i class="fas fa-check-circle text-blue-400 text-lg shadow-sm"></i>
+                        </div>
+                        <p id="previewCity" class="text-sm font-bold text-emerald-100 opacity-80">...</p>
                     </div>
                 </div>
-                <div id="quizResult" class="hidden animate-pulse">
-                    <p class="text-green-400 font-black text-3xl mb-2">هناك 150 شخص!</p>
-                    <p class="text-slate-300 font-bold mb-6">يطابقون مواصفاتك في نصيب الآن</p>
-                    <button onclick="toggleModal('regModal', true)" class="bg-white text-slate-900 px-8 py-3 rounded-full font-black">سجل لرؤيتهم</button>
+                <div class="p-8 grid grid-cols-3 gap-4 bg-white">
+                    <div class="bg-emerald-50 p-4 rounded-2xl text-center shadow-sm"><p class="text-[10px] text-emerald-600 font-black mb-1" data-ar="العمر" data-en="Age">العمر</p><b id="previewAge" class="text-sm text-emerald-900">-</b></div>
+                    <div class="bg-emerald-50 p-4 rounded-2xl text-center shadow-sm"><p class="text-[10px] text-emerald-600 font-black mb-1" data-ar="المهنة" data-en="Job">المهنة</p><b id="previewJob" class="text-sm text-emerald-900 truncate block">-</b></div>
+                    <div class="bg-emerald-50 p-4 rounded-2xl text-center shadow-sm"><p class="text-[10px] text-emerald-600 font-black mb-1" data-ar="الحالة" data-en="Status">الحالة</p><b id="previewStatus" class="text-sm text-emerald-900">-</b></div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <section id="pricing" class="py-24 px-6 container mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-black text-slate-900 mb-4">باقات تناسب رحلتك</h2>
-            <div class="inline-flex bg-slate-100 p-1 rounded-2xl mt-8">
-                <button id="currBtnSDG" onclick="switchCurrency('SD')" class="px-6 py-2 rounded-xl bg-white shadow-sm font-black text-green-700">جنيه سوداني</button>
-                <button id="currBtnSAR" onclick="switchCurrency('SA')" class="px-6 py-2 rounded-xl font-black text-slate-500">ريال سعودي</button>
-                <button id="currBtnUSD" onclick="switchCurrency('DEFAULT')" class="px-6 py-2 rounded-xl font-black text-slate-500">دولار أمريكي</button>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="glass-card p-10 rounded-[3rem] border-slate-100">
-                <h3 class="text-xl font-black mb-4">باقة الستر</h3>
-                <div class="my-6"><span class="text-4xl font-black text-green-700" id="priceSutra">...</span></div>
-                <ul class="space-y-4 text-sm font-bold text-slate-600 mb-10 text-right">
-                    <li><i class="fas fa-check text-green-500 ml-2"></i> رؤية جميع الملفات</li>
-                    <li><i class="fas fa-check text-green-500 ml-2"></i> 10 إعجابات يومياً</li>
-                </ul>
-                <button onclick="buyPlan('الستر')" class="w-full py-4 rounded-2xl bg-slate-900 text-white font-black">اشترك الآن</button>
-            </div>
-            <div class="bg-green-800 p-10 rounded-[3rem] shadow-2xl relative scale-105 border-4 border-amber-400 text-white">
-                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-amber-400 text-green-900 px-6 py-1 rounded-full text-xs font-black">الأكثر طلباً 🔥</div>
-                <h3 class="text-xl font-black mb-4">الباقة الذهبية</h3>
-                <div class="my-6"><span class="text-4xl font-black text-white" id="priceGold">...</span></div>
-                <ul class="space-y-4 text-sm font-bold text-green-100 mb-10 text-right">
-                    <li><i class="fas fa-star text-amber-400 ml-2"></i> تمييز الملف بإطار ذهبي</li>
-                    <li><i class="fas fa-check text-amber-400 ml-2"></i> 100 محادثة شهرياً</li>
-                </ul>
-                <button onclick="buyPlan('الذهبية')" class="w-full py-4 rounded-2xl bg-white text-green-800 font-black">فعل الآن</button>
-            </div>
-            <div class="bg-slate-900 p-10 rounded-[3rem] text-white">
-                <h3 class="text-xl font-black mb-4">باقة VIP</h3>
-                <div class="my-6"><span class="text-4xl font-black text-amber-400" id="priceVIP">...</span></div>
-                <ul class="space-y-4 text-sm font-bold text-slate-400 mb-10 text-right">
-                    <li><i class="fas fa-crown text-amber-500 ml-2"></i> خطابة خاصة للملف</li>
-                    <li><i class="fas fa-check text-amber-500 ml-2"></i> تواصل غير محدود</li>
-                </ul>
-                <button onclick="buyPlan('VIP')" class="w-full py-4 rounded-2xl bg-amber-500 text-slate-900 font-black">اطلب الخدمة</button>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-white border-t py-12 text-center">
-        <div class="container mx-auto px-6">
-            <div class="flex justify-center gap-6 mb-8">
-                <a href="https://facebook.com/naseeb" class="social-btn bg-blue-600 text-white shadow-lg"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://twitter.com/naseeb" class="social-btn bg-sky-500 text-white shadow-lg"><i class="fab fa-twitter"></i></a>
-                <a href="https://instagram.com/naseeb" class="social-btn bg-pink-600 text-white shadow-lg"><i class="fab fa-instagram"></i></a>
-                <a href="https://t.me/naseeb_sudan" class="social-btn bg-blue-400 text-white shadow-lg"><i class="fab fa-telegram-plane"></i></a>
-                <a href="https://wa.me/249127910778" class="social-btn bg-green-500 text-white shadow-lg"><i class="fab fa-whatsapp"></i></a>
-            </div>
-            <div class="mb-6 flex flex-wrap justify-center gap-6 text-sm font-bold text-slate-500">
-                <a href="#" class="hover:text-green-700">سياسة الخصوصية</a>
-                <a href="#" class="hover:text-green-700">شروط الاستخدام</a>
-                <a href="#" class="hover:text-green-700">اتصل بنا</a>
-                <a href="#" class="hover:text-green-700">الأسئلة الشائعة</a>
-            </div>
-            <p class="text-slate-400 text-xs font-bold">© 2025 منصة نصيب العالمي. جميع الحقوق محفوظة لشركة الستر للحلول الرقمية.</p>
-        </div>
-    </footer>
-
-    <div id="regModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-md z-[5000] flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md rounded-[3rem] p-10 shadow-2xl relative">
-            <button onclick="toggleModal('regModal', false)" class="absolute top-6 left-6 text-slate-300 hover:text-red-500"><i class="fas fa-times-circle text-2xl"></i></button>
-            <h3 class="text-2xl font-black mb-2 text-center">مرحباً بك في نصيب 💍</h3>
-            <p class="text-center text-slate-500 text-sm font-bold mb-8">اختر الطريقة الأنسب للانضمام إلينا</p>
+        <div class="bg-white rounded-[3.5rem] shadow-2xl p-8 md:p-12 border border-emerald-100/50 relative overflow-hidden">
             
-            <div class="grid grid-cols-2 gap-4 mb-8">
-                <button onclick="socialLogin('Google')" class="flex items-center justify-center gap-2 border border-slate-200 p-3 rounded-2xl hover:bg-slate-50 transition font-bold text-sm">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="قوقل"> قوقل
-                </button>
-                <button onclick="socialLogin('Facebook')" class="flex items-center justify-center gap-2 bg-[#1877F2] text-white p-3 rounded-2xl hover:bg-blue-700 transition font-bold text-sm">
-                    <i class="fab fa-facebook text-lg"></i> فيسبوك
-                </button>
+            <div class="flex justify-between items-center mb-12 px-2">
+                <div class="progress-dot active" id="dot1"></div>
+                <div class="h-1 flex-1 bg-slate-100 mx-3 rounded-full"><div id="line1" class="h-full bg-emerald-600 transition-all duration-700 w-0"></div></div>
+                <div class="progress-dot" id="dot2"></div>
+                <div class="h-1 flex-1 bg-slate-100 mx-3 rounded-full"><div id="line2" class="h-full bg-emerald-600 transition-all duration-700 w-0"></div></div>
+                <div class="progress-dot" id="dot3"></div>
+                <div class="h-1 flex-1 bg-slate-100 mx-3 rounded-full"><div id="line3" class="h-full bg-emerald-600 transition-all duration-700 w-0"></div></div>
+                <div class="progress-dot" id="dot4"></div>
             </div>
 
-            <div class="relative mb-8 text-center">
-                <span class="bg-white px-4 relative z-10 text-xs font-bold text-slate-400">أو عبر البريد</span>
-                <hr class="absolute top-1/2 w-full border-slate-100">
-            </div>
+            <form id="regForm" action="https://formspree.io/f/mdandyav" method="POST" class="space-y-6">
+                
+                <div class="step-content active" id="step1">
+                    <h2 class="text-3xl font-black text-slate-800 mb-2" data-ar="أمان حسابك 🛡️" data-en="Account Security 🛡️">أمان حسابك 🛡️</h2>
+                    <p class="text-sm text-slate-400 font-bold mb-8" data-ar="ابدأ رحلة الستر بخصوصية تامة" data-en="Start your journey with full privacy">ابدأ رحلة الستر بخصوصية تامة</p>
+                    
+                    <div class="space-y-5">
+                        <input type="email" name="email" id="emailInp" required placeholder="البريد الإلكتروني" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-emerald-600 outline-none font-bold transition-all">
+                        <input type="tel" name="phone" id="phoneInp" required placeholder="رقم الهاتف" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-emerald-600 outline-none font-bold transition-all">
+                        <div class="relative">
+                            <input type="password" name="password" id="passInp" onkeyup="checkPassStrength(this.value)" required placeholder="كلمة السر" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-emerald-600 outline-none font-bold transition-all">
+                            <div id="passStrength"></div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="verifyData()" class="w-full mt-10 bg-slate-950 text-white py-6 rounded-2xl font-black shadow-2xl flex items-center justify-center gap-3 transition-transform active:scale-95">
+                        <span data-ar="التحقق والمتابعة" data-en="Verify & Continue">التحقق والمتابعة</span>
+                        <i class="fas fa-chevron-left ltr:rotate-180"></i>
+                    </button>
+                </div>
 
-            <input type="text" id="regName" placeholder="الاسم الكامل" class="search-input mb-4">
-            <input type="password" id="regPass" placeholder="كلمة المرور" class="search-input mb-6">
-            <button onclick="processRegistration()" class="w-full btn-premium text-white py-5 rounded-[2rem] font-black shadow-xl">تأكيد التسجيل</button>
+                <div id="otpSection" class="hidden text-center space-y-8 animate-pulse">
+                    <h3 class="text-xl font-black text-slate-800" data-ar="أدخل رمز التحقق 🗝️" data-en="Enter Verification Code 🗝️">أدخل رمز التحقق 🗝️</h3>
+                    <div class="flex justify-center gap-3" dir="ltr">
+                        <input type="text" maxlength="1" class="otp-input shadow-sm">
+                        <input type="text" maxlength="1" class="otp-input shadow-sm">
+                        <input type="text" maxlength="1" class="otp-input shadow-sm">
+                        <input type="text" maxlength="1" class="otp-input shadow-sm">
+                    </div>
+                    <button type="button" onclick="nextStep(2)" class="w-full bg-emerald-700 text-white py-5 rounded-2xl font-black shadow-lg" data-ar="تأكيد الرمز" data-en="Confirm Code">تأكيد الرمز</button>
+                </div>
+
+                <div class="step-content" id="step2">
+                    <h2 class="text-3xl font-black text-slate-800 mb-8" data-ar="بطاقتك الشخصية 👤" data-en="Personal Card 👤">بطاقتك الشخصية 👤</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" name="name" id="nameInp" onkeyup="updatePreview(); saveDraft()" required placeholder="الاسم المستعار" class="p-5 rounded-2xl bg-slate-50 border-none font-bold outline-none focus:ring-2 focus:ring-emerald-600">
+                        <input type="text" name="city" id="cityInp" onkeyup="updatePreview(); saveDraft()" required placeholder="المدينة" class="p-5 rounded-2xl bg-slate-50 border-none font-bold outline-none focus:ring-2 focus:ring-emerald-600">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mt-5">
+                        <input type="number" name="age" id="ageInp" onkeyup="updatePreview()" required placeholder="العمر" class="p-5 rounded-2xl bg-slate-50 border-none font-bold outline-none focus:ring-2 focus:ring-emerald-600">
+                        <select name="status" id="statusInp" onchange="updatePreview()" class="p-5 rounded-2xl bg-slate-50 border-none font-bold font-black outline-none focus:ring-2 focus:ring-emerald-600">
+                            <option value="أعزب/آنسة">أعزب/آنسة</option>
+                            <option value="مطلق/ة">مطلق/ة</option>
+                            <option value="أرمل/ة">أرمل/ة</option>
+                        </select>
+                    </div>
+                    <input type="text" name="job" id="jobInp" onkeyup="updatePreview()" required placeholder="المهنة / طبيعة العمل" class="w-full p-5 mt-5 rounded-2xl bg-slate-50 border-none font-bold outline-none focus:ring-2 focus:ring-emerald-600">
+                    <button type="button" onclick="nextStep(3)" class="w-full mt-10 bg-emerald-700 text-white py-6 rounded-2xl font-black shadow-xl" data-ar="المرحلة التالية" data-en="Next Stage">المرحلة التالية</button>
+                </div>
+
+                <div class="step-content" id="step3">
+                    <h2 class="text-3xl font-black text-slate-800 mb-8" data-ar="المواصفات والستر 📏" data-en="Specs & Privacy 📏">المواصفات والستر 📏</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="number" name="height" placeholder="الطول (سم)" class="p-5 rounded-2xl bg-slate-50 border-none font-bold outline-none">
+                        <input type="number" name="weight" placeholder="الوزن (كجم)" class="p-5 rounded-2xl bg-slate-50 border-none font-bold outline-none">
+                    </div>
+                    <textarea name="requirements" placeholder="ماذا تطلب في شريك حياتك؟" class="w-full h-32 p-5 mt-5 rounded-2xl bg-slate-50 border-none font-bold outline-none resize-none"></textarea>
+                    
+                    <div class="mt-6 p-6 border-2 border-dashed border-emerald-200 rounded-[2rem] text-center bg-emerald-50/50 group hover:border-emerald-500 transition-all">
+                        <p class="text-[10px] font-black text-emerald-700 mb-3" data-ar="ارفع صورتك (ستكون مموهة تلقائياً)" data-en="Upload Photo (Automatically Blurred)">ارفع صورتك (ستكون مموهة تلقائياً)</p>
+                        <input type="file" id="pic" accept="image/*" onchange="handleImgPreview(this)" required class="text-xs w-full cursor-pointer">
+                    </div>
+                    <button type="button" onclick="nextStep(4)" class="w-full mt-10 bg-emerald-700 text-white py-6 rounded-2xl font-black shadow-xl" data-ar="تفعيل العضوية" data-en="Activate Membership">تفعيل العضوية</button>
+                </div>
+
+                <div class="step-content" id="step4">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4" data-ar="تفعيل العضوية 💎" data-en="Activation 💎">تفعيل العضوية 💎</h2>
+                    <p id="geoNote" class="text-[10px] text-emerald-600 font-bold mb-6">...</p>
+                    
+                    <select name="plan" id="plan" required class="w-full p-6 rounded-2xl bg-emerald-50 border-2 border-emerald-600 font-black text-emerald-900 shadow-inner">
+                        <option value="" disabled selected data-ar="اختر باقة الستر..." data-en="Choose a plan...">اختر باقة الستر...</option>
+                    </select>
+                    
+                    <div id="bank" class="hidden mt-8 p-8 bg-slate-900 rounded-[2.5rem] text-white text-center shadow-2xl">
+                        <p class="text-[10px] text-slate-400 mb-2" id="paymentMethodLabel" data-ar="حول الرسوم عبر تطبيق بنكك" data-en="Transfer via payment app">حول الرسوم عبر تطبيق بنكك</p>
+                        <p class="text-2xl font-black text-amber-400 select-all tracking-widest" id="accountNum">1705644</p>
+                        <p class="text-[10px] text-slate-400 mt-1" data-ar="باسم: مصعب (نصيب العالمي)" data-en="Name: Musab (Naseeb Global)">باسم: مصعب (نصيب العالمي)</p>
+                        <input type="file" id="receipt" accept="image/*" class="mt-6 block w-full text-[10px] bg-white/10 p-3 rounded-xl">
+                    </div>
+
+                    <div class="flex items-start gap-4 mt-8 p-5 bg-amber-50 rounded-2xl border border-amber-100">
+                        <input type="checkbox" id="termsCheck" required class="mt-1 w-6 h-6 accent-emerald-700">
+                        <label for="termsCheck" class="text-[10px] text-slate-700 font-bold">
+                            <span data-ar="أوافق على" data-en="I agree to">أوافق على</span> 
+                            <button type="button" onclick="document.getElementById('termsModal').classList.add('active')" class="text-emerald-700 underline font-black" data-ar="ميثاق الستر" data-en="Covenant">ميثاق الستر</button> 
+                        </label>
+                    </div>
+
+                    <button type="button" onclick="startSubmit()" id="btn" class="w-full mt-8 bg-emerald-800 text-white font-black py-6 rounded-2xl shadow-2xl flex items-center justify-center gap-3">
+                        <span data-ar="إرسال الطلب والتوثيق 🚀" data-en="Submit & Verify 🚀">إرسال الطلب والتوثيق 🚀</span>
+                    </button>
+                </div>
+
+                <input type="hidden" name="profile_url" id="p_url">
+                <input type="hidden" name="receipt_url" id="r_url">
+            </form>
         </div>
     </div>
 
     <script>
-        const PRICING = {
-            'SD': { curr: 'ج.س', sutra: '15,000', gold: '45,000', vip: '95,000' },
-            'SA': { curr: 'ر.س', sutra: '150', gold: '450', vip: '900' },
-            'DEFAULT': { curr: '$', sutra: '35', gold: '99', vip: '199' }
+        const IMGBB_API = "ef5f93c776a98bfd2a4ef1d6cdeba6bf";
+        let currentLang = 'ar';
+        let isInternational = false;
+
+        const termsData = {
+            ar: `<p>1. أتعهد أمام الله أن هدفي هو الزواج الشرعي فقط.</p><p>2. ألتزم بصدق كامل في كل البيانات.</p><p>3. الصور ستكون مموهة تلقائياً للخصوصية.</p>`,
+            en: `<p>1. I swear my goal is legal marriage only.</p><p>2. I commit to full honesty in all data.</p><p>3. Photos are automatically blurred for privacy.</p>`
         };
 
-        // دالة حماية من الـ XSS (Sanitize input)
-        function sanitizeInput(text) {
-            const div = document.createElement('div');
-            div.innerText = text;
-            return div.innerHTML;
+        const plans = {
+            sudan: [
+                { val: "باقة الستر", txt_ar: "باقة الستر (15,000 SDG)", txt_en: "Sutra Plan (15,000 SDG)" },
+                { val: "باقة VIP", txt_ar: "باقة VIP الملكية (75,000 SDG)", txt_en: "Royal VIP (75,000 SDG)" }
+            ],
+            global: [
+                { val: "Global Gold", txt_ar: "الباقة الذهبية ($70)", txt_en: "Global Gold ($70)" }
+            ]
+        };
+
+        // --- وظائف الميزات المسترجعة ---
+        function saveDraft() {
+            const data = {
+                name: document.getElementById('nameInp').value,
+                city: document.getElementById('cityInp').value
+            };
+            localStorage.setItem('naseeb_draft', JSON.stringify(data));
         }
 
-        function switchCurrency(country) {
-            const data = PRICING[country];
-            document.getElementById('priceSutra').innerText = `${data.sutra} ${data.curr}`;
-            document.getElementById('priceGold').innerText = `${data.gold} ${data.curr}`;
-            document.getElementById('priceVIP').innerText = `${data.vip} ${data.curr}`;
-            
-            const buttons = document.querySelectorAll('#pricing button');
-            buttons.forEach(b => {
-                b.classList.remove('bg-white', 'shadow-sm', 'text-green-700');
-                b.classList.add('text-slate-500');
+        function loadDraft() {
+            const draft = localStorage.getItem('naseeb_draft');
+            if(draft) {
+                const data = JSON.parse(draft);
+                document.getElementById('nameInp').value = data.name || "";
+                document.getElementById('cityInp').value = data.city || "";
+                updatePreview();
+            }
+        }
+
+        async function checkLocation() {
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                isInternational = data.country_code !== 'SD';
+                document.getElementById('geoNote').innerText = currentLang === 'ar' ? 
+                    (isInternational ? "موقعك: دولي 🌍" : "موقعك: السودان 🇸🇩") : "Location Detected";
+                
+                if (isInternational) {
+                    document.getElementById('accountNum').innerText = "musab_naseeb_paypal";
+                }
+                renderPlans();
+            } catch (e) { 
+                isInternational = false; // افتراضي السودان لو فشل
+                renderPlans(); 
+            }
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.getElementById('mainHtml').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('langLabel').innerText = currentLang === 'ar' ? 'English' : 'عربي';
+            document.querySelectorAll('[data-ar]').forEach(el => el.innerText = el.getAttribute(`data-${currentLang}`));
+            document.getElementById('termsContent').innerHTML = termsData[currentLang];
+            renderPlans();
+        }
+
+        function checkPassStrength(pass) {
+            const bar = document.getElementById('passStrength');
+            if (pass.length < 5) { bar.style.width = '30%'; bar.style.background = '#f87171'; }
+            else { bar.style.width = '100%'; bar.style.background = '#059669'; }
+        }
+
+        function verifyData() {
+            if(!document.getElementById('emailInp').value.includes('@')) return alert("Email Error");
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('otpSection').classList.remove('hidden');
+        }
+
+        function nextStep(n) {
+            document.getElementById('otpSection').classList.add('hidden');
+            document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + n).classList.add('active');
+            if(n > 1) document.getElementById('line' + (n-1)).style.width = '100%';
+            document.getElementById('dot' + n).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function updatePreview() {
+            document.getElementById('previewName').innerText = document.getElementById('nameInp').value || "...";
+            document.getElementById('previewCity').innerText = document.getElementById('cityInp').value || "...";
+            document.getElementById('previewAge').innerText = document.getElementById('ageInp').value || "-";
+            document.getElementById('previewJob').innerText = document.getElementById('jobInp').value || "-";
+            document.getElementById('previewStatus').innerText = document.getElementById('statusInp').value || "-";
+        }
+
+        function handleImgPreview(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = document.getElementById('previewImg');
+                    img.src = e.target.result;
+                    img.style.filter = "blur(0px)"; // إزالة التمويه فقط للمشترك أثناء الرفع
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function renderPlans() {
+            const select = document.getElementById('plan');
+            const target = isInternational ? plans.global : plans.sudan;
+            select.innerHTML = `<option value="" disabled selected>${currentLang === 'ar' ? "اختر الباقة..." : "Choose Plan..."}</option>`;
+            target.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.val;
+                opt.innerText = currentLang === 'ar' ? p.txt_ar : p.txt_en;
+                select.appendChild(opt);
             });
-            event.currentTarget.classList.add('bg-white', 'shadow-sm', 'text-green-700');
         }
 
-        function toggleModal(id, show) {
-            document.getElementById(id).classList.toggle('hidden', !show);
+        document.getElementById('plan').onchange = () => document.getElementById('bank').style.display = 'block';
+
+        async function upload(file) {
+            if(!file) return "";
+            const fd = new FormData(); fd.append('image', file);
+            const r = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API}`, {method:'POST', body:fd});
+            const d = await r.json(); return d.success ? d.data.url : "";
         }
 
-        function runQuiz() {
-            document.getElementById('quizStep').classList.add('hidden');
-            document.getElementById('quizResult').classList.remove('hidden');
-        }
+        async function startSubmit() {
+            if(!document.getElementById('termsCheck').checked) return alert("Agree to terms");
+            const btn = document.getElementById('btn');
+            btn.innerText = "..."; btn.disabled = true;
 
-        function showToast() {
-            const users = ["أحمد - الرياض", "سارة - بورتسودان", "منى - دبي", "خالد - الخرطوم", "سلمى - القاهرة"];
-            setInterval(() => {
-                const randomUser = users[Math.floor(Math.random() * users.length)];
-                document.getElementById('toastUser').innerText = sanitizeInput(randomUser);
-                document.getElementById('liveToast').classList.add('show');
-                setTimeout(() => document.getElementById('liveToast').classList.remove('show'), 5000);
-            }, 12000);
-        }
+            const p = await upload(document.getElementById('pic').files[0]);
+            const r = await upload(document.getElementById('receipt').files[0]);
+            document.getElementById('p_url').value = p;
+            document.getElementById('r_url').value = r;
 
-        function buyPlan(plan) {
-            const safePlan = encodeURIComponent(plan);
-            window.open(`https://wa.me/249127910778?text=${encodeURIComponent('أريد تفعيل باقة (' + plan + ') في منصة نصيب')}`);
-        }
+            const res = await fetch(document.getElementById('regForm').action, {
+                method: 'POST', body: new FormData(document.getElementById('regForm')), headers: {'Accept': 'application/json'}
+            });
 
-        // محاكاة تسجيل الدخول الاجتماعي
-        function socialLogin(provider) {
-            console.log(`Logging in with ${provider}...`);
-            alert(`سيتم توجيهك لصفحة تسجيل دخول ${provider} الآمنة...`);
-            // هنا يتم الربط مع Firebase Auth أو أي API آخر
-        }
-
-        async function processRegistration() {
-            const name = document.getElementById('regName').value;
-            if(!name || name.length < 3) return alert("الرجاء إدخال اسم صحيح");
-            
-            const safeName = sanitizeInput(name);
-            localStorage.setItem('naseeb_logged', 'true');
-            localStorage.setItem('userName', safeName);
-            
-            // إظهار لودينج بسيط قبل الانتقال
-            event.target.innerText = "جاري التحقق...";
-            setTimeout(() => {
-                window.location.href = 'members.html';
-            }, 1000);
+            if(res.ok) {
+                localStorage.clear(); // مسح المسودة عند النجاح
+                alert("Success!");
+                window.open(`https://wa.me/249127910778?text=NewRegistration`, '_blank');
+                location.href = "members.html";
+            }
         }
 
         window.onload = () => {
-            switchCurrency('SD');
-            showToast();
-            let count = 14203;
-            setInterval(() => {
-                count += Math.floor(Math.random() * 5);
-                document.getElementById('liveCounter').innerText = `${count.toLocaleString()} مشترك متصل الآن`;
-            }, 3000);
+            document.getElementById('termsContent').innerHTML = termsData.ar;
+            checkLocation();
+            loadDraft();
         };
     </script>
 </body>
