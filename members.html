@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -7,11 +7,11 @@
     <title>أعضاء نصيب | استكشف شريك حياتك في بيئة آمنة</title>
     <meta name="description" content="تصفح قائمة الأعضاء الموثقين في منصة نصيب العالمي. ابحث عن نصيبك حسب المدينة، الحالة الاجتماعية، أو المهنة بكل خصوصية.">
     <meta property="og:title" content="منصة نصيب - قائمة الأعضاء الموثقين">
-    <meta property="og:image" content="https://naseeb-global.com/members-preview.jpg">
+    <meta property="og:image" content="https://i.ibb.co/3kZg5xn/naseeb-preview.jpg">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     
     <style>
         :root { --primary-green: #15803d; --accent-gold: #fbbf24; --royal-blue: #1e40af; }
@@ -29,7 +29,8 @@
         .premium-badge { position: absolute; top: 12px; right: 12px; background: linear-gradient(45deg, #fbbf24, #f59e0b); color: white; padding: 4px 12px; border-radius: 50px; font-size: 10px; font-weight: 900; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .vip-badge { position: absolute; top: 12px; right: 12px; background: linear-gradient(45deg, #1e293b, #0f172a); color: #fbbf24; padding: 4px 12px; border-radius: 50px; font-size: 10px; font-weight: 900; z-index: 10; border: 1px solid #fbbf24; }
         
-        .blur-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 5; backdrop-filter: blur(4px); }
+        .blur-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 5; backdrop-filter: blur(4px); opacity: 0; transition: 0.3s; }
+        .member-card:hover .blur-overlay { opacity: 1; }
         .unlock-btn { background: white; color: var(--primary-green); padding: 8px 16px; border-radius: 50px; font-size: 11px; font-weight: 900; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .unlock-btn:hover { background: var(--primary-green); color: white; transform: scale(1.05); }
 
@@ -42,21 +43,23 @@
         .action-btn { @apply flex-1 py-2 rounded-xl text-[11px] font-black transition-all active:scale-95 flex items-center justify-center gap-1 shadow-sm; }
         
         /* Chat UI */
-        #chatWindow { display: none; position: fixed; bottom: 0; left: 0; right: 0; top: 0; background: white; z-index: 3000; flex-direction: column; animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        @keyframes slideIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        #chatWindow { display: none; position: fixed; bottom: 0; left: 0; right: 0; top: 0; background: white; z-index: 3000; flex-direction: column; animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .skeleton { background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
         @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        @keyframes animate-slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slide-up { animation: animate-slide-up 0.5s ease-out forwards; }
     </style>
 </head>
 <body class="pb-24">
 
-    <div id="loadingMembers" class="fixed inset-0 bg-white z-[5000] flex flex-col items-center justify-center">
+    <div id="loadingMembers" class="fixed inset-0 bg-white z-[5000] flex flex-col items-center justify-center transition-opacity duration-500">
         <div class="relative">
             <div class="w-20 h-20 border-4 border-green-100 rounded-full"></div>
             <div class="w-20 h-20 border-4 border-green-700 border-t-transparent rounded-full animate-spin absolute top-0"></div>
-            <div class="absolute inset-0 flex items-center justify-center text-green-700 font-black">ن</div>
+            <div class="absolute inset-0 flex items-center justify-center text-green-700 font-black text-2xl">ن</div>
         </div>
         <p class="mt-6 font-bold text-green-800 animate-pulse text-lg">نبحث لك عن نصيبك الآن...</p>
     </div>
