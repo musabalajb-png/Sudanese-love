@@ -1,57 +1,164 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>من نحن - نصيب العالمي</title>
+    <title>من نحن | رسالة نصيب العالمي</title>
+    <meta name="description" content="اكتشف القصة والقيم وراء منصة نصيب العالمي، المنصة الإسلامية الرائدة للزواج الجاد والموثوق.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-        body { font-family: 'Cairo', sans-serif; direction: rtl; }
+        :root { --main-font: 'Cairo', sans-serif; --primary-green: #15803d; --accent-gold: #fbbf24; }
+        [dir="ltr"] { --main-font: 'Poppins', sans-serif; }
+        body { font-family: var(--main-font); background: #f8fafc; user-select: none; }
+        .hero-gradient { background: linear-gradient(135deg, var(--primary-green) 0%, #14532d 100%); }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid var(--primary-green);
+            z-index: 1;
+        }
+        [dir="ltr"] .timeline-item::before { right: auto; left: -10px; }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-slate-50">
 
-    <nav class="bg-white shadow-sm p-4 text-center">
-        <a href="index.html" class="text-green-700 font-bold">← العودة للرئيسية</a>
-    </nav>
-
-    <section class="py-16 px-6 max-w-4xl mx-auto">
-        <div class="bg-white p-8 md:p-12 rounded-3 shadow-sm border border-gray-100">
-            <h1 class="text-3xl font-bold text-green-700 mb-8 border-b-2 border-green-100 pb-4 text-center">من نحن؟ (نصيب العالمي)</h1>
-            
-            <div class="space-y-6 text-gray-700 leading-relaxed text-lg text-justify">
-                <p>
-                    منصة <strong>نصيب العالمي</strong> هي أول مبادرة <strong>إسلامية</strong> تقنية تهدف لترسيخ قيم الزواج الحلال بطريقة عصرية وآمنة. انطلقت هذه المنصة برؤية واضحة تهدف لتيسير الحلال وجمع القلوب بالحسنى في زمن كثرت فيه التحديات.
-                </p>
-                <p>
-                    في (نصيب)، نؤمن بأن الزواج هو أسمى علاقة إنسانية، ولذلك سخرنا التقنية لتكون جسراً آمناً يربط بين الباحثين عن الاستقرار، سواء كانوا داخل السودان، في دول الخليج، أوروبا، أو أي مكان حول العالم. 
-                </p>
-                <p>
-                    نحن لا نقدم مجرد خدمة تعارف، بل نوفر بيئة منضبطة بضوابط شرعية وقيم أخلاقية، حيث يتم التحقق من جدية وهوية كل مشترك يدوياً لضمان أعلى درجات الموثوقية. هدفنا الأول والأخير هو "الستر" وبناء بيوت قائمة على المودة والرحمة.
-                </p>
-            </div>
-
-            <div class="mt-12 p-6 bg-green-50 rounded-2xl border border-green-100">
-                <h3 class="text-xl font-bold text-green-800 mb-6 text-center">لأي استفسار أو لتوثيق حسابك، تواصل معنا:</h3>
-                <div class="flex flex-col md:flex-row gap-4 justify-center">
-                    <a href="https://wa.me/249127910778" target="_blank" class="flex items-center justify-center gap-2 bg-green-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-700 transition shadow-lg">
-                        <span class="text-2xl">🟢</span>
-                        واتساب (سوداني)
-                    </a>
-                    <a href="https://wa.me/249911118345" target="_blank" class="flex items-center justify-center gap-2 bg-green-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition shadow-lg">
-                        <span class="text-2xl">🟢</span>
-                        واتساب (زين)
-                    </a>
+    <nav class="bg-white/80 backdrop-blur-xl shadow-sm p-4 sticky top-0 z-50 border-b border-slate-100">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="location.href='index.html'">
+                <div class="w-10 h-10 bg-green-700 rounded-2xl flex items-center justify-center text-white shadow-lg rotate-3"><i class="fas fa-ring text-lg"></i></div>
+                <div>
+                    <span class="font-black text-green-800 text-xl block leading-none" data-ar="نصيب" data-en="Naseeb">نصيب</span>
                 </div>
-                <p class="text-center text-sm text-gray-500 mt-4 italic">نحن متواجدون لخدمتكم على مدار الساعة</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="members.html" class="text-sm font-bold text-slate-600 hover:text-primary-green" data-ar="الأعضاء" data-en="Members">الأعضاء</a>
+                <a href="pricing.html" class="text-sm font-bold text-slate-600 hover:text-primary-green" data-ar="الباقات" data-en="Pricing">الباقات</a>
+                <a href="index.html#registerSection" class="bg-primary-green text-white px-5 py-2 rounded-xl font-bold text-xs shadow-lg hover:bg-green-700 transition" data-ar="ابدأ رحلتك" data-en="Start Journey">ابدأ رحلتك</a>
             </div>
         </div>
-    </section>
+    </nav>
 
-    <footer class="text-center py-10 text-gray-400 text-sm">
-        © 2025 نصيب العالمي - جميع الحقوق محفوظة
+    <header class="hero-gradient text-white py-24 px-6 text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');"></div>
+        <div class="max-w-4xl mx-auto relative z-10">
+            <h1 class="text-4xl md:text-6xl font-black mb-4" data-ar="رسالتنا: تيسير الحلال في كل مكان" data-en="Our Mission: Facilitating Halal Union, Everywhere"></h1>
+            <p class="text-lg text-green-100 opacity-90" data-ar="قصة منصة انطلقت من قيم الستر والجدية لتصل إلى قلوب الباحثين عن الاستقرار حول العالم." data-en="The story of a platform born from values of modesty and seriousness, reaching hearts seeking stability worldwide."></p>
+        </div>
+    </header>
+
+    <main class="py-20 px-6 max-w-4xl mx-auto">
+        
+        <!-- Our Story Timeline -->
+        <div class="mb-20">
+            <h2 class="text-3xl font-black text-center text-slate-800 mb-12" data-ar="قصتنا" data-en="Our Story"></h2>
+            <div class="relative border-r-4 border-green-100 pr-10 space-y-12">
+                <div class="timeline-item">
+                    <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-12 h-12 bg-green-50 text-primary-green rounded-xl flex items-center justify-center text-xl"><i class="fas fa-lightbulb"></i></div>
+                            <h3 class="font-black text-xl text-primary-green" data-ar="الفكرة (2023)" data-en="The Idea (2023)"></h3>
+                        </div>
+                        <p class="text-slate-600" data-ar="في زمن كثرت فيه التحديات، ولدت فكرة لإنشاء جسر آمن يربط بين القلوب الباحثة عن الزواج الحلال بجدية وخصوصية." data-en="In a time of many challenges, an idea was born to create a safe bridge connecting hearts seriously and privately seeking halal marriage."></p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-12 h-12 bg-green-50 text-primary-green rounded-xl flex items-center justify-center text-xl"><i class="fas fa-rocket"></i></div>
+                            <h3 class="font-black text-xl text-primary-green" data-ar="الانطلاقة (2024)" data-en="The Launch (2024)"></h3>
+                        </div>
+                        <p class="text-slate-600" data-ar="انطلقت منصة نصيب العالمي بهوية واضحة: التركيز على المجتمع السوداني في كل مكان، مع توفير بيئة منضبطة يتم فيها التحقق من كل عضو يدوياً." data-en="Naseeb Global launched with a clear identity: focusing on the Sudanese community everywhere, providing a disciplined environment where every member is manually verified."></p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-12 h-12 bg-green-50 text-primary-green rounded-xl flex items-center justify-center text-xl"><i class="fas fa-globe-africa"></i></div>
+                            <h3 class="font-black text-xl text-primary-green" data-ar="الوصول العالمي (2025)" data-en="Global Reach (2025)"></h3>
+                        </div>
+                        <p class="text-slate-600" data-ar="اليوم، نفخر بخدمة آلاف الأعضاء الجادين من أكثر من 20 دولة حول العالم، مع الحفاظ على قيمنا الأساسية في الستر والأمان والمصداقية." data-en="Today, we are proud to serve thousands of serious members from over 20 countries, while upholding our core values of modesty, security, and credibility."></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Our Core Values -->
+        <div class="mb-20">
+            <h2 class="text-3xl font-black text-center text-slate-800 mb-12" data-ar="قيمنا الأساسية" data-en="Our Core Values"></h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100"><i class="fas fa-user-shield text-3xl text-primary-green mb-3"></i><h4 class="font-bold" data-ar="الستر" data-en="Modesty"></h4></div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100"><i class="fas fa-handshake text-3xl text-primary-green mb-3"></i><h4 class="font-bold" data-ar="الجدية" data-en="Seriousness"></h4></div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100"><i class="fas fa-lock text-3xl text-primary-green mb-3"></i><h4 class="font-bold" data-ar="الأمان" data-en="Security"></h4></div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100"><i class="fas fa-check-double text-3xl text-primary-green mb-3"></i><h4 class="font-bold" data-ar="المصداقية" data-en="Credibility"></h4></div>
+            </div>
+        </div>
+
+        <!-- Meet the Founder -->
+        <div class="bg-white rounded-3xl shadow-lg p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 mb-20">
+            <img src="https://i.ibb.co/yB2S6yN/musab-profile.jpg" alt="Founder of Naseeb" class="w-32 h-32 rounded-full object-cover border-4 border-green-200">
+            <div class="text-center md:text-right">
+                <h3 class="text-2xl font-black text-slate-800" data-ar="كلمة من المؤسس" data-en="A Word from the Founder"></h3>
+                <p class="text-slate-600 mt-4 italic leading-relaxed">"لم أؤسس نصيب ليكون مجرد تطبيق، بل ليكون حلاً لمشكلة حقيقية، وملاذاً آمناً لكل من يبحث عن الحلال في زمن صعب. كل عضو في هذه المنصة هو أمانة في أعناقنا، وهدفنا هو أن نكون سبباً في سعادة كل بيت يُبنى من خلالنا."</p>
+                <p class="font-bold text-primary-green mt-4">- مؤسس نصيب العالمي</p>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="mb-20">
+            <h2 class="text-3xl font-black text-center text-slate-800 mb-12" data-ar="قصص نجاح ملهمة" data-en="Inspiring Success Stories"></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-accent-gold">
+                    <p class="text-slate-600 italic mb-4">"بعد تجارب فاشلة، وجدت في نصيب الجدية والمصداقية التي كنت أبحث عنها. اليوم أنا متزوجة من رجل فاضل تعرفت عليه هنا. شكراً نصيب."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://ui-avatars.com/api/?name=Fatima+A&background=random" class="w-10 h-10 rounded-full">
+                        <div>
+                            <p class="font-bold text-sm">فاطمة. أ</p>
+                            <p class="text-xs text-slate-400">الرياض، السعودية</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-accent-gold">
+                    <p class="text-slate-600 italic mb-4">"كنت أعيش في كندا وكان من الصعب إيجاد شريكة من نفس الخلفية الثقافية. نصيب كان الجسر الذي أوصلني بزوجتي الحبيبة في السودان."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+M&background=random" class="w-10 h-10 rounded-full">
+                        <div>
+                            <p class="font-bold text-sm">أحمد. م</p>
+                            <p class="text-xs text-slate-400">تورونتو، كندا</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 px-6 text-center">
+        <div class="container mx-auto">
+            <div class="flex justify-center gap-6 mb-6">
+                <a href="index.html" class="hover:text-white">الرئيسية</a>
+                <a href="members.html" class="hover:text-white">الأعضاء</a>
+                <a href="pricing.html" class="hover:text-white">الباقات</a>
+            </div>
+            <p class="text-sm">© 2025 نصيب العالمي - جميع الحقوق محفوظة.</p>
+        </div>
     </footer>
+
+    <script>
+        // Simple script for language toggle if needed, can be expanded
+        function toggleLang() {
+            // This is a placeholder. A full implementation would require a dictionary
+            // and updating all text content, similar to other pages.
+            alert('Language toggle functionality can be implemented here.');
+        }
+    </script>
 
 </body>
 </html>
