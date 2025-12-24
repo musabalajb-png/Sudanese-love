@@ -4,419 +4,201 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title id="pageTitle">نصيب العالمي | منصة الستر والزواج المبارك</title>
-    <meta name="description" content="المنصة السودانية العالمية الأولى للزواج الجاد على سنة الله ورسوله. ابحث عن نصيبك بستر وأمان.">
-    <meta property="og:title" content="نصيب العالمي | ابدأ رحلة البحث عن شريك حياتك">
-    <meta property="og:description" content="انضم لآلاف الأعضاء الجادين من السودان وحول العالم في بيئة آمنة وموثوقة تهدف لتيسير الحلال.">
-    <meta property="og:image" content="https://musabalajb-png.github.io/Sudanese-love/assets/og-image.jpg"> <!-- تأكد من وجود هذه الصورة -->
-
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
     <style>
-        :root { --primary: #065f46; --accent: #d97706; --bg-light: #f8fafc; --diamond: #5b21b6; --gold: #ca8a04; --bankak-blue: #0072ce; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg-light); scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; user-select: none; }
+        :root { --primary: #065f46; --accent: #d97706; --bg-light: #f8fafc; --bankak-blue: #0072ce; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg-light); user-select: none; }
         
-        /* دفاعات الخصوصية والحماية */
-        img { pointer-events: none; user-select: none; -webkit-user-drag: none; }
-        .hero-gradient { background: linear-gradient(135deg, var(--primary) 0%, #064e3b 100%); }
-
+        /* استايل الهيدر ليطابق الصورة */
+        .hero-section { background-color: #065f46; position: relative; overflow: hidden; }
+        .nav-glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        
         .step-content { display: none; animation: fadeIn 0.5s ease-out; }
         .step-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ستايلات الباقات */
         .plan-card {
             background: white; border: 2px solid #e2e8f0; border-radius: 2rem;
             padding: 1.5rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
         }
-        .plan-card:hover { transform: translateY(-8px); }
-        .plan-card.selected { border-width: 4px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); }
-        .plan-card.selected.sutra { border-color: var(--primary); }
-        .plan-card.selected.gold { border-color: var(--gold); }
-        .plan-card.selected.diamond { border-color: var(--diamond); }
+        .plan-card.selected { border-width: 4px; border-color: var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-        /* مؤشر إكمال الملف */
-        #completion-circle-bg { stroke: rgba(255,255,255,0.2); }
         #completion-circle-fg {
             stroke: var(--accent); stroke-linecap: round;
             transform: rotate(-90deg); transform-origin: 50% 50%;
             transition: stroke-dashoffset 0.5s ease-out;
         }
-
-        .username-status { position: absolute; top: 50%; left: 1rem; transform: translateY(-50%); opacity: 0; transition: 0.3s; }
-        [dir="ltr"] .username-status { left: auto; right: 1rem; }
         
-        .floating-wa { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
         .form-input {
             width: 100%; padding: 1.25rem; border-radius: 1.25rem; background-color: #f1f5f9;
             border: 2px solid transparent; font-weight: 700; outline: none; transition: all 0.3s;
         }
         .form-input:focus { border-color: var(--primary); background-color: white; }
-        .form-input.error { border-color: #ef4444; }
-        .error-message { color: #ef4444; font-size: 0.8rem; font-weight: bold; margin-top: 0.5rem; display: none; }
     </style>
 </head>
 <body class="text-slate-800">
 
-    <button onclick="toggleLang()" class="fixed top-5 left-5 z-[100] bg-white/90 shadow-xl px-4 py-2 rounded-full font-bold text-sm flex items-center gap-2 border border-emerald-100">
-        <i class="fas fa-globe text-emerald-600"></i> <span id="langLabel">English</span>
-    </button>
+    <header class="hero-section text-white pb-20">
+        <nav class="flex justify-between items-center px-6 py-4">
+            <div class="flex items-center gap-2">
+                <button onclick="toggleLang()" class="bg-white text-emerald-900 px-4 py-1 rounded-full font-bold text-sm">English</button>
+            </div>
+            <div class="text-center">
+                <h1 class="text-2xl font-black flex items-center gap-2">
+                    نصيب العالمي <span class="text-3xl">💍</span>
+                </h1>
+            </div>
+            <button class="bg-emerald-100/20 px-4 py-1 rounded-full font-bold text-sm">تسجيل الدخول</button>
+        </nav>
 
-    <header class="hero-gradient text-white pt-20 pb-32 px-6 text-center">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight" data-ar="ابحث عن نصيبك بستر وأمان" data-en="Find Your Destiny with Privacy & Faith"></h1>
-            <p class="text-emerald-100 text-lg md:text-xl font-bold mb-10 opacity-90" data-ar="المنصة السودانية العالمية الأولى للزواج الجاد على سنة الله ورسوله" data-en="The #1 Global Sudanese Platform for Serious, Faith-Based Marriage."></p>
-            <a href="#registerSection" class="bg-amber-500 hover:bg-amber-400 text-emerald-950 font-black px-10 py-5 rounded-2xl text-xl shadow-2xl transition-all inline-block" data-ar="ابدأ رحلتك الآن" data-en="Start Your Journey Now"></a>
+        <div class="max-w-4xl mx-auto text-center mt-12 px-6">
+            <div class="inline-block bg-black/20 backdrop-blur-md px-4 py-2 rounded-full mb-6 border border-white/10">
+                <span class="text-sm font-bold"><i class="fas fa-users mr-2"></i> 1,240 شخص يتصفح المنصة الآن</span>
+            </div>
+            <h2 class="text-5xl md:text-7xl font-black mb-6 leading-tight">مُحيطك للستر والحلال</h2>
+            <p class="text-xl font-bold mb-10 opacity-90">بمعايير إسلامية وخصوصية فائقة</p>
+            <a href="#registerSection" class="bg-white text-emerald-900 font-black px-12 py-5 rounded-2xl text-xl shadow-2xl transition-all inline-block">ابدأ رحلتك الآن</a>
         </div>
     </header>
 
-    <section class="max-w-6xl mx-auto -mt-20 px-6 grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
+    <section class="max-w-6xl mx-auto -mt-10 px-6 grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
         <div class="bg-white p-6 rounded-[2rem] shadow-xl text-center border-b-4 border-emerald-600">
-            <i class="fas fa-users text-3xl text-emerald-600 mb-3"></i>
-            <h3 class="font-black text-2xl">+5,000</h3>
-            <p class="text-xs font-bold text-slate-500" data-ar="عضو موثوق" data-en="Trusted Members"></p>
+            <i class="fas fa-users text-3xl text-emerald-600 mb-2"></i>
+            <h3 class="font-black text-xl">+5,000 عضو</h3>
         </div>
-        <div class="bg-white p-6 rounded-[2rem] shadow-xl text-center border-b-4 border-amber-500">
-            <i class="fas fa-hand-holding-heart text-3xl text-amber-500 mb-3"></i>
-            <h3 class="font-black text-2xl">+100</h3>
-            <p class="text-xs font-bold text-slate-500" data-ar="قصة نجاح" data-en="Success Stories"></p>
-        </div>
-        <div class="bg-white p-6 rounded-[2rem] shadow-xl text-center border-b-4 border-purple-600">
-            <i class="fas fa-shield-halved text-3xl text-purple-600 mb-3"></i>
-            <h3 class="font-black text-2xl">100%</h3>
-            <p class="text-xs font-bold text-slate-500" data-ar="خصوصية وأمان" data-en="Privacy & Security"></p>
-        </div>
-        <div class="bg-white p-6 rounded-[2rem] shadow-xl text-center border-b-4 border-blue-600">
-            <i class="fas fa-globe-africa text-3xl text-blue-600 mb-3"></i>
-            <h3 class="font-black text-2xl">+20</h3>
-            <p class="text-xs font-bold text-slate-500" data-ar="دولة حول العالم" data-en="Countries Worldwide"></p>
-        </div>
-    </section>
+        </section>
 
     <main id="registerSection" class="max-w-7xl mx-auto px-4 pb-20">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            
-            <div class="lg:col-span-7 bg-white rounded-[3rem] shadow-2xl p-8 md:p-12 border border-slate-100">
-                <form id="regForm" onsubmit="return false;">
+            <div class="lg:col-span-7 bg-white rounded-[3rem] shadow-2xl p-8 border border-slate-100">
+                <form id="regForm" onsubmit="return false;" action="https://formspree.io/f/xvgzbbwa" method="POST">
                     
                     <div class="step-content active" id="step1">
-                        <h2 class="text-2xl font-black mb-6" data-ar="الخطوة 1: معلومات الحساب" data-en="Step 1: Account Info"></h2>
-                        <div class="space-y-4">
-                            <div>
-                                <input type="email" name="email" id="emailInp" required placeholder="البريد الإلكتروني" class="form-input" onkeyup="validateField(this, 'email')">
-                                <p id="emailError" class="error-message"></p>
-                            </div>
-                            <div>
-                                <input type="tel" name="phone" id="phoneInp" required placeholder="رقم الهاتف" class="form-input" onkeyup="validateField(this, 'phone')">
-                                <p id="phoneError" class="error-message"></p>
-                            </div>
-                        </div>
-                        <button type="button" onclick="goToStep(2)" class="w-full mt-6 bg-slate-900 text-white py-5 rounded-2xl font-black shadow-lg" data-ar="متابعة" data-en="Continue"></button>
+                        <h2 class="text-2xl font-black mb-6">الخطوة 1: معلومات الحساب</h2>
+                        <input type="email" name="email" id="emailInp" required placeholder="البريد الإلكتروني" class="form-input mb-4">
+                        <input type="tel" name="phone" id="phoneInp" required placeholder="رقم الهاتف" class="form-input">
+                        <button type="button" onclick="goToStep(2)" class="w-full mt-6 bg-slate-900 text-white py-5 rounded-2xl font-black">متابعة</button>
                     </div>
 
                     <div class="step-content" id="step2">
-                        <h2 class="text-2xl font-black mb-6" data-ar="الخطوة 2: البيانات الشخصية" data-en="Step 2: Personal Info"></h2>
+                        <h2 class="text-2xl font-black mb-6">الخطوة 2: البيانات الشخصية</h2>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="relative">
-                                <input type="text" name="name" id="nameInp" onkeyup="handleUsernameInput()" required placeholder="الاسم المستعار" class="form-input">
-                                <i id="username-loading" class="fas fa-spinner fa-spin text-slate-400 username-status"></i>
-                                <i id="username-ok" class="fas fa-check-circle text-green-500 username-status"></i>
-                                <i id="username-taken" class="fas fa-times-circle text-red-500 username-status"></i>
-                            </div>
+                            <input type="text" name="name" id="nameInp" onkeyup="updatePreview()" required placeholder="الاسم المستعار" class="form-input">
                             <input type="text" name="city" id="cityInp" onkeyup="updatePreview()" required placeholder="المدينة" class="form-input">
                             <input type="number" name="age" id="ageInp" onkeyup="updatePreview()" placeholder="العمر" class="form-input">
                             <select name="status" id="statusInp" onchange="updatePreview()" class="form-input">
                                 <option value="أعزب/آنسة">أعزب/آنسة</option>
                                 <option value="مطلق/ة">مطلق/ة</option>
-                                <option value="أرمل/ة">أرمل/ة</option>
                             </select>
                         </div>
-                        <input type="text" name="job" id="jobInp" onkeyup="updatePreview()" placeholder="المهنة" class="w-full p-5 mt-4 form-input">
-                        <button type="button" onclick="goToStep(3)" class="w-full mt-6 bg-emerald-700 text-white py-5 rounded-2xl font-black shadow-lg" data-ar="التالي" data-en="Next"></button>
+                        <button type="button" onclick="goToStep(3)" class="w-full mt-6 bg-emerald-700 text-white py-5 rounded-2xl font-black">التالي</button>
                     </div>
 
                     <div class="step-content" id="step3">
-                        <h2 class="text-2xl font-black mb-6" data-ar="الخطوة 3: الصورة والمواصفات" data-en="Step 3: Photo & Specs"></h2>
-                        <textarea name="reqs" placeholder="ماذا تطلب في شريك حياتك؟" class="w-full h-32 p-5 rounded-2xl bg-slate-100 border-none font-bold outline-none resize-none mb-4"></textarea>
-                        <div class="p-6 border-2 border-dashed border-emerald-200 rounded-[2rem] text-center bg-emerald-50/30">
-                            <p class="text-xs font-bold mb-2 text-emerald-700" data-ar="ارفع صورتك (تظهر مغبشة للخصوصية)" data-en="Upload Photo (Blurred for Privacy)"></p>
-                            <input type="file" id="picFile" accept="image/*" onchange="handleImgPreview(this)" class="text-xs">
-                        </div>
-                        <button type="button" onclick="goToStep(4)" class="w-full mt-6 bg-emerald-700 text-white py-5 rounded-2xl font-black shadow-lg" data-ar="عرض الباقات" data-en="Show Plans"></button>
+                        <h2 class="text-2xl font-black mb-6">الخطوة 3: المواصفات والصورة</h2>
+                        <textarea name="reqs" id="reqs" placeholder="ماذا تطلب في شريك حياتك؟" class="w-full h-32 p-5 rounded-2xl bg-slate-100 font-bold mb-4"></textarea>
+                        <input type="file" id="picFile" accept="image/*" onchange="updateProfileCompletion()" class="mb-4">
+                        <button type="button" onclick="goToStep(4)" class="w-full mt-6 bg-emerald-700 text-white py-5 rounded-2xl font-black">عرض الباقات</button>
                     </div>
 
                     <div class="step-content" id="step4">
-                        <div class="text-center mb-8">
-                            <h2 class="text-3xl font-black text-slate-800" data-ar="الخطوة النهائية: اختر باقتك" data-en="Final Step: Choose Your Plan"></h2>
-                            <p id="geoNote" class="text-emerald-600 font-bold text-sm mt-2 italic"></p>
-                        </div>
-                        
+                        <h2 class="text-3xl font-black text-center mb-8">الخطوة النهائية: اختر باقتك</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div id="sutra-plan" class="plan-card sutra" onclick="selectPlan('sutra')">
-                                <h3 class="font-black text-lg text-emerald-800" data-ar="باقة الستر" data-en="Sutra Plan"></h3>
-                                <p class="font-black text-xl my-2"><span class="price" data-price-sdg="30000"></span> <span class="currency-code"></span></p>
-                            </div>
-                            <div id="gold-plan" class="plan-card gold relative" onclick="selectPlan('gold')">
-                                <span class="absolute -top-2 left-1/2 -translate-x-1/2 bg-yellow-500 text-white text-[8px] px-2 py-1 rounded-full font-black" data-ar="شائعة" data-en="POPULAR"></span>
-                                <h3 class="font-black text-lg text-yellow-600" data-ar="الباقة الذهبية" data-en="Gold Plan"></h3>
-                                <p class="font-black text-xl my-2"><span class="price" data-price-sdg="75000"></span> <span class="currency-code"></span></p>
-                            </div>
-                            <div id="diamond-plan" class="plan-card diamond" onclick="selectPlan('diamond')">
-                                <h3 class="font-black text-lg text-purple-800" data-ar="الباقة الماسية" data-en="Diamond Plan"></h3>
-                                <p class="font-black text-xl my-2"><span class="price" data-price-sdg="90000"></span> <span class="currency-code"></span></p>
-                            </div>
+                            <div class="plan-card" onclick="selectPlan('sutra')"><h3>باقة الستر</h3></div>
+                            <div class="plan-card" onclick="selectPlan('gold')"><h3>الباقة الذهبية</h3></div>
+                            <div class="plan-card" onclick="selectPlan('diamond')"><h3>الباقة الماسية</h3></div>
                         </div>
-                        <div class="text-center mt-6">
-                            <button type="button" onclick="selectPlan('free')" class="text-slate-600 font-bold underline" data-ar="أو استمر مع الباقة المجانية" data-en="Or continue with the Free Plan"></button>
-                        </div>
-
-                        <div id="paymentSection" class="hidden mt-6 p-6 bg-emerald-950 rounded-3xl text-white text-center">
-                            <!-- Payment content is rendered dynamically by JavaScript -->
-                        </div>
-
-                        <button type="button" onclick="finalSubmit()" id="submitBtn" class="w-full mt-8 bg-emerald-600 text-white py-6 rounded-2xl font-black shadow-2xl transition-all">
-                            <span data-ar="إرسال طلب الانضمام 🚀" data-en="Submit Application 🚀"></span>
+                        <button type="button" onclick="finalSubmit()" id="submitBtn" class="w-full mt-8 bg-emerald-600 text-white py-6 rounded-2xl font-black shadow-2xl">
+                            إرسال طلب الانضمام 🚀
                         </button>
                     </div>
 
                     <input type="hidden" name="profile_img_url" id="p_url">
-                    <input type="hidden" name="receipt_img_url" id="r_url">
                     <input type="hidden" name="plan_type" id="selected_plan_hidden">
                 </form>
             </div>
 
             <div class="lg:col-span-5 sticky top-10">
-                <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-emerald-50">
-                    <div class="relative h-64 bg-slate-200">
-                        <img id="previewImg" src="https://ui-avatars.com/api/?name=Naseeb&background=065f46&color=fff" class="w-full h-full object-cover blur-[40px]" loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-950 to-transparent"></div>
-                        
-                        <div class="absolute top-4 right-4">
-                            <svg class="w-12 h-12" viewBox="0 0 36 36">
-                                <path id="completion-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3"></path>
-                                <path id="completion-circle-fg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3" stroke-dasharray="100, 100" stroke-dashoffset="100"></path>
-                                <text id="completion-text" x="18" y="22" text-anchor="middle" font-size="9" fill="white" font-weight="bold">0%</text>
-                            </svg>
-                        </div>
+                <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-emerald-50 text-center p-6">
+                    <div class="relative h-48 bg-slate-200 rounded-2xl mb-4 overflow-hidden">
+                        <img id="previewImg" src="https://ui-avatars.com/api/?name=Naseeb&background=065f46&color=fff" class="w-full h-full object-cover blur-[20px]">
                     </div>
-                    <div class="p-6 text-center">
-                        <h3 id="prevName" class="text-2xl font-black text-emerald-900">...</h3>
-                        <p id="prevCity" class="text-slate-500 font-bold mb-4">...</p>
-                        <div class="grid grid-cols-3 gap-1 text-[10px] font-bold">
-                            <div class="bg-emerald-50 p-2 rounded-lg"><b id="prevAge">-</b><br><span data-ar="العمر" data-en="Age"></span></div>
-                            <div class="bg-emerald-50 p-2 rounded-lg"><b id="prevStatus">-</b><br><span data-ar="الحالة" data-en="Status"></span></div>
-                            <div class="bg-emerald-50 p-2 rounded-lg"><b id="prevJob" class="truncate">-</b><br><span data-ar="المهنة" data-en="Job"></span></div>
-                        </div>
-                    </div>
+                    <h3 id="prevName" class="text-2xl font-black text-emerald-900">...</h3>
+                    <p id="prevCity" class="text-slate-500 font-bold">...</p>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <footer class="bg-emerald-950 text-emerald-200 py-12 px-6 text-center">
-        <p class="font-bold">© 2025 نصيب العالمي - جميع الحقوق محفوظة.</p>
-    </footer>
-
-    <a href="https://wa.me/249127910778" target="_blank" class="floating-wa bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all">
-        <i class="fab fa-whatsapp text-3xl"></i>
-    </a>
-
-    <div id="copyToast" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg"></div>
-
     <script>
-        // --- الإعدادات العامة ---
-        let currentLang = 'ar';
-        let userCurrency = 'SDG';
-        let isSudan = true;
-        let exchangeRates = { 'SDG': 1 };
-        let usernameCheckTimeout;
         let selectedPlan = 'free';
-        const formFields = ['email', 'phone', 'name', 'city', 'age', 'status', 'job', 'reqs'];
-
-        // --- محاكاة الواجهة البرمجية الخلفية (الأمان والتحكم) ---
-        const NaseebAPI = {
-            _IMGBB_API_KEY: "ef5f93c776a98bfd2a4ef1d6cdeba6bf",
-            secureUpload: async function(file) {
-                if (!file) return { success: true, url: "" };
-                const fd = new FormData();
-                fd.append('image', file);
-                try {
-                    const r = await fetch(`https://api.imgbb.com/1/upload?key=${this._IMGBB_API_KEY}`, { method: 'POST', body: fd });
-                    const d = await r.json();
-                    return { success: d.success, url: d.data ? d.data.url : "" };
-                } catch (error) {
-                    return { success: false, error: "Upload failed" };
-                }
-            },
-            checkUsername: async function(username) {
-                return new Promise(resolve => {
-                    setTimeout(() => {
-                        const takenUsernames = ['admin', 'naseeb', 'musab', 'test'];
-                        resolve({ available: !takenUsernames.includes(username.toLowerCase()) });
-                    }, 500);
-                });
-            },
-            serverSideValidate: function(formData) {
-                const email = formData.get('email');
-                const phone = formData.get('phone');
-                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { valid: false, field: 'email', message: 'Invalid email format' };
-                if (!/^[0-9\+]{7,15}$/.test(phone)) return { valid: false, field: 'phone', message: 'Invalid phone format' };
-                return { valid: true };
-            }
-        };
-
-        // --- دوال واجهة المستخدم والمنطق ---
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.onkeydown = function(e) { if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) return false; }
 
         function goToStep(n) {
-            if (n > 1) {
-                let allValid = true;
-                if (n === 2) {
-                    if (!validateField(document.getElementById('emailInp'), 'email')) allValid = false;
-                    if (!validateField(document.getElementById('phoneInp'), 'phone')) allValid = false;
-                }
-                if (!allValid) return;
-            }
             document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
             document.getElementById('step' + n).classList.add('active');
-            window.scrollTo({ top: document.getElementById('registerSection').offsetTop - 50, behavior: 'smooth' });
         }
 
-        function updateProfileCompletion() {
-            const fields = ['nameInp', 'cityInp', 'ageInp', 'jobInp', 'picFile'];
-            let completed = 0;
-            fields.forEach(id => {
-                const el = document.getElementById(id);
-                if (el && ((el.type === 'file' && el.files.length > 0) || (el.type !== 'file' && el.value))) completed++;
-            });
-            const p = Math.round((completed / fields.length) * 100);
-            document.getElementById('completion-circle-fg').style.strokeDashoffset = 100 - p;
-            document.getElementById('completion-text').textContent = p + '%';
-        }
-
-        async function handleUsernameInput() {
-            updatePreview();
-            const name = document.getElementById('nameInp').value;
-            const loading = document.getElementById('username-loading');
-            const ok = document.getElementById('username-ok');
-            const taken = document.getElementById('username-taken');
-            [loading, ok, taken].forEach(i => i.style.opacity = '0');
-            if (name.length < 3) return;
-            loading.style.opacity = '1';
-            clearTimeout(usernameCheckTimeout);
-            usernameCheckTimeout = setTimeout(async () => {
-                const response = await NaseebAPI.checkUsername(name);
-                loading.style.opacity = '0';
-                if (response.available) ok.style.opacity = '1'; else taken.style.opacity = '1';
-            }, 800);
+        function updatePreview() {
+            document.getElementById('prevName').innerText = document.getElementById('nameInp').value || "...";
+            document.getElementById('prevCity').innerText = document.getElementById('cityInp').value || "...";
         }
 
         function selectPlan(plan) {
             selectedPlan = plan;
             document.getElementById('selected_plan_hidden').value = plan;
             document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
-            if (plan !== 'free') {
-                document.getElementById(`${plan}-plan`).classList.add('selected');
-                renderPaymentSection();
-                document.getElementById('paymentSection').classList.remove('hidden');
-                document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else {
-                document.getElementById('paymentSection').classList.add('hidden');
+        }
+
+        // دالة الرفع لـ ImgBB
+        async function upload(file) {
+            if (!file) return "";
+            const fd = new FormData();
+            fd.append('image', file);
+            const r = await fetch('https://api.imgbb.com/1/upload?key=ef5f93c776a98bfd2a4ef1d6cdeba6bf', {method:'POST', body:fd});
+            const d = await r.json();
+            return d.data.url;
+        }
+
+        // الإرسال النهائي للـ Backend والـ IP
+        async function finalSubmit() {
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerText = 'جاري الحفظ والارسال...';
+
+            const pUrl = await upload(document.getElementById('picFile').files[0]);
+            document.getElementById('p_url').value = pUrl;
+
+            const payload = {
+                name: document.getElementById('nameInp').value,
+                email: document.getElementById('emailInp').value,
+                phone: document.getElementById('phoneInp').value,
+                city: document.getElementById('cityInp').value,
+                age: document.getElementById('ageInp').value,
+                status: document.getElementById('statusInp').value,
+                plan: selectedPlan,
+                profile_img: pUrl
+            };
+
+            try {
+                // الإرسال لـ Replit (لحفظ البيانات والـ IP في MongoDB)
+                await fetch('https://form-hub--musabalajb.replit.app/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                // الإرسال لـ Formspree كنسخة احتياطية
+                document.getElementById('regForm').submit();
+                alert("تم تسجيلك بنجاح يا مصعب!");
+            } catch (e) {
+                console.error("Backend Error:", e);
+                document.getElementById('regForm').submit();
             }
         }
-
-        function renderPaymentSection() {
-            const container = document.getElementById('paymentSection');
-            if (isSudan) {
-                container.innerHTML = `
-                    <p class="text-sm mb-4 font-bold" data-ar="اضغط للنسخ وفتح تطبيق بنكك:" data-en="Tap to copy and open Bankak:"></p>
-                    <button type="button" onclick="payWithBankak()" class="w-full bg-[var(--bankak-blue)] text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 text-lg shadow-xl">
-                        <i class="fas fa-copy"></i> <span>${'1705644'.replace(/./g, '*')}</span>
-                    </button>
-                `;
-            } else {
-                container.innerHTML = `
-                    <p class="text-sm mb-4 font-bold" data-ar="للدفع الدولي، تواصل معنا عبر واتساب:" data-en="For international payment, contact us on WhatsApp:"></p>
-                    <a href="https://wa.me/249127910778?text=Hi, I want to subscribe from another country." target="_blank" class="w-full bg-green-500 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 text-lg shadow-xl">
-                        <i class="fab fa-whatsapp"></i> <span data-ar="تواصل مع الإدارة" data-en="Contact Admin"></span>
-                    </a>
-                `;
-            }
-            toggleLang(); toggleLang(); // Re-apply language
-        }
-
-        function payWithBankak() {
-            const acc = '1705644';
-            navigator.clipboard.writeText(acc).then(() => {
-                showToast(currentLang === 'ar' ? 'تم نسخ الرقم!' : 'Account number copied!');
-                setTimeout(() => { window.location.href = 'bankak://'; }, 1500);
-            });
-        }
-
-        async function initializeGeo() {
-            const cachedData = JSON.parse(localStorage.getItem('currencyData'));
-            const now = new Date().getTime();
-            if (cachedData && (now - cachedData.timestamp < 6 * 60 * 60 * 1000)) {
-                userCurrency = cachedData.userCurrency;
-                isSudan = cachedData.isSudan;
-                exchangeRates = cachedData.exchangeRates;
-                updateGeoNote(cachedData.countryName);
-            } else {
-                try {
-                    const geoRes = await fetch('https://ipapi.co/json/');
-                    const geoData = await geoRes.json();
-                    userCurrency = geoData.currency || 'USD';
-                    isSudan = geoData.country_code === 'SD';
-                    updateGeoNote(geoData.country_name);
-                    const ratesRes = await fetch('https://api.exchangerate-api.com/v4/latest/SDG');
-                    exchangeRates = (await ratesRes.json()).rates;
-                    localStorage.setItem('currencyData', JSON.stringify({ userCurrency, isSudan, exchangeRates, countryName: geoData.country_name, timestamp: now }));
-                } catch(e) { userCurrency = 'USD'; isSudan = false; }
-            }
-            updatePrices();
-        }
-
-        function updateGeoNote(countryName) {
-            const note = document.getElementById('geoNote');
-            if (countryName) {
-                const textAr = `🌍 الأسعار تظهر بعملة بلدك (${countryName})`;
-                const textEn = `🌍 Prices shown in your local currency (${countryName})`;
-                note.setAttribute('data-ar', textAr); note.setAttribute('data-en', textEn);
-                note.innerText = currentLang === 'ar' ? textAr : textEn;
-            }
-        }
-
-        function updatePrices() {
-            const rate = exchangeRates[userCurrency] || exchangeRates['USD'];
-            if (!rate) return;
-            document.querySelectorAll('.price').forEach(el => {
-                const sdg = parseFloat(el.getAttribute('data-price-sdg'));
-                const finalPrice = (userCurrency === 'SDG') ? sdg : Math.round((sdg * rate) / 5) * 5;
-                el.innerText = new Intl.NumberFormat(currentLang === 'ar' ? 'ar-EG' : 'en-US').format(finalPrice);
-            });
-            document.querySelectorAll('.currency-code').forEach(el => el.innerText = userCurrency);
-        }
-
-        function toggleLang() {
-            currentLang = currentLang === 'ar' ? 'en' : 'ar';
-            document.getElementById('mainHtml').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-            document.getElementById('langLabel').innerText = currentLang === 'ar' ? 'English' : 'عربي';
-            document.querySelectorAll('[data-ar]').forEach(el => {
-                const text = el.getAttribute(`data-${currentLang}`);
-                if (text) el.innerText = text;
-            });
-            updatePrices();
-        }
-
-        function updatePreview() {
-            formFields.forEach(id => {
-                const el = document.getElementById(id + 'Inp') || document.getElementById(id);
-                if (el) localStorage.setItem(`draft_${id}`, el.value);
-            });
-            document.getElementById('prevName').innerText = localStorage.getItem('draft_name') || "...";
-            document.getElementById('prevCity').innerText = localStorage.getItem('draft_city') || "...";
-            document.getElementById('prevAge').innerText = localStorage.getItem('draft_age') || "-";
-            document
+    </script>
+</body>
+</html>
