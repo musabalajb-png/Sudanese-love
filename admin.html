@@ -3,202 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم | نصيب العالمي</title>
+    <title>لوحة تحكم نصيب العالمي</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
-        body { font-family: 'Cairo', sans-serif; background: #f4f7f6; user-select: none; }
-        .admin-card { border-radius: 2rem; background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-        input, select, textarea { border: 1.5px solid #edf2f7 !important; transition: 0.3s; }
-        input:focus { border-color: #16a34a !important; box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.1); }
-        .tab-btn { transition: 0.3s; padding: 0.5rem 1.5rem; border-radius: 12px; font-weight: bold; color: #64748b; }
-        .tab-btn.active { background: #16a34a; color: white; box-shadow: 0 10px 15px -3px rgba(22, 163, 74, 0.2); }
-        .banned-row { opacity: 0.6; background-color: #fff1f2; }
+        :root { --primary: #15803d; --dark: #1e293b; --light: #f1f5f9; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--light); user-select: none; }
+        .stat-card { background-color: white; border-radius: 1.5rem; padding: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .table-wrapper { max-height: 500px; overflow-y: auto; }
+        .table-wrapper::-webkit-scrollbar { width: 8px; }
+        .table-wrapper::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; backdrop-filter: blur(5px); }
+        .modal.active { display: flex; }
+        .banned-row { opacity: 0.5; background-color: #fee2e2; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="flex">
 
-    <div id="loginSection" class="max-w-md mx-auto mt-20 bg-white p-10 rounded-[3rem] shadow-2xl border-t-8 border-green-700">
-        <div class="text-center mb-8">
-            <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-user-shield text-3xl text-green-600"></i>
-            </div>
-            <h2 class="text-2xl font-black text-slate-800">دخول الإدارة</h2>
-            <p class="text-slate-400 text-sm mt-2">مرحباً بك مجدداً يا مصعب</p>
-        </div>
-        <div class="space-y-4">
-            <input type="password" id="adminPass" placeholder="كلمة السر الخاصة بك" class="w-full px-6 py-4 rounded-2xl outline-none text-center font-bold">
-            <button onclick="checkPass()" class="w-full bg-green-700 text-white py-4 rounded-2xl font-black shadow-lg hover:bg-green-800 transition-all active:scale-95">دخول آمن</button>
+    <!-- Admin Login Screen -->
+    <div id="login-screen" class="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center p-4">
+        <div class="w-full max-w-sm bg-white p-8 rounded-3xl shadow-2xl text-center">
+            <i class="fas fa-user-shield text-5xl text-primary mb-6"></i>
+            <h2 class="text-2xl font-black text-dark mb-2">لوحة تحكم المدير</h2>
+            <input type="password" id="admin-password" class="w-full text-center p-4 rounded-2xl bg-light border-2 border-gray-200 font-bold text-lg tracking-widest" placeholder="••••••••">
+            <p id="login-error" class="text-red-500 text-xs font-bold mt-2 h-4"></p>
+            <button id="admin-login-btn" onclick="handleAdminLogin()" class="w-full mt-4 bg-dark text-white py-4 rounded-2xl font-black text-lg">دخول</button>
         </div>
     </div>
 
-    <div id="adminPanel" class="hidden max-w-6xl mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+    <!-- Add Member Modal -->
+    <div id="add-member-modal" class="modal items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-2xl space-y-6">
+            <h2 class="text-xl font-black text-slate-700">إضافة عضو جديد</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" id="mName" placeholder="الاسم" class="p-3 border rounded-lg">
+                <input type="number" id="mAge" placeholder="العمر" class="p-3 border rounded-lg">
+                <input type="text" id="mCity" placeholder="المدينة" class="p-3 border rounded-lg">
+                <select id="mPlan" class="p-3 border rounded-lg bg-white"><option>عادية</option><option>الستر</option><option>ذهبية</option><option>ماسية</option></select>
+                <input type="text" id="mImage" placeholder="رابط الصورة" class="p-3 border rounded-lg md:col-span-2">
+            </div>
+            <div class="flex justify-end gap-4">
+                <button onclick="closeModal('add-member-modal')" class="px-6 py-2 bg-gray-100 rounded-lg font-bold">إلغاء</button>
+                <button onclick="addNewMember()" class="px-6 py-2 bg-primary text-white rounded-lg font-bold">إضافة العضو</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-dark text-white p-6 space-y-8 hidden md:flex flex-col">
+        <h1 class="text-2xl font-black text-center text-amber-400">نصيب | تحكم</h1>
+        <nav class="flex-grow"><a href="#" class="flex items-center gap-3 p-3 rounded-lg bg-white/10 font-bold"><i class="fas fa-tachometer-alt w-6 text-center"></i> لوحة القيادة</a></nav>
+        <button onclick="adminLogout()" class="w-full flex items-center justify-center gap-3 p-3 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white font-bold"><i class="fas fa-sign-out-alt"></i> خروج</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="main-content" class="flex-1 p-8 hidden">
+        <header class="mb-8 flex justify-between items-center">
             <div>
-                <h1 class="text-3xl font-black text-slate-800 tracking-tight">نظام التحكم الشامل 💍</h1>
-                <p class="text-green-600 font-bold flex items-center gap-2">المسؤول: مصعب</p>
+                <h1 class="text-3xl font-black text-dark">لوحة القيادة</h1>
+                <p class="text-gray-500">نظرة شاملة على أداء منصة نصيب العالمي.</p>
             </div>
-            <div class="flex flex-wrap gap-2 bg-white p-2 rounded-2xl shadow-sm border">
-                <button onclick="switchTab('members')" class="tab-btn active" id="btn-members">الأعضاء</button>
-                <button onclick="switchTab('likes')" class="tab-btn" id="btn-likes">الإعجابات</button>
-                <button onclick="switchTab('broadcast')" class="tab-btn" id="btn-broadcast">إرسال تنبيه</button>
-                <button onclick="location.reload()" class="bg-red-50 text-red-600 px-4 py-2 rounded-xl font-bold hover:bg-red-100 transition">خروج</button>
-            </div>
+            <button onclick="openModal('add-member-modal')" class="bg-primary text-white px-5 py-3 rounded-xl font-bold flex items-center gap-2">
+                <i class="fas fa-plus"></i> إضافة عضو
+            </button>
         </header>
 
-        <div id="membersTab" class="space-y-8">
-            <div class="admin-card p-8">
-                <h2 class="text-xl font-black mb-6 text-slate-700 flex items-center gap-3"><i class="fas fa-user-plus text-green-500"></i> إضافة عضو</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <input type="text" id="mName" placeholder="الاسم المستعار" class="p-3 rounded-xl outline-none font-bold">
-                    <input type="number" id="mAge" placeholder="العمر" class="p-3 rounded-xl outline-none font-bold">
-                    <input type="text" id="mCity" placeholder="المدينة" class="p-3 rounded-xl outline-none font-bold">
-                    <input type="text" id="mStatus" placeholder="الحالة" class="p-3 rounded-xl outline-none font-bold">
-                    <input type="text" id="mJob" placeholder="المهنة" class="p-3 rounded-xl outline-none font-bold">
-                    <select id="mPlan" class="p-3 rounded-xl outline-none font-bold bg-slate-50">
-                        <option value="عادية">باقة عادية</option>
-                        <option value="الستر">باقة الستر</option>
-                        <option value="ذهبية">باقة ذهبية</option>
-                        <option value="ماسية">باقة ماسية</option>
-                    </select>
-                    <input type="text" id="mImage" placeholder="رابط الصورة" class="col-span-1 md:col-span-2 p-3 rounded-xl outline-none font-bold">
-                    <div class="flex items-center gap-3 p-3">
-                        <input type="checkbox" id="mVerified" class="w-5 h-5 accent-green-600">
-                        <label class="text-sm font-bold">حساب موثق ✅</label>
-                    </div>
-                    <button onclick="addNewMember()" class="bg-green-700 text-white font-black rounded-2xl py-4 shadow-xl col-span-1 md:col-span-3">نشر العضو الآن 🚀</button>
-                </div>
+        <!-- Stats & Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="stat-card"><h3 class="font-bold text-gray-500">إجمالي الأعضاء</h3><p id="total-members" class="text-4xl font-black mt-2">0</p></div>
+                <div class="stat-card"><h3 class="font-bold text-gray-500">الجدد اليوم</h3><p id="new-today" class="text-4xl font-black mt-2">0</p></div>
+                <div class="md:col-span-2 bg-white p-6 rounded-2xl shadow-sm border"><canvas id="growthChart"></canvas></div>
             </div>
-
-            <div class="admin-card overflow-hidden">
-                <div class="p-6 border-b flex justify-between bg-slate-50/50">
-                    <h3 class="font-black text-slate-700">الأعضاء المسجلين</h3>
-                    <span id="memberCount" class="bg-green-600 text-white px-4 py-1 rounded-full text-xs font-black">0</span>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-right">
-                        <thead>
-                            <tr class="text-slate-400 text-xs bg-slate-50">
-                                <th class="p-4">العضو</th>
-                                <th class="p-4">الباقة</th>
-                                <th class="p-4">الحالة</th>
-                                <th class="p-4">الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminMembersList" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border"><canvas id="planChart"></canvas></div>
         </div>
 
-        <div id="likesTab" class="hidden admin-card p-8">
-            <h2 class="text-xl font-black mb-6 text-slate-700">مراقبة الرسائل المباشرة</h2>
-            <div id="likesList" class="space-y-4"></div>
-        </div>
-
-        <div id="broadcastTab" class="hidden admin-card p-8">
-            <h2 class="text-xl font-black mb-6 text-slate-700 flex items-center gap-3">
-                <i class="fas fa-bullhorn text-red-500"></i> إرسال تنبيه لكل الأعضاء
-            </h2>
-            <div class="max-w-2xl space-y-4">
-                <p class="text-sm text-slate-400">هذه الرسالة ستظهر لكل الأعضاء عند فتح الموقع في صندوق الإشعارات.</p>
-                <textarea id="broadcastMsg" class="w-full h-32 p-4 rounded-2xl outline-none font-bold" placeholder="اكتب التنبيه هنا..."></textarea>
-                <button onclick="sendBroadcast()" class="bg-red-500 text-white px-8 py-3 rounded-xl font-black shadow-lg hover:bg-red-600 transition">إرسال التنبيه الآن 📢</button>
+        <!-- Members Table -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border">
+            <input type="text" id="search-members" onkeyup="filterTable()" placeholder="بحث بالاسم أو البريد..." class="w-full p-3 border rounded-lg mb-4">
+            <div class="table-wrapper">
+                <table class="w-full text-sm text-right">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0"><tr><th class="px-6 py-3">الاسم</th><th class="px-6 py-3">الباقة</th><th class="px-6 py-3">الحالة</th><th class="px-6 py-3">إجراءات</th></tr></thead>
+                    <tbody id="members-table-body"></tbody>
+                </table>
             </div>
         </div>
-    </div>
+    </main>
 
     <script>
-        const dbURL = "https://naseeb-project-1030a-default-rtdb.asia-southeast1.firebasedatabase.app/members";
-        const scriptURL = "https://script.google.com/macros/s/AKfycbzOqsZZEKV2FyCQxMRxo2aB8Ld4txzXFdYEKGwXCb48ymeM6nOufWVZmv65jVErV3sL_Q/exec";
+        const ADMIN_PASS = "Musab@219736";
+        const DB_URL = "https://naseeb-project-1030a-default-rtdb.asia-southeast1.firebasedatabase.app/members.json";
+        let failedLoginAttempts = 0;
+        let allMembersData = {};
 
-        function checkPass() {
-            if(document.getElementById('adminPass').value === "Musab@219736") {
-                sessionStorage.setItem("isAdmin", "true");
+        function handleAdminLogin() {
+            const pass = document.getElementById('admin-password').value;
+            if (pass === ADMIN_PASS) {
+                sessionStorage.setItem('admin_logged_in', 'true');
                 showPanel();
-            } else { alert("كلمة السر خطأ"); }
+            } else {
+                failedLoginAttempts++;
+                const errorEl = document.getElementById('login-error');
+                errorEl.textContent = 'كلمة المرور غير صحيحة.';
+                if (failedLoginAttempts >= 3) {
+                    document.getElementById('admin-login-btn').disabled = true;
+                    errorEl.textContent = 'تم قفل الدخول مؤقتاً.';
+                    setTimeout(() => {
+                        document.getElementById('admin-login-btn').disabled = false;
+                        failedLoginAttempts = 0;
+                        errorEl.textContent = '';
+                    }, 30000);
+                }
+            }
         }
 
         function showPanel() {
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('adminPanel').classList.remove('hidden');
-            loadAdminMembers();
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('sidebar').classList.remove('hidden');
+            document.getElementById('main-content').classList.remove('hidden');
+            loadDashboardData();
         }
 
-        async function loadAdminMembers() {
+        async function loadDashboardData() {
             try {
-                const res = await fetch(dbURL + ".json");
-                const data = await res.json();
-                const list = document.getElementById('adminMembersList');
-                list.innerHTML = "";
-                if (data) {
-                    const keys = Object.keys(data);
-                    document.getElementById('memberCount').innerText = keys.length + " عضو";
-                    keys.reverse().forEach(key => {
-                        const m = data[key];
-                        const isBanned = m.status === "محظور";
-                        list.innerHTML += `
-                            <tr class="${isBanned ? 'banned-row' : ''}">
-                                <td class="p-4 font-bold text-slate-700">${m.name} ${m.verified ? '✅' : ''}</td>
-                                <td class="p-4 text-xs font-bold">${m.plan || 'عادية'}</td>
-                                <td class="p-4"><span class="px-2 py-1 rounded-lg text-[10px] ${isBanned ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}">${isBanned ? 'محظور' : 'نشط'}</span></td>
-                                <td class="p-4 flex gap-2">
-                                    <button onclick="toggleBan('${key}', ${isBanned})" class="p-2 ${isBanned ? 'text-green-500' : 'text-orange-500'} bg-white rounded-lg shadow-sm">
-                                        <i class="fas ${isBanned ? 'fa-user-check' : 'fa-user-slash'}"></i>
-                                    </button>
-                                    <button onclick="deleteMember('${key}')" class="p-2 text-red-500 bg-white rounded-lg shadow-sm"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>`;
-                    });
+                const res = await fetch(DB_URL);
+                allMembersData = await res.json() || {};
+                const membersArray = Object.keys(allMembersData).map(key => ({ id: key, ...allMembersData[key] }));
+
+                // Populate Stats
+                document.getElementById('total-members').textContent = membersArray.length;
+                const today = new Date().toISOString().slice(0, 10);
+                document.getElementById('new-today').textContent = membersArray.filter(m => m.createdAt && m.createdAt.startsWith(today)).length;
+
+                // Populate Table
+                renderTable(membersArray);
+                
+                // Render Charts
+                renderGrowthChart(membersArray);
+                renderPlanChart(membersArray);
+
+            } catch (e) { console.error("Failed to load data:", e); }
+        }
+
+        function renderTable(members) {
+            const tableBody = document.getElementById('members-table-body');
+            tableBody.innerHTML = '';
+            members.reverse().forEach(member => {
+                const isBanned = member.status === "محظور";
+                const row = `
+                    <tr class="bg-white border-b ${isBanned ? 'banned-row' : ''}">
+                        <td class="px-6 py-4 font-bold text-gray-900">${member.name} ${member.verified ? '✅' : ''}</td>
+                        <td class="px-6 py-4">${member.plan || 'عادية'}</td>
+                        <td class="px-6 py-4"><span class="px-2 py-1 rounded-lg text-[10px] ${isBanned ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}">${isBanned ? 'محظور' : 'نشط'}</span></td>
+                        <td class="px-6 py-4 space-x-2">
+                            <button onclick="toggleBan('${member.id}', ${isBanned})" class="p-2 text-sm"><i class="fas ${isBanned ? 'fa-user-check' : 'fa-user-slash'}"></i></button>
+                            <button onclick="deleteMember('${member.id}')" class="p-2 text-sm text-red-500"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function renderGrowthChart(members) {
+            const growthData = Array(7).fill(0);
+            const today = new Date();
+            members.forEach(m => {
+                if (m.createdAt) {
+                    const joinDate = new Date(m.createdAt);
+                    const diffDays = Math.floor((today - joinDate) / (1000 * 60 * 60 * 24));
+                    if (diffDays < 7) {
+                        growthData[6 - diffDays]++;
+                    }
                 }
-            } catch (e) { console.error("Error loading"); }
+            });
+            const ctx = document.getElementById('growthChart').getContext('2d');
+            new Chart(ctx, { type: 'line', data: { labels: ['-6 أيام', '-5', '-4', '-3', '-2', 'أمس', 'اليوم'], datasets: [{ label: 'مشترك جديد', data: growthData, borderColor: '#15803d', fill: true, tension: 0.4 }] } });
         }
 
-        async function toggleBan(id, currentStatus) {
-            const action = currentStatus ? "إلغاء حظر" : "حظر";
-            if(confirm(`هل تريد ${action} هذا العضو؟`)) {
-                await fetch(`${dbURL}/${id}.json`, {
-                    method: 'PATCH',
-                    body: JSON.stringify({ status: currentStatus ? "نشط" : "محظور" })
-                });
-                loadAdminMembers();
-            }
-        }
-
-        async function sendBroadcast() {
-            const msg = document.getElementById('broadcastMsg').value.trim();
-            if(!msg) return;
-            if(confirm("سيتم إرسال هذا التنبيه لكل الأعضاء، استمرار؟")) {
-                try {
-                    await fetch(scriptURL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        body: JSON.stringify({
-                            sender: "إدارة نصيب",
-                            receiver: "الكل",
-                            message: "📢 تنبيه إداري: " + msg
-                        })
-                    });
-                    alert("تم إرسال التنبيه بنجاح ✅");
-                    document.getElementById('broadcastMsg').value = "";
-                } catch(e) { alert("فشل الإرسال"); }
-            }
+        function renderPlanChart(members) {
+            const planCounts = members.reduce((acc, m) => {
+                const plan = m.plan || 'عادية';
+                acc[plan] = (acc[plan] || 0) + 1;
+                return acc;
+            }, {});
+            const ctx = document.getElementById('planChart').getContext('2d');
+            new Chart(ctx, { type: 'doughnut', data: { labels: Object.keys(planCounts), datasets: [{ data: Object.values(planCounts), backgroundColor: ['#9ca3af', '#16a34a', '#f59e0b', '#8b5cf6'] }] } });
         }
 
         async function addNewMember() {
-            const name = document.getElementById('mName').value;
-            if(!name) return alert("الاسم مطلوب");
             const newMember = {
-                name: name, age: document.getElementById('mAge').value,
-                city: document.getElementById('mCity').value,
-                status: "نشط", job: document.getElementById('mJob').value,
-                plan: document.getElementById('mPlan').value,
-                image: document.getElementById('mImage').value,
-                verified: document.getElementById('mVerified').checked,
-                createdAt: new Date().toISOString()
+                name: document.getElementById('mName').value, age: document.getElementById('mAge').value,
+                city: document.getElementById('mCity').value, status: "نشط",
+                plan: document.getElementById('mPlan').value, image: document.getElementById('mImage').value,
+                verified: true, createdAt: new Date().toISOString()
             };
-            await fetch(dbURL + ".json", { method: "POST", body: JSON.stringify(newMember) });
-            alert("تمت الإضافة ✅");
-            loadAdminMembers();
+            if (!newMember.name) return alert("الاسم مطلوب");
+            await fetch(DB_URL, { method: "POST", body: JSON.stringify(newMember) });
+            closeModal('add-member-modal');
+            loadDashboardData();
         }
+
+        async function toggleBan(id, isBanned) {
+            await fetch(`https://naseeb-project-1030a-default-rtdb.asia-southeast1.firebasedatabase.app/members/${id}.json`, {
+                method: 'PATCH', body: JSON.stringify({ status: isBanned ? "نشط" : "محظور" })
+            });
+            loadDashboardData();
+        }
+
+        async function deleteMember(id) {
+            if (confirm('هل أنت متأكد من حذف هذا العضو نهائياً؟')) {
+                await fetch(`https://naseeb-project-1030a-default-rtdb.asia-southeast1.firebasedatabase.app/members/${id}.json`, { method: 'DELETE' });
+                loadDashboardData();
+            }
+        }
+
+        function filterTable() {
+            const filter = document.getElementById('search-members').value.toUpperCase();
+            const membersArray = Object.keys(allMembersData).map(key => ({ id: key, ...allMembersData[key] }));
+            const filteredMembers = membersArray.filter(m => m.name.toUpperCase().includes(filter));
+            renderTable(filteredMembers);
+        }
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        function adminLogout() { sessionStorage.removeItem('admin_logged_in'); location.reload(); }
+
+        // Initial check
+        if (sessionStorage.getItem('admin_logged_in') === 'true') {
+            showPanel();
+        }
+    </script>
+</body>
+</html>
