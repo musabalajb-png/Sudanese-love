@@ -2,157 +2,188 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>نصيب العالمي | منصة التعارف والزواج السوداني الأولى</title>
-    <meta name="description" content="نصيب العالمي هي المنصة الأولى للستر والحلال في السودان. ابحث عن شريك العمر في بيئة آمنة تضمن الخصوصية والمعايير الإسلامية.">
-    <meta name="keywords" content="زواج سوداني, نصيب, خطابة سودانية, زواج حلال, ستر, زواج الخرطوم, بنات السودان للزواج, مغتربين السودان">
-    <meta name="author" content="المصعب - نصيب العالمي">
-    
-    <meta property="og:title" content="نصيب العالمي | ابحث عن نصيبك الآن">
-    <meta property="og:description" content="منصة آمنة وموثوقة للزواج السوداني. خصوصية تامة لكل الأعضاء.">
-    <meta property="og:image" content="https://musabalajb-png.github.io/Sudanese-love/logo.png">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>نصيب العالمي | منصة التواصل الذكية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        :root { --primary-green: #16a34a; --heart-pink: rgba(255, 182, 193, 0.4); }
-        body { font-family: 'Cairo', sans-serif; background: #f0f4f8; overflow-x: hidden; margin: 0; user-select: none; }
+        :root { --primary-green: #15803d; --accent-gold: #fbbf24; }
+        body { font-family: 'Cairo', sans-serif; background: #f8fafc; overflow-x: hidden; user-select: none; }
+        .bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%); z-index: -2; }
         
-        .bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, #fff5f5, #f0fdf4, #f5f3ff, #fff9db); background-size: 400% 400%; animation: gradientBG 15s ease infinite; z-index: -2; }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .heart-bg { position: fixed; color: var(--heart-pink); font-size: 20px; pointer-events: none; z-index: -1; animation: fall linear infinite; }
-        @keyframes fall { from { transform: translateY(-10vh) rotate(0deg); opacity: 1; } to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
-
-        .member-card { border-radius: 2.5rem; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); transition: 0.4s; position: relative; border: 1.5px solid rgba(255, 255, 255, 0.5); overflow: hidden; display: flex; flex-direction: column; }
-        .member-card:hover { transform: scale(1.03) translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .img-box { width: 100%; padding-top: 115%; position: relative; overflow: hidden; background: #f1f5f9; }
+        /* Member Card Styling */
+        .member-card { border-radius: 2rem; background: white; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; border: 1px solid #f1f5f9; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
+        .member-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); }
+        .img-box { width: 100%; padding-top: 120%; position: relative; overflow: hidden; background: #e2e8f0; }
         .img-box img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; transition: 0.8s; }
-        
-        .blur-effect { filter: blur(25px); transform: scale(1.2); pointer-events: none; }
-        .premium-badge { position: absolute; top: 10px; right: 10px; background: linear-gradient(to left, #fbbf24, #f59e0b); color: white; padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 900; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        
-        .blur-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; z-index: 5; backdrop-filter: blur(2px); }
-        .blur-text { background: white; padding: 6px 15px; border-radius: 50px; font-size: 11px; font-weight: 900; color: #16a34a; box-shadow: 0 10px 20px rgba(0,0,0,0.2); cursor: pointer; border: 2px solid #16a34a; }
+        .blur-effect { filter: blur(25px); transform: scale(1.1); }
+        .premium-badge { position: absolute; top: 12px; right: 12px; background: linear-gradient(45deg, #fbbf24, #f59e0b); color: white; padding: 4px 12px; border-radius: 50px; font-size: 10px; font-weight: 900; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .blur-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.2); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 5; backdrop-filter: blur(4px); }
+        .unlock-btn { background: white; color: var(--primary-green); padding: 8px 16px; border-radius: 50px; font-size: 11px; font-weight: 900; cursor: pointer; transition: 0.3s; }
+        .unlock-btn:hover { background: var(--primary-green); color: white; }
 
-        .online-dot { position: absolute; bottom: 10px; left: 10px; width: 12px; height: 12px; background: #22c55e; border-radius: 50%; border: 2px solid white; z-index: 10; }
+        /* Animation & UI */
+        .online-dot { position: absolute; bottom: 12px; left: 12px; width: 12px; height: 12px; background: #22c55e; border-radius: 50%; border: 2px solid white; z-index: 10; }
         .dot-pulse { animation: dot-pulse 2s infinite; }
         @keyframes dot-pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); } 70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
-
-        .stat-badge { background: rgba(22, 163, 74, 0.1); color: #16a34a; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: bold; border: 1px solid rgba(22, 163, 74, 0.2); }
-
-        #notificationPanel { position: fixed; bottom: 90px; left: 20px; right: 20px; max-width: 350px; max-height: 450px; background: white; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.25); z-index: 2000; overflow-y: auto; display: none; border: 3px solid #ef4444; }
-        .music-btn { position: fixed; bottom: 25px; left: 25px; width: 55px; height: 55px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 1000; cursor: pointer; color: var(--primary-green); transition: 0.3s; }
+        .filter-chip { @apply px-5 py-2 rounded-full border border-slate-200 text-sm font-bold text-slate-500 transition-all cursor-pointer whitespace-nowrap bg-white; }
+        .filter-chip.active { @apply bg-green-700 border-green-700 text-white shadow-lg shadow-green-200; }
+        .action-btn { @apply flex-1 py-2 rounded-xl text-[11px] font-black transition-all active:scale-95 flex items-center justify-center gap-1 shadow-sm; }
+        
+        #notifPanel { display: none; position: fixed; top: 80px; left: 20px; right: 20px; max-width: 400px; background: white; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); z-index: 2000; padding: 20px; border: 1px solid #eee; }
+        #chatWindow { display: none; position: fixed; bottom: 0; left: 0; right: 0; top: 0; background: white; z-index: 3000; flex-direction: column; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="pb-24">
 
     <div id="loadingMembers" class="fixed inset-0 bg-white z-[5000] flex flex-col items-center justify-center">
-        <div class="w-20 h-20 border-8 border-green-100 border-t-green-600 rounded-full animate-spin"></div>
-        <p class="mt-6 font-bold text-green-800 animate-pulse text-lg">جاري تجهيز نصيبك...</p>
+        <div class="relative">
+            <div class="w-20 h-20 border-4 border-green-100 rounded-full"></div>
+            <div class="w-20 h-20 border-4 border-green-700 border-t-transparent rounded-full animate-spin absolute top-0"></div>
+        </div>
+        <p class="mt-6 font-bold text-green-800 animate-pulse text-lg">جاري مراجعة طلبات الستر...</p>
     </div>
 
     <div class="bg-canvas"></div>
-    <div id="heartsContainer"></div>
 
-    <div class="music-btn" id="musicToggle" onclick="toggleMusic()">
-        <i class="fas fa-music text-xl"></i>
-        <audio id="bgAudio" loop preload="auto">
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        </audio>
-    </div>
-
-    <button onclick="toggleNotifications()" class="fixed bottom-6 right-6 w-16 h-16 bg-red-500 text-white rounded-full shadow-2xl z-[2100] flex items-center justify-center transition-all active:scale-90">
-        <i class="fas fa-bell text-2xl"></i>
-        <span id="notifBadge" class="absolute -top-1 -left-1 bg-yellow-400 text-red-700 text-[12px] w-7 h-7 rounded-full flex items-center justify-center font-black border-2 border-white hidden">0</span>
-    </button>
-
-    <div id="notificationPanel" class="p-5">
-        <div class="flex justify-between items-center mb-4 border-b pb-3 text-slate-800">
-            <h4 class="font-bold">إعجابات وصلتني</h4>
-            <button onclick="toggleNotifications()"><i class="fas fa-times"></i></button>
-        </div>
-        <div id="notifList"></div>
-    </div>
-
-    <nav class="bg-white/80 backdrop-blur-lg shadow-sm p-4 sticky top-0 z-50 border-b border-white/30">
+    <nav class="bg-white/80 backdrop-blur-xl shadow-sm p-4 sticky top-0 z-50 border-b border-slate-100">
         <div class="container mx-auto flex justify-between items-center px-2">
-            <div class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-green-600 rounded-2xl flex items-center justify-center text-white shadow-lg"><i class="fas fa-ring"></i></div>
-                <span class="font-black text-green-700 text-2xl tracking-tighter">نصيب</span>
+            <div class="flex items-center gap-3 cursor-pointer" onclick="location.href='index.html'">
+                <div class="w-10 h-10 bg-green-700 rounded-2xl flex items-center justify-center text-white shadow-lg"><i class="fas fa-ring text-lg"></i></div>
+                <span class="font-black text-green-800 text-xl tracking-tighter">نصيب</span>
             </div>
             <div class="flex items-center gap-3">
-                <div class="stat-badge hidden md:block">نشط الآن: <span id="onlineCount">0</span></div>
-                <button onclick="logout()" class="w-10 h-10 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition-all"><i class="fas fa-sign-out-alt"></i></button>
+                <button onclick="toggleNotif()" class="relative w-10 h-10 bg-slate-100 rounded-full text-slate-600 transition-colors hover:bg-slate-200">
+                    <i class="fas fa-bell"></i>
+                    <span id="notifBadge" class="absolute -top-1 -left-1 bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-full hidden border-2 border-white">0</span>
+                </button>
+                <button onclick="logout()" class="w-10 h-10 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><i class="fas fa-power-off"></i></button>
             </div>
         </div>
     </nav>
 
+    <div id="notifPanel">
+        <div class="flex justify-between items-center mb-4">
+            <h4 class="font-black text-slate-800">الإشعارات الواردة</h4>
+            <button onclick="toggleNotif()" class="text-slate-400"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="notifList" class="max-h-60 overflow-y-auto space-y-2 no-scrollbar"></div>
+    </div>
+
+    <div id="chatWindow">
+        <div class="bg-green-800 p-4 text-white flex justify-between items-center shadow-lg">
+            <div class="flex items-center gap-3">
+                <button onclick="closeChat()" class="p-2 hover:bg-green-700 rounded-full transition-colors"><i class="fas fa-arrow-right"></i></button>
+                <div>
+                    <span id="chatPartnerName" class="font-bold block text-sm"></span>
+                    <span class="text-[9px] text-green-200"><i class="fas fa-circle text-[6px] text-green-400 ml-1"></i>متصل الآن</span>
+                </div>
+            </div>
+            <span id="chatCounter" class="text-[10px] bg-green-900/50 border border-green-600 px-3 py-1 rounded-full font-bold"></span>
+        </div>
+        <div id="chatMessages" class="flex-1 p-4 bg-slate-50 overflow-y-auto flex flex-col gap-3 no-scrollbar"></div>
+        <div class="p-4 bg-white border-t flex gap-2 items-center">
+            <input type="text" id="msgInput" placeholder="اكتب رسالة جادة..." class="flex-1 bg-slate-100 rounded-full px-5 py-3 text-sm outline-none focus:ring-2 focus:ring-green-500 transition-all">
+            <button onclick="sendMessage()" class="w-12 h-12 bg-green-700 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-800 active:scale-90 transition-all"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
     <div class="container mx-auto p-5">
-        <div class="bg-white/60 backdrop-blur-2xl rounded-[2rem] p-4 shadow-xl flex items-center gap-3 mb-8 border border-white">
-            <i class="fas fa-search text-slate-400 mr-2"></i>
-            <input type="text" id="searchInput" onkeyup="filterMembers()" placeholder="ابحث عن شريك العمر بالاسم أو المدينة..." class="w-full bg-transparent outline-none font-bold text-slate-700">
+        <div class="mb-8">
+            <div class="bg-white rounded-[2rem] p-3 shadow-sm flex items-center gap-3 border border-slate-100 mb-5 focus-within:ring-2 focus-within:ring-green-500 transition-all">
+                <i class="fas fa-search text-slate-300 mr-2"></i>
+                <input type="text" id="searchInput" onkeyup="filterMembers()" placeholder="ابحث بالاسم، المدينة، أو المهنة..." class="w-full bg-transparent outline-none font-bold text-slate-700 text-sm">
+            </div>
+            <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar" id="filterContainer">
+                <div class="filter-chip active" onclick="setFilter('all', this)">الكل</div>
+                <div class="filter-chip" onclick="setFilter('داخل السودان', this)">داخل السودان</div>
+                <div class="filter-chip" onclick="setFilter('خارج السودان', this)">المغتربين</div>
+            </div>
         </div>
 
         <div id="suggestionSection" class="hidden mb-12">
-            <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center text-white shadow-lg shadow-amber-200"><i class="fas fa-star text-xs"></i></div>
-                    <h3 class="font-black text-slate-700" id="suggestTitle">مقترح لك من منطقتك</h3>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6" id="suggestGrid"></div>
-            <hr class="mt-10 border-slate-200 opacity-50">
+            <h3 class="font-black text-slate-800 text-lg mb-4 flex items-center gap-2">
+                <span class="w-2 h-2 bg-amber-500 rounded-full animate-ping"></span> مقترحات تناسب مدينتك
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4" id="suggestGrid"></div>
         </div>
 
         <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-green-200"><i class="fas fa-users text-xs"></i></div>
-                <h3 class="font-black text-slate-700">اكتشف شريك حياتك</h3>
-            </div>
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="totalCountDisplay">جاري الحساب...</span>
+            <h3 class="font-black text-slate-800 text-lg">استكشف الشركاء الجادين</h3>
+            <span class="text-[10px] font-bold text-slate-500 px-3 py-1 bg-white rounded-lg border shadow-sm" id="totalCountDisplay">0 مشترك</span>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6" id="membersGrid"></div>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4" id="membersGrid"></div>
     </div>
+
+    <div id="appToast" class="fixed top-24 left-1/2 -translate-x-1/2 z-[6000] bg-slate-900 text-white px-6 py-3 rounded-full text-xs font-bold shadow-2xl hidden animate-bounce"></div>
 
     <script>
         const CONFIG = {
-            sheetURL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv"
+            sheetURL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv",
+            planLimits: {
+                'عادية': { likes: 10, gifts: 10, chats: 3 },
+                'الستر': { likes: 20, gifts: 20, chats: 20 },
+                'ذهبية': { likes: 50, gifts: 50, chats: 100 },
+                'ماسية': { likes: 9999, gifts: 9999, chats: 9999 },
+                'VIP': { likes: 9999, gifts: 9999, chats: 9999 }
+            }
         };
 
-        function createMemberCard(member, index, isPaid) {
-            const isPremium = /ذهبية|ماسية/i.test(member.plan);
-            const shouldBlur = !isPaid;
-            const verifiedTag = member.verified ? '<i class="fas fa-check-circle text-blue-400 ml-1"></i>' : '';
+        let allMembers = [];
+        let notifications = [];
+
+        // --- الأمن وتشفير البيانات ---
+        function getSecureStats() {
+            const today = new Date().toDateString();
+            let data = JSON.parse(localStorage.getItem('naseeb_secure_data')) || {};
             
-            return `
-                <div class="member-card member-item" data-name="${member.name}" data-city="${member.city}" id="card-${index}">
-                    <div class="img-box relative">
-                        ${isPremium ? '<div class="premium-badge"><i class="fas fa-crown mr-1"></i> VIP</div>' : ''}
-                        ${isPremium ? '<div class="online-dot dot-pulse"></div>' : ''}
-                        
-                        <img src="${member.img || 'https://ui-avatars.com/api/?name=' + member.name}" class="${shouldBlur ? 'blur-effect' : ''}" loading="lazy">
-                        
-                        ${shouldBlur ? `
-                            <div class="blur-overlay" onclick="location.href='checkout.html'">
-                                <div class="blur-text shadow-xl">كشف الصورة 🔓</div>
-                            </div>` : ''}
-                    </div>
-                    <div class="p-4 text-center">
-                        <h4 class="font-black text-sm truncate text-slate-700 mb-1">${member.name} ${verifiedTag}</h4>
-                        <p class="text-[10px] text-slate-400 mb-4 flex items-center justify-center gap-1">
-                            <i class="fas fa-location-dot text-red-300"></i> ${member.city}
-                        </p>
-                        <div class="flex gap-2">
-                            <button class="bg-red-50 text-red-600 w-10 h-10 flex items-center justify-center rounded-2xl transition-transform active:scale-90">🌹</button>
-                            <button class="bg-green-600 text-white px-2 py-2 rounded-2xl text-[11px] font-black flex-1 shadow-lg active:scale-95 transition-all">تواصل الآن 💌</button>
-                        </div>
-                    </div>
-                </div>`;
+            if (data.date !== today) {
+                data = { date: today, likes: 0, gifts: 0, chats: 0 };
+                localStorage.setItem('naseeb_secure_data', JSON.stringify(data));
+            }
+            return data;
         }
 
+        function checkActionLimit(type) {
+            const stats = getSecureStats();
+            const plan = localStorage.getItem('userPlan') || 'عادية';
+            const limits = CONFIG.planLimits[plan] || CONFIG.planLimits['عادية'];
+
+            if (stats[type] >= limits[type]) {
+                alert(`⚠️ تنبيه: استنفدت حدك اليومي من (${type === 'likes' ? 'الإعجابات' : type === 'gifts' ? 'الهدايا' : 'الرسائل'}).\n\nباقة (${plan}) تمنحك ${limits[type]} محاولات يومياً.\nقم بالترقية لفتح تواصل غير محدود.`);
+                if(type === 'chats') location.href = '#pricing';
+                return false;
+            }
+            return true;
+        }
+
+        function incrementStat(type) {
+            const stats = getSecureStats();
+            stats[type]++;
+            localStorage.setItem('naseeb_secure_data', JSON.stringify(stats));
+            updateVisualCounters();
+        }
+
+        function updateVisualCounters() {
+            const stats = getSecureStats();
+            const plan = localStorage.getItem('userPlan') || 'عادية';
+            const limits = CONFIG.planLimits[plan] || CONFIG.planLimits['عادية'];
+            const counterEl = document.getElementById('chatCounter');
+            
+            if (limits.chats > 1000) {
+                counterEl.innerHTML = `<i class="fas fa-infinity ml-1"></i> باقة مفتوحة`;
+            } else {
+                const remaining = limits.chats - stats.chats;
+                counterEl.innerText = `المتبقي لك: ${remaining} رسالة`;
+            }
+        }
+
+        // --- إدارة البيانات ---
         async function load() {
             try {
                 const res = await fetch(`${CONFIG.sheetURL}?cb=${Date.now()}`);
@@ -163,77 +194,208 @@
                 const suggestGrid = document.getElementById('suggestGrid');
                 const suggestSection = document.getElementById('suggestionSection');
                 
-                grid.innerHTML = "";
-                suggestGrid.innerHTML = "";
-
                 const myPlan = localStorage.getItem('userPlan') || 'عادية';
-                const myCity = localStorage.getItem('userCity') || ''; 
-                const isPaidUser = /الستر|ذهبية|ماسية/i.test(myPlan);
+                const isPaid = /الستر|ذهبية|ماسية|VIP/i.test(myPlan);
+                const myCity = localStorage.getItem('userCity') || '';
 
-                let hasSuggestions = false;
-                let count = 0;
+                allMembers = [];
+                grid.innerHTML = ""; suggestGrid.innerHTML = "";
 
                 rows.forEach((row, index) => {
                     const cols = row.split(',').map(c => c.trim().replace(/^"|"$/g, ''));
                     if(!cols[0] || cols[0].length < 2) return;
-                    
-                    const member = { 
-                        name: cols[0], city: cols[3] || 'السودان', plan: cols[2] || 'عادية', img: cols[6], verified: true 
+
+                    const m = { 
+                        name: cols[0], 
+                        city: cols[3] || 'غير محدد', 
+                        plan: cols[2] || 'عادية', 
+                        img: cols[6], 
+                        job: cols[4] || 'عضو' 
                     };
-
-                    const cardHTML = createMemberCard(member, index, isPaidUser);
-                    count++;
-
-                    if (myCity && member.city.includes(myCity) && member.name !== localStorage.getItem('userName')) {
+                    allMembers.push(m);
+                    
+                    const cardHTML = createCard(m, index, isPaid);
+                    
+                    // منطق المقترحات (نفس المدينة)
+                    if (myCity && m.city.includes(myCity) && m.name !== localStorage.getItem('userName')) {
                         suggestGrid.innerHTML += cardHTML;
-                        hasSuggestions = true;
+                        suggestSection.classList.remove('hidden');
                     } else {
                         grid.innerHTML += cardHTML;
                     }
                 });
 
-                if(hasSuggestions) {
-                    suggestSection.classList.remove('hidden');
-                    document.getElementById('suggestTitle').innerText = `مقترحات في ${myCity}`;
-                }
-
-                document.getElementById('totalCountDisplay').innerText = `إجمالي الأعضاء: ${count}`;
-                document.getElementById('onlineCount').innerText = Math.floor(count * 0.3);
+                document.getElementById('totalCountDisplay').innerText = `${allMembers.length} مشترك جاد`;
                 document.getElementById('loadingMembers').style.display = 'none';
-            } catch (e) { console.error("Load Failed"); }
+                updateVisualCounters();
+            } catch (e) {
+                console.error("Fetch Error:", e);
+                showToast("⚠️ فشل في تحميل البيانات، تأكد من الاتصال.");
+            }
+        }
+
+        function createCard(m, i, isPaid) {
+            const isPremium = /ذهبية|ماسية|VIP/i.test(m.plan);
+            return `
+                <div class="member-card member-item" data-tags="${m.name} ${m.city} ${m.job}">
+                    <div class="img-box">
+                        ${isPremium ? '<div class="premium-badge"><i class="fas fa-crown text-[8px] ml-1"></i>مميز</div>' : ''}
+                        <div class="online-dot dot-pulse"></div>
+                        <img src="${m.img || 'https://ui-avatars.com/api/?background=f0fdf4&color=15803d&name='+m.name}" class="${!isPaid ? 'blur-effect' : ''}" loading="lazy">
+                        ${!isPaid ? `<div class="blur-overlay"><button class="unlock-btn" onclick="location.href='index.html#pricing'">فتح الصورة 🔓</button></div>` : ''}
+                    </div>
+                    <div class="p-3 flex-1 flex flex-col">
+                        <h4 class="font-black text-[12px] text-slate-800 truncate mb-0.5">${m.name} <i class="fas fa-check-circle text-blue-500 text-[9px]"></i></h4>
+                        <p class="text-[9px] text-slate-400 mb-3"><i class="fas fa-map-marker-alt ml-1 text-red-400"></i>${m.city}</p>
+                        <div class="mt-auto flex gap-1">
+                            <button onclick="actionLike('${m.name}')" class="action-btn bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white" title="إعجاب"><i class="fas fa-heart"></i></button>
+                            <button onclick="actionGift('${m.name}')" class="action-btn bg-amber-50 text-amber-500 hover:bg-amber-500 hover:text-white" title="إرسال هدية"><i class="fas fa-gift"></i></button>
+                            <button onclick="actionChat('${m.name}')" class="action-btn bg-green-50 text-green-700 hover:bg-green-700 hover:text-white" title="بدء محادثة"><i class="fas fa-comment-dots"></i></button>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        // --- التفاعلات ---
+        function actionLike(name) {
+            if(!checkActionLimit('likes')) return;
+            incrementStat('likes');
+            showToast(`❤️ أرسلت إعجاباً لـ ${name}`);
+        }
+
+        function actionGift(name) {
+            if(!checkActionLimit('gifts')) return;
+            if(confirm(`إرسال هدية افتراضية لـ ${name} لفت انتباه؟`)) {
+                incrementStat('gifts');
+                showToast(`🎁 تم إرسال الهدية بنجاح`);
+            }
+        }
+
+        function actionChat(name) {
+            if(!checkActionLimit('chats')) return;
+            showToast(`📩 جاري طلب فتح المحادثة مع ${name}`);
+            setTimeout(() => addNotification(name, 'طلب تواصل جديد'), 1000);
+        }
+
+        function addNotification(sender, type) {
+            const id = Date.now();
+            notifications.unshift({ id, sender, type });
+            updateNotifBadge();
+            renderNotifs();
+        }
+
+        function updateNotifBadge() {
+            const badge = document.getElementById('notifBadge');
+            badge.innerText = notifications.length;
+            notifications.length > 0 ? badge.classList.remove('hidden') : badge.classList.add('hidden');
+        }
+
+        function renderNotifs() {
+            const list = document.getElementById('notifList');
+            if(notifications.length === 0) {
+                list.innerHTML = '<div class="text-center py-5"><i class="fas fa-bell-slash text-slate-200 text-3xl mb-2"></i><p class="text-slate-400 text-[10px]">لا توجد إشعارات</p></div>';
+                return;
+            }
+            list.innerHTML = notifications.map(n => `
+                <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <div class="flex flex-col">
+                        <span class="text-[11px] font-black text-slate-800">${n.sender}</span>
+                        <span class="text-[9px] text-slate-500">${n.type}</span>
+                    </div>
+                    <div class="flex gap-1">
+                        <button onclick="acceptChat('${n.sender}', ${n.id})" class="bg-green-600 text-white text-[9px] px-3 py-1.5 rounded-lg font-bold">قبول</button>
+                        <button onclick="dismissNotif(${n.id})" class="text-slate-400 text-[9px] p-1.5 hover:text-red-500"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function acceptChat(name, id) {
+            dismissNotif(id);
+            toggleNotif();
+            document.getElementById('chatPartnerName').innerText = name;
+            document.getElementById('chatWindow').style.display = 'flex';
+            document.getElementById('chatMessages').innerHTML = `
+                <div class="bg-amber-50 border border-amber-100 p-3 rounded-2xl text-[10px] text-amber-800 text-center leading-relaxed">
+                    🔔 تذكر: هذا التواصل بغرض الستر والزواج الحلال. التزم بالأدب السوداني في حديثك.
+                </div>
+            `;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('msgInput');
+            const chatBox = document.getElementById('chatMessages');
+            
+            if(!input.value.trim()) return;
+            if(!checkActionLimit('chats')) return;
+
+            incrementStat('chats');
+            
+            const msgTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const msgHTML = `
+                <div class="self-end bg-green-700 text-white p-3 rounded-2xl rounded-tr-none text-xs max-w-[85%] shadow-sm animate-slide-up">
+                    <p>${input.value}</p>
+                    <span class="text-[8px] text-green-200 block mt-1 text-left">${msgTime} <i class="fas fa-check-double"></i></span>
+                </div>`;
+            
+            chatBox.innerHTML += msgHTML;
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // رد آلي للمحاكاة
+            setTimeout(() => {
+                const reply = `أهلاً بك، شكراً على اهتمامك بملفي الشخصي. كيف يمكننا البدء بالتعارف الرسمي؟`;
+                chatBox.innerHTML += `
+                    <div class="self-start bg-white border border-slate-200 text-slate-800 p-3 rounded-2xl rounded-tl-none text-xs max-w-[85%] shadow-sm">
+                        <p>${reply}</p>
+                        <span class="text-[8px] text-slate-400 block mt-1">${msgTime}</span>
+                    </div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1500);
+        }
+
+        function dismissNotif(id) {
+            notifications = notifications.filter(n => n.id !== id);
+            updateNotifBadge();
+            renderNotifs();
+        }
+
+        function toggleNotif() {
+            const p = document.getElementById('notifPanel');
+            p.style.display = p.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function closeChat() { document.getElementById('chatWindow').style.display = 'none'; }
+
+        function showToast(msg) {
+            const t = document.getElementById('appToast');
+            t.innerText = msg; t.classList.remove('hidden');
+            setTimeout(() => t.classList.add('hidden'), 3000);
         }
 
         function filterMembers() {
             const val = document.getElementById('searchInput').value.toLowerCase();
             document.querySelectorAll('.member-item').forEach(card => {
-                const name = card.getAttribute('data-name').toLowerCase();
-                const city = card.getAttribute('data-city').toLowerCase();
-                card.style.display = (name.includes(val) || city.includes(val)) ? 'flex' : 'none';
+                const tags = card.getAttribute('data-tags').toLowerCase();
+                card.style.display = tags.includes(val) ? 'flex' : 'none';
             });
         }
 
-        let isPlaying = false;
-        function toggleMusic() {
-            const audio = document.getElementById('bgAudio');
-            const btn = document.getElementById('musicToggle');
-            if(isPlaying) { audio.pause(); btn.innerHTML = '<i class="fas fa-music"></i>'; }
-            else { audio.play(); btn.innerHTML = '<i class="fas fa-pause"></i>'; }
-            isPlaying = !isPlaying;
+        function setFilter(type, el) {
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = (type === 'all') ? '' : type;
+            filterMembers();
         }
 
-        setInterval(() => {
-            if(document.visibilityState !== 'visible') return;
-            const h = document.createElement('div');
-            h.className = 'heart-bg'; h.innerHTML = '❤️';
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            document.getElementById('heartsContainer').appendChild(h);
-            setTimeout(() => h.remove(), 5000);
-        }, 1000);
+        function logout() { 
+            if(confirm("يا مصعب، متأكد داير تسجل خروج؟")) { 
+                localStorage.clear(); 
+                location.href = 'index.html'; 
+            } 
+        }
 
-        function logout() { if(confirm("هل تود الخروج من المنصة؟")) { localStorage.clear(); location.href='index.html'; } }
-        function toggleNotifications() { const p = document.getElementById('notificationPanel'); p.style.display = p.style.display === 'block' ? 'none' : 'block'; }
-        
         window.onload = load;
     </script>
 </body>
