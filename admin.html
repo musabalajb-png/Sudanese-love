@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +18,7 @@
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; backdrop-filter: blur(5px); }
         .modal.active { display: flex; }
         .banned-row { opacity: 0.5; background-color: #fee2e2; }
+        .tab-btn.active { background-color: var(--primary); color: white; }
     </style>
 </head>
 <body class="flex">
@@ -33,23 +34,9 @@
         </div>
     </div>
 
-    <!-- Add Member Modal -->
-    <div id="add-member-modal" class="modal items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-2xl space-y-6">
-            <h2 class="text-xl font-black text-slate-700">إضافة عضو جديد</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" id="mName" placeholder="الاسم" class="p-3 border rounded-lg">
-                <input type="number" id="mAge" placeholder="العمر" class="p-3 border rounded-lg">
-                <input type="text" id="mCity" placeholder="المدينة" class="p-3 border rounded-lg">
-                <select id="mPlan" class="p-3 border rounded-lg bg-white"><option>عادية</option><option>الستر</option><option>ذهبية</option><option>ماسية</option></select>
-                <input type="text" id="mImage" placeholder="رابط الصورة" class="p-3 border rounded-lg md:col-span-2">
-            </div>
-            <div class="flex justify-end gap-4">
-                <button onclick="closeModal('add-member-modal')" class="px-6 py-2 bg-gray-100 rounded-lg font-bold">إلغاء</button>
-                <button onclick="addNewMember()" class="px-6 py-2 bg-primary text-white rounded-lg font-bold">إضافة العضو</button>
-            </div>
-        </div>
-    </div>
+    <!-- Modals -->
+    <div id="add-member-modal" class="modal items-center justify-center p-4"><div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-2xl space-y-6"><h2 class="text-xl font-black">إضافة عضو جديد</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><input type="text" id="mName" placeholder="الاسم" class="p-3 border rounded-lg"><input type="email" id="mEmail" placeholder="البريد" class="p-3 border rounded-lg"><input type="password" id="mPassword" placeholder="كلمة المرور" class="p-3 border rounded-lg"><select id="mPlan" class="p-3 border rounded-lg bg-white"><option>free</option><option>sutra</option><option>gold</option><option>diamond</option></select></div><div class="flex justify-end gap-4"><button onclick="closeModal('add-member-modal')" class="px-6 py-2 bg-gray-100 rounded-lg font-bold">إلغاء</button><button onclick="addNewMember()" class="px-6 py-2 bg-primary text-white rounded-lg font-bold">إضافة</button></div></div></div>
+    <div id="broadcast-modal" class="modal items-center justify-center p-4"><div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-2xl space-y-6"><h2 class="text-xl font-black">إرسال تنبيه عام</h2><textarea id="broadcastMsg" class="w-full h-32 p-4 border rounded-lg" placeholder="اكتب رسالتك هنا..."></textarea><div class="flex justify-end gap-4"><button onclick="closeModal('broadcast-modal')" class="px-6 py-2 bg-gray-100 rounded-lg font-bold">إلغاء</button><button onclick="sendBroadcast()" class="px-6 py-2 bg-red-500 text-white rounded-lg font-bold">إرسال الآن</button></div></div></div>
 
     <!-- Sidebar -->
     <aside id="sidebar" class="w-64 bg-dark text-white p-6 space-y-8 hidden md:flex flex-col">
@@ -61,16 +48,10 @@
     <!-- Main Content -->
     <main id="main-content" class="flex-1 p-8 hidden">
         <header class="mb-8 flex justify-between items-center">
-            <div>
-                <h1 class="text-3xl font-black text-dark">لوحة القيادة</h1>
-                <p class="text-gray-500">نظرة شاملة على أداء منصة نصيب العالمي.</p>
-            </div>
-            <button onclick="openModal('add-member-modal')" class="bg-primary text-white px-5 py-3 rounded-xl font-bold flex items-center gap-2">
-                <i class="fas fa-plus"></i> إضافة عضو
-            </button>
+            <div><h1 class="text-3xl font-black text-dark">لوحة القيادة</h1><p class="text-gray-500">نظرة شاملة على أداء منصة نصيب العالمي.</p></div>
+            <div class="flex gap-2"><button onclick="openModal('add-member-modal')" class="bg-primary text-white px-5 py-3 rounded-xl font-bold flex items-center gap-2"><i class="fas fa-plus"></i> إضافة عضو</button><button onclick="openModal('broadcast-modal')" class="bg-red-500 text-white px-5 py-3 rounded-xl font-bold flex items-center gap-2"><i class="fas fa-bullhorn"></i> إرسال تنبيه</button></div>
         </header>
 
-        <!-- Stats & Charts -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
             <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="stat-card"><h3 class="font-bold text-gray-500">إجمالي الأعضاء</h3><p id="total-members" class="text-4xl font-black mt-2">0</p></div>
@@ -80,24 +61,20 @@
             <div class="bg-white p-6 rounded-2xl shadow-sm border"><canvas id="planChart"></canvas></div>
         </div>
 
-        <!-- Members Table -->
         <div class="bg-white p-6 rounded-2xl shadow-sm border">
             <input type="text" id="search-members" onkeyup="filterTable()" placeholder="بحث بالاسم أو البريد..." class="w-full p-3 border rounded-lg mb-4">
-            <div class="table-wrapper">
-                <table class="w-full text-sm text-right">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0"><tr><th class="px-6 py-3">الاسم</th><th class="px-6 py-3">الباقة</th><th class="px-6 py-3">الحالة</th><th class="px-6 py-3">إجراءات</th></tr></thead>
-                    <tbody id="members-table-body"></tbody>
-                </table>
-            </div>
+            <div class="table-wrapper"><table class="w-full text-sm text-right"><thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0"><tr><th class="px-6 py-3">الاسم</th><th class="px-6 py-3">البريد</th><th class="px-6 py-3">الباقة</th><th class="px-6 py-3">الحالة</th><th class="px-6 py-3">إجراءات</th></tr></thead><tbody id="members-table-body"></tbody></table></div>
         </div>
     </main>
 
     <script>
+        const SERVER_URL = "https://sudanese-love--musabalajb.replit.app";
         const ADMIN_PASS = "Musab@219736";
-        const DB_URL = "https://naseeb-project-1030a-default-rtdb.asia-southeast1.firebasedatabase.app/members.json";
         let failedLoginAttempts = 0;
-        let allMembersData = {};
+        let allMembersData = [];
+        let growthChartInstance, planChartInstance;
 
+        // --- AUTHENTICATION ---
         function handleAdminLogin() {
             const pass = document.getElementById('admin-password').value;
             if (pass === ADMIN_PASS) {
@@ -126,111 +103,113 @@
             loadDashboardData();
         }
 
+        // --- DATA FETCHING & RENDERING ---
+        async function apiRequest(endpoint, method = 'GET', body = null) {
+            const headers = { 'Content-Type': 'application/json', 'Admin-Secret': ADMIN_PASS };
+            const options = { method, headers };
+            if (body) options.body = JSON.stringify(body);
+            const response = await fetch(`${SERVER_URL}/api/v1/admin${endpoint}`, options);
+            if (!response.ok) throw new Error(`API request failed: ${response.statusText}`);
+            return response.json();
+        }
+
         async function loadDashboardData() {
             try {
-                const res = await fetch(DB_URL);
-                allMembersData = await res.json() || {};
-                const membersArray = Object.keys(allMembersData).map(key => ({ id: key, ...allMembersData[key] }));
+                const data = await apiRequest('/members');
+                allMembersData = data.members;
+                renderStats(allMembersData);
+                renderTable(allMembersData);
+                renderCharts(allMembersData);
+            } catch (e) { console.error("Failed to load data:", e); alert("فشل تحميل البيانات من الخادم."); }
+        }
 
-                // Populate Stats
-                document.getElementById('total-members').textContent = membersArray.length;
-                const today = new Date().toISOString().slice(0, 10);
-                document.getElementById('new-today').textContent = membersArray.filter(m => m.createdAt && m.createdAt.startsWith(today)).length;
-
-                // Populate Table
-                renderTable(membersArray);
-                
-                // Render Charts
-                renderGrowthChart(membersArray);
-                renderPlanChart(membersArray);
-
-            } catch (e) { console.error("Failed to load data:", e); }
+        function renderStats(members) {
+            document.getElementById('total-members').textContent = members.length;
+            const today = new Date().toISOString().slice(0, 10);
+            document.getElementById('new-today').textContent = members.filter(m => m.createdAt && m.createdAt.startsWith(today)).length;
         }
 
         function renderTable(members) {
             const tableBody = document.getElementById('members-table-body');
             tableBody.innerHTML = '';
-            members.reverse().forEach(member => {
-                const isBanned = member.status === "محظور";
-                const row = `
-                    <tr class="bg-white border-b ${isBanned ? 'banned-row' : ''}">
-                        <td class="px-6 py-4 font-bold text-gray-900">${member.name} ${member.verified ? '✅' : ''}</td>
-                        <td class="px-6 py-4">${member.plan || 'عادية'}</td>
-                        <td class="px-6 py-4"><span class="px-2 py-1 rounded-lg text-[10px] ${isBanned ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}">${isBanned ? 'محظور' : 'نشط'}</span></td>
-                        <td class="px-6 py-4 space-x-2">
-                            <button onclick="toggleBan('${member.id}', ${isBanned})" class="p-2 text-sm"><i class="fas ${isBanned ? 'fa-user-check' : 'fa-user-slash'}"></i></button>
-                            <button onclick="deleteMember('${member.id}')" class="p-2 text-sm text-red-500"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>`;
-                tableBody.innerHTML += row;
+            members.slice().reverse().forEach(member => {
+                const isBanned = member.status === "banned";
+                tableBody.innerHTML += `<tr class="bg-white border-b ${isBanned ? 'banned-row' : ''}"><td class="px-6 py-4 font-bold">${member.name} ${member.isVerified ? '✅' : ''}</td><td class="px-6 py-4">${member.email}</td><td class="px-6 py-4">${member.plan || 'free'}</td><td class="px-6 py-4"><span class="px-2 py-1 rounded-lg text-[10px] ${isBanned ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}">${isBanned ? 'محظور' : 'نشط'}</span></td><td class="px-6 py-4 space-x-2"><button onclick="toggleBan('${member._id}', ${isBanned})" class="p-2 text-sm"><i class="fas ${isBanned ? 'fa-user-check' : 'fa-user-slash'}"></i></button><button onclick="deleteMember('${member._id}')" class="p-2 text-sm text-red-500"><i class="fas fa-trash"></i></button></td></tr>`;
             });
         }
 
-        function renderGrowthChart(members) {
+        function renderCharts(members) {
+            if (growthChartInstance) growthChartInstance.destroy();
+            if (planChartInstance) planChartInstance.destroy();
+
             const growthData = Array(7).fill(0);
             const today = new Date();
             members.forEach(m => {
                 if (m.createdAt) {
-                    const joinDate = new Date(m.createdAt);
-                    const diffDays = Math.floor((today - joinDate) / (1000 * 60 * 60 * 24));
-                    if (diffDays < 7) {
-                        growthData[6 - diffDays]++;
-                    }
+                    const diffDays = Math.floor((today - new Date(m.createdAt)) / 86400000);
+                    if (diffDays < 7) growthData[6 - diffDays]++;
                 }
             });
-            const ctx = document.getElementById('growthChart').getContext('2d');
-            new Chart(ctx, { type: 'line', data: { labels: ['-6 أيام', '-5', '-4', '-3', '-2', 'أمس', 'اليوم'], datasets: [{ label: 'مشترك جديد', data: growthData, borderColor: '#15803d', fill: true, tension: 0.4 }] } });
+            growthChartInstance = new Chart(document.getElementById('growthChart').getContext('2d'), { type: 'line', data: { labels: ['-6 أيام', '-5', '-4', '-3', '-2', 'أمس', 'اليوم'], datasets: [{ label: 'مشترك جديد', data: growthData, borderColor: '#15803d', backgroundColor: 'rgba(21, 128, 61, 0.1)', fill: true, tension: 0.4 }] } });
+
+            const planCounts = members.reduce((acc, m) => { const plan = m.plan || 'free'; acc[plan] = (acc[plan] || 0) + 1; return acc; }, {});
+            planChartInstance = new Chart(document.getElementById('planChart').getContext('2d'), { type: 'doughnut', data: { labels: Object.keys(planCounts), datasets: [{ data: Object.values(planCounts), backgroundColor: ['#9ca3af', '#16a34a', '#f59e0b', '#8b5cf6'] }] }, options: { plugins: { legend: { position: 'bottom' } } } });
         }
 
-        function renderPlanChart(members) {
-            const planCounts = members.reduce((acc, m) => {
-                const plan = m.plan || 'عادية';
-                acc[plan] = (acc[plan] || 0) + 1;
-                return acc;
-            }, {});
-            const ctx = document.getElementById('planChart').getContext('2d');
-            new Chart(ctx, { type: 'doughnut', data: { labels: Object.keys(planCounts), datasets: [{ data: Object.values(planCounts), backgroundColor: ['#9ca3af', '#16a34a', '#f59e0b', '#8b5cf6'] }] } });
-        }
-
+        // --- CRUD & ACTIONS ---
         async function addNewMember() {
-            const newMember = {
-                name: document.getElementById('mName').value, age: document.getElementById('mAge').value,
-                city: document.getElementById('mCity').value, status: "نشط",
-                plan: document.getElementById('mPlan').value, image: document.getElementById('mImage').value,
-                verified: true, createdAt: new Date().toISOString()
-            };
-            if (!newMember.name) return alert("الاسم مطلوب");
-            await fetch(DB_URL, { method: "POST", body: JSON.stringify(newMember) });
-            closeModal('add-member-modal');
-            loadDashboardData();
+            const newMember = { name: document.getElementById('mName').value, email: document.getElementById('mEmail').value, password: document.getElementById('mPassword').value, plan: document.getElementById('mPlan').value };
+            if (!newMember.name || !newMember.email || !newMember.password) return alert("الاسم والبريد وكلمة المرور مطلوبة");
+            try {
+                await apiRequest('/members', 'POST', newMember);
+                closeModal('add-member-modal');
+                loadDashboardData();
+            } catch (e) { alert('فشل إضافة العضو.'); }
         }
 
         async function toggleBan(id, isBanned) {
-            await fetch(`https://naseeb-project-1030a-default-rtdb.asia-southeast1.firebasedatabase.app/members/${id}.json`, {
-                method: 'PATCH', body: JSON.stringify({ status: isBanned ? "نشط" : "محظور" })
-            });
-            loadDashboardData();
+            const action = isBanned ? "إلغاء حظر" : "حظر";
+            if (confirm(`هل تريد ${action} هذا العضو؟`)) {
+                try {
+                    await apiRequest(`/members/${id}/ban`, 'PATCH', { ban: !isBanned });
+                    loadDashboardData();
+                } catch (e) { alert(`فشل ${action} العضو.`); }
+            }
         }
 
         async function deleteMember(id) {
             if (confirm('هل أنت متأكد من حذف هذا العضو نهائياً؟')) {
-                await fetch(`https://naseeb-project-1030a-default-rtdb.asia-southeast1.firebasedatabase.app/members/${id}.json`, { method: 'DELETE' });
-                loadDashboardData();
+                try {
+                    await apiRequest(`/members/${id}`, 'DELETE');
+                    loadDashboardData();
+                } catch (e) { alert('فشل حذف العضو.'); }
+            }
+        }
+        
+        async function sendBroadcast() {
+            const message = document.getElementById('broadcastMsg').value.trim();
+            if (!message) return;
+            if (confirm("سيتم إرسال هذا التنبيه لكل الأعضاء، استمرار؟")) {
+                try {
+                    await apiRequest('/broadcast', 'POST', { message });
+                    alert("تم إرسال التنبيه بنجاح ✅");
+                    closeModal('broadcast-modal');
+                } catch (e) { alert("فشل إرسال التنبيه."); }
             }
         }
 
         function filterTable() {
             const filter = document.getElementById('search-members').value.toUpperCase();
-            const membersArray = Object.keys(allMembersData).map(key => ({ id: key, ...allMembersData[key] }));
-            const filteredMembers = membersArray.filter(m => m.name.toUpperCase().includes(filter));
+            const filteredMembers = allMembersData.filter(m => m.name.toUpperCase().includes(filter) || m.email.toUpperCase().includes(filter));
             renderTable(filteredMembers);
         }
 
+        // --- UTILITY ---
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
         function adminLogout() { sessionStorage.removeItem('admin_logged_in'); location.reload(); }
 
-        // Initial check
+        // --- INITIALIZATION ---
         if (sessionStorage.getItem('admin_logged_in') === 'true') {
             showPanel();
         }
