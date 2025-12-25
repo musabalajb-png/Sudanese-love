@@ -1,67 +1,48 @@
- <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <title>أعضاء نصيب | استكشف شريك حياتك في بيئة آمنة</title>
     <meta name="description" content="تصفح قائمة الأعضاء الموثقين في منصة نصيب العالمي. ابحث عن نصيبك حسب المدينة، الحالة الاجتماعية، أو المهنة بكل خصوصية.">
-    <meta property="og:title" content="منصة نصيب - قائمة الأعضاء الموثقين">
-    <meta property="og:image" content="https://i.ibb.co/3kZg5xn/naseeb-preview.jpg">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     
     <style>
-        :root { --primary-green: #15803d; --accent-gold: #fbbf24; --royal-blue: #1e40af; }
+        :root { --primary-green: #15803d; --accent-gold: #fbbf24; }
         body { font-family: 'Cairo', sans-serif; background: #f8fafc; overflow-x: hidden; user-select: none; }
         .bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%); z-index: -2; }
         
-        /* Member Card Styling المحدثة */
         .member-card { border-radius: 2rem; background: white; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; border: 1px solid #f1f5f9; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
         .member-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(21, 128, 61, 0.15); }
         .img-box { width: 100%; padding-top: 120%; position: relative; overflow: hidden; background: #e2e8f0; }
         .img-box img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; transition: 0.8s; }
         .blur-effect { filter: blur(25px); transform: scale(1.1); }
         
-        /* الشارات badges */
         .premium-badge { position: absolute; top: 12px; right: 12px; background: linear-gradient(45deg, #fbbf24, #f59e0b); color: white; padding: 4px 12px; border-radius: 50px; font-size: 10px; font-weight: 900; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .vip-badge { position: absolute; top: 12px; right: 12px; background: linear-gradient(45deg, #1e293b, #0f172a); color: #fbbf24; padding: 4px 12px; border-radius: 50px; font-size: 10px; font-weight: 900; z-index: 10; border: 1px solid #fbbf24; }
         
-        .blur-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 5; backdrop-filter: blur(4px); opacity: 0; transition: 0.3s; }
-        .member-card:hover .blur-overlay { opacity: 1; }
-        .unlock-btn { background: white; color: var(--primary-green); padding: 8px 16px; border-radius: 50px; font-size: 11px; font-weight: 900; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .unlock-btn:hover { background: var(--primary-green); color: white; transform: scale(1.05); }
-
         .online-dot { position: absolute; bottom: 12px; left: 12px; width: 12px; height: 12px; background: #22c55e; border-radius: 50%; border: 2px solid white; z-index: 10; }
-        .dot-pulse { animation: dot-pulse 2s infinite; }
-        @keyframes dot-pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); } 70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
         
         .filter-chip { @apply px-5 py-2 rounded-full border border-slate-200 text-sm font-bold text-slate-500 transition-all cursor-pointer whitespace-nowrap bg-white; }
         .filter-chip.active { @apply bg-green-700 border-green-700 text-white shadow-lg shadow-green-200; }
         .action-btn { @apply flex-1 py-2 rounded-xl text-[11px] font-black transition-all active:scale-95 flex items-center justify-center gap-1 shadow-sm; }
         
-        /* Chat UI */
-        #chatWindow { display: none; position: fixed; bottom: 0; left: 0; right: 0; top: 0; background: white; z-index: 3000; flex-direction: column; animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        
-        .no-scrollbar::-webkit-scrollbar { display: none; }
         .skeleton { background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
         @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        @keyframes animate-slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-slide-up { animation: animate-slide-up 0.5s ease-out forwards; }
     </style>
 </head>
 <body class="pb-24">
 
-    <div id="loadingMembers" class="fixed inset-0 bg-white z-[5000] flex flex-col items-center justify-center transition-opacity duration-500">
+    <div id="loadingScreen" class="fixed inset-0 bg-white z-[5000] flex flex-col items-center justify-center">
         <div class="relative">
             <div class="w-20 h-20 border-4 border-green-100 rounded-full"></div>
             <div class="w-20 h-20 border-4 border-green-700 border-t-transparent rounded-full animate-spin absolute top-0"></div>
-            <div class="absolute inset-0 flex items-center justify-center text-green-700 font-black text-2xl">ن</div>
+            <div class="absolute inset-0 flex items-center justify-center text-green-700 font-black">ن</div>
         </div>
-        <p class="mt-6 font-bold text-green-800 animate-pulse text-lg">نبحث لك عن نصيبك الآن...</p>
+        <p id="loadingText" class="mt-6 font-bold text-green-800 animate-pulse text-lg">نتحقق من هويتك...</p>
     </div>
 
     <div class="bg-canvas"></div>
@@ -76,236 +57,148 @@
                 </div>
             </div>
             <div class="flex items-center gap-3">
-                <button onclick="toggleNotif()" class="relative w-10 h-10 bg-slate-100 rounded-full text-slate-600 transition-all hover:ring-2 hover:ring-green-500">
-                    <i class="fas fa-bell"></i>
-                    <span id="notifBadge" class="absolute -top-1 -left-1 bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-full hidden border-2 border-white">0</span>
-                </button>
-                <div class="h-8 w-[1px] bg-slate-200"></div>
-                <button onclick="logout()" class="w-10 h-10 bg-red-50 text-red-500 rounded-xl flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><i class="fas fa-sign-out-alt"></i></button>
+                <span id="welcomeUser" class="text-sm font-bold text-slate-600 hidden md:block"></span>
+                <div class="h-8 w-[1px] bg-slate-200 hidden md:block"></div>
+                <button onclick="logout()" class="w-10 h-10 bg-red-50 text-red-500 rounded-xl flex items-center justify-center hover:bg-red-500 hover:text-white transition-all" title="تسجيل الخروج"><i class="fas fa-sign-out-alt"></i></button>
             </div>
         </div>
     </nav>
 
-    <div id="notifPanel" class="hidden fixed top-20 left-4 right-4 max-w-sm mx-auto bg-white rounded-[2rem] shadow-2xl z-[1500] p-6 border border-slate-100">
-        <div class="flex justify-between items-center mb-4">
-            <h4 class="font-black text-slate-800">تنبيهات جادة</h4>
-            <button onclick="toggleNotif()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 text-slate-400"><i class="fas fa-times text-xs"></i></button>
-        </div>
-        <div id="notifList" class="max-h-60 overflow-y-auto space-y-3 no-scrollbar"></div>
-    </div>
-
-    <div id="chatWindow">
-        <div class="bg-slate-900 p-4 text-white flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <button onclick="closeChat()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10"><i class="fas fa-chevron-right"></i></button>
-                <div>
-                    <span id="chatPartnerName" class="font-black block text-sm"></span>
-                    <span class="text-[9px] text-green-400 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> نشط الآن</span>
-                </div>
-            </div>
-            <div id="chatCounter" class="text-[10px] bg-white/10 px-3 py-1 rounded-full font-bold"></div>
-        </div>
-        <div id="chatMessages" class="flex-1 p-5 bg-[#f0f2f5] overflow-y-auto flex flex-col gap-4 no-scrollbar"></div>
-        <div class="p-4 bg-white border-t safe-area-bottom">
-            <div class="flex gap-2 items-center bg-slate-100 rounded-[2rem] px-4 py-2">
-                <input type="text" id="msgInput" placeholder="اكتب رسالة بجدية..." class="flex-1 bg-transparent py-2 text-sm outline-none font-bold">
-                <button onclick="sendMessage()" class="w-10 h-10 bg-green-700 text-white rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-all"><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </div>
-    </div>
-
     <main class="container mx-auto p-5">
-        <div class="mb-8 animate-slide-up">
+        <div class="mb-8">
             <div class="bg-white rounded-[2rem] p-3 shadow-md flex items-center gap-3 border border-slate-100 mb-5 focus-within:ring-2 focus-within:ring-green-500 transition-all">
                 <i class="fas fa-search text-slate-300 mr-2"></i>
-                <input type="text" id="searchInput" onkeyup="filterMembers()" placeholder="ابحث باسم المدينة، المهنة، أو الكلمات المفتاحية..." class="w-full bg-transparent outline-none font-black text-slate-700 text-sm">
+                <input type="text" id="searchInput" onkeyup="filterMembers()" placeholder="ابحث بالاسم، المدينة، أو المهنة..." class="w-full bg-transparent outline-none font-black text-slate-700 text-sm">
             </div>
-            <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar" id="filterContainer">
-                <div class="filter-chip active" onclick="setFilter('all', this)">كل الأعضاء</div>
-                <div class="filter-chip" onclick="setFilter('داخل السودان', this)">🇸🇩 داخل السودان</div>
-                <div class="filter-chip" onclick="setFilter('خارج السودان', this)">🌍 المغتربين</div>
-                <div class="filter-chip" onclick="setFilter('موثق', this)">✅ موثقين</div>
-            </div>
-        </div>
-
-        <div id="suggestionSection" class="hidden mb-12">
-            <div class="flex items-center justify-between mb-4 px-2">
-                <h3 class="font-black text-slate-800 text-lg flex items-center gap-2">
-                    <i class="fas fa-magic text-amber-500"></i> مقترحات ذكية لك
-                </h3>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4" id="suggestGrid"></div>
         </div>
 
         <div class="flex items-center justify-between mb-6 px-2">
             <h3 class="font-black text-slate-800 text-lg">اكتشف شريك حياتك</h3>
-            <span class="text-[10px] font-black text-green-700 px-3 py-1 bg-green-50 rounded-full border border-green-100" id="totalCountDisplay">جاري الإحصاء...</span>
+            <span class="text-[10px] font-black text-green-700 px-3 py-1 bg-green-50 rounded-full border border-green-100" id="totalCountDisplay">...</span>
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4" id="membersGrid">
+            <!-- Skeletons for loading state -->
             <div class="member-card skeleton min-h-[250px]"></div>
             <div class="member-card skeleton min-h-[250px]"></div>
             <div class="member-card skeleton min-h-[250px]"></div>
             <div class="member-card skeleton min-h-[250px]"></div>
+            <div class="member-card skeleton min-h-[250px] hidden md:flex"></div>
+            <div class="member-card skeleton min-h-[250px] hidden lg:flex"></div>
         </div>
     </main>
 
-    <div id="appToast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[6000] bg-slate-900/95 backdrop-blur shadow-2xl text-white px-8 py-4 rounded-[2rem] text-xs font-black hidden animate-bounce border border-white/10"></div>
+    <div id="appToast" class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-[6000] bg-slate-900/95 backdrop-blur shadow-2xl text-white px-8 py-4 rounded-[2rem] text-xs font-black border border-white/10"></div>
 
     <script>
-        const CONFIG = {
-            sheetURL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRHsoqVm7cDIUgGw6u5n0yO8U19lyqKLrrskUn6Q7At1Q04hrXdC7HxojsDnxj7Frld2__eJOBBMEX6/pub?output=csv",
-            planLimits: {
-                'عادية': { likes: 5, gifts: 2, chats: 1 },
-                'الستر': { likes: 20, gifts: 10, chats: 10 },
-                'ذهبية': { likes: 50, gifts: 50, chats: 50 },
-                'VIP': { likes: 999, gifts: 999, chats: 999 }
+        const SERVER_URL = "https://sudanese-love--musabalajb.replit.app"; // Your backend URL
+        let allMembers = [];
+
+        // 1. Authentication Check on Page Load
+        window.onload = function() {
+            const token = localStorage.getItem('naseeb_token');
+            const userName = localStorage.getItem('naseeb_user_name');
+
+            if (!token) {
+                // If no token, redirect to login page immediately
+                window.location.href = 'login.html';
+                return;
             }
+
+            if (userName) {
+                document.getElementById('welcomeUser').innerText = `مرحباً، ${userName}`;
+            }
+
+            // If token exists, proceed to fetch members
+            fetchMembers(token);
         };
 
-        let allMembers = [];
-        let notifications = [];
+        // 2. Fetch Members from the REAL Backend
+        async function fetchMembers(token) {
+            const loadingText = document.getElementById('loadingText');
+            loadingText.innerText = 'نبحث لك عن نصيبك...';
 
-        // تنظيف النصوص للحماية
-        function cleanText(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        // نظام الحماية اليومي للمحاولات
-        function getSecureStats() {
-            const key = 'naseeb_daily_usage';
-            const today = new Date().toDateString();
-            let data = JSON.parse(localStorage.getItem(key)) || { date: today, likes: 0, gifts: 0, chats: 0 };
-            
-            if (data.date !== today) {
-                data = { date: today, likes: 0, gifts: 0, chats: 0 };
-                localStorage.setItem(key, JSON.stringify(data));
-            }
-            return data;
-        }
-
-        async function load() {
             try {
-                const res = await fetch(`${CONFIG.sheetURL}?v=${Date.now()}`);
-                const data = await res.text();
-                const rows = data.split('\n').slice(1);
-                
-                const grid = document.getElementById('membersGrid');
-                const suggestGrid = document.getElementById('suggestGrid');
-                const suggestSection = document.getElementById('suggestionSection');
-                
-                const userPlan = localStorage.getItem('userPlan') || 'عادية';
-                const isPaid = /الستر|ذهبية|VIP/i.test(userPlan);
-                const userCity = localStorage.getItem('userCity') || '';
-
-                allMembers = [];
-                grid.innerHTML = ""; 
-                suggestGrid.innerHTML = "";
-
-                rows.forEach((row, index) => {
-                    const cols = row.split(',').map(c => c.trim().replace(/^"|"$/g, ''));
-                    if(!cols[0] || cols[0].length < 2) return;
-
-                    const m = { 
-                        name: cleanText(cols[0]), 
-                        city: cleanText(cols[3] || 'السودان'), 
-                        plan: cols[2] || 'عادية', 
-                        img: cols[6], 
-                        job: cleanText(cols[4] || 'عضو'),
-                        verified: true // سيتم جلبها من الشيت مستقبلاً
-                    };
-                    allMembers.push(m);
-                    
-                    const cardHTML = createCard(m, index, isPaid);
-                    
-                    if (userCity && m.city.includes(userCity) && m.name !== localStorage.getItem('userName')) {
-                        suggestGrid.innerHTML += cardHTML;
-                        suggestSection.classList.remove('hidden');
-                    } else {
-                        grid.innerHTML += cardHTML;
+                const response = await fetch(`${SERVER_URL}/api/v1/members`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
                     }
                 });
 
-                document.getElementById('totalCountDisplay').innerText = `${allMembers.length} شريك ينتظرك`;
-                document.getElementById('loadingMembers').style.opacity = '0';
-                setTimeout(() => document.getElementById('loadingMembers').style.display = 'none', 500);
-            } catch (e) {
-                showToast("⚠️ حدث خطأ في الاتصال، تأكد من شبكتك.");
+                if (response.status === 401) {
+                    // Unauthorized, token is invalid or expired
+                    logout(); // Clear storage and redirect
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                allMembers = data.members;
+                renderMembers(allMembers);
+
+            } catch (error) {
+                console.error('Failed to fetch members:', error);
+                loadingText.innerText = 'حدث خطأ في الاتصال بالخادم.';
+                showToast('❌ خطأ في جلب البيانات.', true);
             }
         }
 
-        function createCard(m, i, isPaid) {
-            const isVIP = /VIP/i.test(m.plan);
-            const isGold = /ذهبية/i.test(m.plan);
-            
-            let badge = '';
-            if (isVIP) badge = '<div class="vip-badge"><i class="fas fa-crown mr-1"></i>VIP</div>';
-            else if (isGold) badge = '<div class="premium-badge"><i class="fas fa-star mr-1"></i>مميز</div>';
+        // 3. Render Members on the Page
+        function renderMembers(members) {
+            const grid = document.getElementById('membersGrid');
+            grid.innerHTML = ""; // Clear skeletons
 
+            if (members.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-slate-500 font-bold">لا يوجد أعضاء لعرضهم حالياً.</p>`;
+            } else {
+                members.forEach((member, index) => {
+                    grid.innerHTML += createCard(member, index);
+                });
+            }
+
+            document.getElementById('totalCountDisplay').innerText = `${members.length} عضو متاح`;
+            document.getElementById('loadingScreen').style.display = 'none';
+        }
+
+        // 4. Create Member Card HTML
+        function createCard(m, i) {
+            const isGold = m.plan && /gold|diamond/i.test(m.plan);
+            const badge = isGold ? '<div class="premium-badge"><i class="fas fa-star mr-1"></i>مميز</div>' : '';
+            
+            // The onclick now stores the full member object in sessionStorage
             return `
-                <div class="member-card member-item animate-slide-up" data-tags="${m.name} ${m.city} ${m.job} ${m.verified ? 'موثق' : ''}" style="animation-delay: ${i * 0.05}s">
+                <div class="member-card member-item" data-tags="${m.name} ${m.city} ${m.job}" style="animation-delay: ${i * 0.05}s" onclick='viewProfile(${JSON.stringify(m)})'>
                     <div class="img-box">
                         ${badge}
-                        <div class="online-dot dot-pulse"></div>
-                        <img src="${m.img || 'https://ui-avatars.com/api/?name='+m.name+'&background=random'}" class="${!isPaid ? 'blur-effect' : ''}" loading="lazy">
-                        ${!isPaid ? `<div class="blur-overlay"><button class="unlock-btn" onclick="location.href='index.html#pricing'">فك الحجب 🔓</button></div>` : ''}
+                        <div class="online-dot"></div>
+                        <img src="${m.profileImageUrl || `https://ui-avatars.com/api/?name=${m.name}&background=random`}" loading="lazy">
                     </div>
                     <div class="p-4 flex-1 flex flex-col">
                         <h4 class="font-black text-[13px] text-slate-800 truncate flex items-center gap-1">
                             ${m.name} 
-                            <i class="fas fa-check-circle text-blue-500 text-[10px]" title="عضو موثق"></i>
+                            ${m.isVerified ? '<i class="fas fa-check-circle text-blue-500 text-[10px]" title="عضو موثق"></i>' : ''}
                         </h4>
-                        <p class="text-[10px] text-slate-500 font-bold mb-4"><i class="fas fa-map-marker-alt text-red-400 ml-1"></i>${m.city}</p>
+                        <p class="text-[10px] text-slate-500 font-bold mb-4"><i class="fas fa-map-marker-alt text-red-400 ml-1"></i>${m.city || 'غير محدد'}</p>
                         <div class="mt-auto flex gap-2">
-                            <button onclick="handleInteraction('likes', '${m.name}')" class="action-btn bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white"><i class="fas fa-heart"></i></button>
-                            <button onclick="handleInteraction('chats', '${m.name}')" class="action-btn bg-green-50 text-green-700 hover:bg-green-700 hover:text-white"><i class="fas fa-comment"></i></button>
+                            <button class="action-btn bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn bg-green-50 text-green-700 hover:bg-green-700 hover:text-white"><i class="fas fa-comment"></i></button>
                         </div>
                     </div>
                 </div>`;
         }
 
-        function handleInteraction(type, target) {
-            const stats = getSecureStats();
-            const plan = localStorage.getItem('userPlan') || 'عادية';
-            const limit = CONFIG.planLimits[plan][type];
-
-            if (stats[type] >= limit) {
-                showToast(`❌ وصلت للحد اليومي في باقة (${plan}). قم بالترقية الآن.`);
-                return;
-            }
-
-            stats[type]++;
-            localStorage.setItem('naseeb_daily_usage', JSON.stringify(stats));
-
-            if (type === 'likes') showToast(`❤️ تم إرسال إعجاب لـ ${target}`);
-            if (type === 'chats') {
-                showToast(`✅ جاري فتح الدردشة مع ${target}`);
-                setTimeout(() => openChat(target), 800);
-            }
+        // 5. View Profile Function
+        function viewProfile(memberData) {
+            // Store the clicked member's data in sessionStorage to pass it to the profile page
+            sessionStorage.setItem('currentProfile', JSON.stringify(memberData));
+            window.location.href = 'profile.html';
         }
 
-        function openChat(name) {
-            document.getElementById('chatPartnerName').innerText = name;
-            document.getElementById('chatWindow').style.display = 'flex';
-            document.getElementById('chatMessages').innerHTML = `<div class="text-center text-[10px] text-slate-400 py-4">أنت الآن تتحدث مع ${name} بغرض الزواج الحلال</div>`;
-        }
-
-        function sendMessage() {
-            const inp = document.getElementById('msgInput');
-            if (!inp.value.trim()) return;
-            
-            const msg = `
-                <div class="self-end bg-green-700 text-white px-4 py-2 rounded-[1.2rem] rounded-tr-none text-sm shadow-sm">
-                    ${cleanText(inp.value)}
-                </div>`;
-            document.getElementById('chatMessages').innerHTML += msg;
-            inp.value = "";
-            const box = document.getElementById('chatMessages');
-            box.scrollTop = box.scrollHeight;
-        }
-
+        // 6. Filter and Logout Functions (remain mostly the same)
         function filterMembers() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             document.querySelectorAll('.member-item').forEach(el => {
@@ -314,36 +207,20 @@
             });
         }
 
-        function setFilter(tag, el) {
-            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-            el.classList.add('active');
-            const searchInput = document.getElementById('searchInput');
-            searchInput.value = (tag === 'all') ? '' : tag;
-            filterMembers();
+        function logout() {
+            localStorage.removeItem('naseeb_token');
+            localStorage.removeItem('naseeb_user_name');
+            localStorage.removeItem('naseeb_user_id');
+            window.location.href = 'login.html';
         }
 
-        function toggleNotif() {
-            const p = document.getElementById('notifPanel');
-            p.classList.toggle('hidden');
-        }
-
-        function showToast(msg) {
+        function showToast(msg, isError = false) {
             const t = document.getElementById('appToast');
             t.innerText = msg;
+            t.style.backgroundColor = isError ? '#ef4444' : '#1e293b';
             t.classList.remove('hidden');
             setTimeout(() => t.classList.add('hidden'), 3500);
         }
-
-        function closeChat() { document.getElementById('chatWindow').style.display = 'none'; }
-        
-        function logout() {
-            if(confirm("هل تريد تسجيل الخروج؟")) {
-                localStorage.clear();
-                window.location.href = 'index.html';
-            }
-        }
-
-        window.onload = load;
     </script>
 </body>
 </html>
