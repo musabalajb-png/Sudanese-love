@@ -92,7 +92,7 @@
                     <div class="h-12 flex items-center justify-center"><i class="fas fa-star text-2xl text-amber-500"></i></div>
                     <div class="h-12 flex items-center justify-center"><i class="fas fa-times-circle text-2xl text-slate-300"></i></div>
                 </div>
-                <button onclick="subscribe('الباقة الذهبية')" class="w-full py-4 mt-6 rounded-2xl bg-accent-gold text-white font-bold hover:bg-amber-500 transition shadow-lg shadow-amber-200" data-ar="الترقية للذهبية" data-en="Upgrade to Gold"></button>
+                <button onclick="subscribe({ name: 'الباقة الذهبية', price: '75000' })" class="w-full py-4 mt-6 rounded-2xl bg-accent-gold text-white font-bold hover:bg-amber-500 transition shadow-lg shadow-amber-200" data-ar="الترقية للذهبية" data-en="Upgrade to Gold"></button>
             </div>
 
             <!-- Diamond Plan -->
@@ -108,7 +108,7 @@
                     <div class="h-12 flex items-center justify-center"><i class="fas fa-gem text-2xl text-purple-500"></i></div>
                     <div class="h-12 flex items-center justify-center"><i class="fas fa-gem text-2xl text-purple-500"></i></div>
                 </div>
-                <button onclick="subscribe('الباقة الماسية')" class="w-full py-4 mt-6 rounded-2xl bg-purple-700 text-white font-bold hover:bg-purple-800 transition" data-ar="الترقية للماسية" data-en="Upgrade to Diamond"></button>
+                <button onclick="subscribe({ name: 'الباقة الماسية', price: '90000' })" class="w-full py-4 mt-6 rounded-2xl bg-purple-700 text-white font-bold hover:bg-purple-800 transition" data-ar="الترقية للماسية" data-en="Upgrade to Diamond"></button>
             </div>
         </div>
     </div>
@@ -155,6 +155,7 @@
                         userCurrency, 
                         exchangeRates, 
                         countryName: geoData.country_name,
+                        isSudan: geoData.country_code === 'SD',
                         timestamp: now 
                     }));
                 } catch(e) {
@@ -187,7 +188,6 @@
                 if (userCurrency === 'SDG') {
                     finalPrice = priceSDG;
                 } else {
-                    // Round to a sensible number, e.g., nearest 1, 5, or 10
                     finalPrice = Math.round((priceSDG * rate) / 5) * 5;
                 }
                 
@@ -210,11 +210,18 @@
             updatePrices();
         }
 
-        function subscribe(planName) {
-            const user = localStorage.getItem('userName') || 'مشترك جديد';
-            const country = JSON.parse(localStorage.getItem('currencyData'))?.countryName || 'Unknown';
-            const msg = `مرحباً نصيب العالمي،\nأرغب في الاشتراك في (${planName}).\n\nالاسم: ${user}\nالدولة: ${country}`;
-            window.open(`https://wa.me/249127910778?text=${encodeURIComponent(msg)}`, '_blank');
+        function subscribe(plan) {
+            const priceEl = document.querySelector(`[data-price-sdg="${plan.price}"]`);
+            const currencyEl = priceEl.nextElementSibling;
+            
+            const planDetails = {
+                name: plan.name,
+                price: priceEl.innerText,
+                currency: currencyEl.innerText
+            };
+
+            sessionStorage.setItem('selectedPlan', JSON.stringify(planDetails));
+            window.location.href = 'checkout.html';
         }
 
         window.onload = async () => {
