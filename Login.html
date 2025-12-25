@@ -4,250 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>تسجيل الدخول | نصيب العالمي</title>
+    <meta name="description" content="سجل دخولك إلى منصة نصيب العالمي للوصول إلى حسابك ومتابعة رحلتك في البحث عن شريك الحياة.">
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     
     <style>
-        :root { --primary-green: #15803d; --accent-gold: #fbbf24; }
-        [dir="ltr"] { font-family: 'Poppins', sans-serif; }
-        body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%); display: flex; align-items: center; justify-content: center; min-height: 100vh; user-select: none; }
-        
+        :root { --primary: #065f46; --accent: #d97706; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; display: flex; align-items: center; justify-content: center; min-height: 100vh; user-select: none; }
         .login-card {
             background: white;
             border-radius: 3rem;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
             width: 100%;
             max-width: 450px;
-            padding: 2.5rem;
-            border: 1px solid #f1f5f9;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
         .form-input {
-            width: 100%;
-            padding: 1.25rem;
-            padding-right: 3.5rem; /* Space for icon */
-            border-radius: 1.5rem;
-            background-color: #f1f5f9;
-            border: 2px solid transparent;
-            font-weight: 700;
-            outline: none;
-            transition: all 0.3s;
+            width: 100%; padding: 1.25rem; border-radius: 1.25rem; background-color: #f1f5f9;
+            border: 2px solid transparent; font-weight: 700; outline: none; transition: all 0.3s;
         }
-        [dir="ltr"] .form-input { padding-right: 1.25rem; padding-left: 3.5rem; }
-        .form-input:focus { border-color: var(--primary-green); background-color: white; }
-        
-        .input-icon { position: absolute; top: 50%; right: 1.25rem; transform: translateY(-50%); color: #94a3b8; }
-        [dir="ltr"] .input-icon { right: auto; left: 1.25rem; }
-
-        .otp-input { width: 45px; height: 55px; text-align: center; font-size: 1.5rem; font-weight: bold; border-radius: 12px; border: 2px solid #e2e8f0; background: #f8fafc; }
-        .otp-input:focus { border-color: var(--primary-green); outline: none; background: white; }
+        .form-input:focus { border-color: var(--primary); background-color: white; }
     </style>
 </head>
-<body class="p-4">
+<body class="p-6">
 
     <div class="login-card">
-        <div class="text-center mb-8">
-            <div class="flex items-center justify-center gap-3 cursor-pointer mb-4" onclick="location.href='index.html'">
-                <div class="w-12 h-12 bg-green-700 rounded-2xl flex items-center justify-center text-white shadow-lg rotate-3"><i class="fas fa-ring text-xl"></i></div>
-                <div>
-                    <span class="font-black text-green-800 text-2xl block leading-none">نصيب</span>
-                    <span class="text-[9px] font-bold text-slate-400">منصة الستر السودانية</span>
+        <div class="p-8 md:p-12">
+            <div class="text-center mb-10">
+                <div class="w-20 h-20 bg-green-100 text-green-700 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner">
+                    <i class="fas fa-ring"></i>
                 </div>
+                <h1 class="text-3xl font-black text-slate-800" data-ar="مرحباً بعودتك" data-en="Welcome Back"></h1>
+                <p class="text-slate-500 font-bold mt-2" data-ar="سجل دخولك لمتابعة رحلة الستر" data-en="Log in to continue your journey"></p>
             </div>
-            <h2 class="text-2xl font-black text-slate-800" data-ar="مرحباً بعودتك" data-en="Welcome Back">مرحباً بعودتك</h2>
-            <p class="text-sm text-slate-500 font-bold" data-ar="سجل دخولك لمتابعة رحلة البحث عن شريك حياتك" data-en="Log in to continue your journey">سجل دخولك لمتابعة رحلة البحث عن شريك حياتك</p>
-        </div>
 
-        <div id="error-box" class="hidden bg-red-50 text-red-600 p-4 rounded-2xl text-center text-sm font-bold mb-6"></div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="space-y-5">
+                    <div>
+                        <label for="email" class="font-bold text-sm text-slate-600 mb-2 block" data-ar="البريد الإلكتروني" data-en="Email Address"></label>
+                        <input type="email" id="email" name="email" required class="form-input">
+                    </div>
+                    <div>
+                        <label for="password" class="font-bold text-sm text-slate-600 mb-2 block" data-ar="كلمة المرور" data-en="Password"></label>
+                        <input type="password" id="password" name="password" required class="form-input">
+                    </div>
+                </div>
 
-        <!-- Login with Password Form -->
-        <form id="password-form" class="space-y-5">
-            <div class="relative">
-                <i class="fas fa-envelope input-icon"></i>
-                <input type="text" id="identifier" required placeholder="البريد أو رقم الهاتف" class="form-input">
+                <div class="flex justify-between items-center mt-6">
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="rememberMe" name="rememberMe" class="w-5 h-5 accent-green-600 rounded">
+                        <label for="rememberMe" class="text-xs font-bold text-slate-600" data-ar="تذكرني" data-en="Remember Me"></label>
+                    </div>
+                    <a href="#" class="text-xs font-bold text-green-600 hover:underline" data-ar="نسيت كلمة المرور؟" data-en="Forgot Password?"></a>
+                </div>
+
+                <div id="error-message" class="hidden mt-6 bg-red-50 text-red-600 text-sm font-bold p-4 rounded-2xl text-center"></div>
+
+                <button type="submit" id="loginBtn" class="w-full mt-8 bg-green-700 text-white font-black py-5 rounded-2xl shadow-xl shadow-green-200 hover:bg-green-800 transition active:scale-95 flex items-center justify-center">
+                    <span data-ar="دخول آمن" data-en="Secure Login"></span>
+                </button>
+            </form>
+
+            <div class="text-center mt-8">
+                <p class="text-sm text-slate-500">
+                    <span data-ar="ليس لديك حساب؟" data-en="Don't have an account?"></span>
+                    <a href="index.html" class="font-bold text-green-600 hover:underline" data-ar="انضم إلينا الآن" data-en="Join Now"></a>
+                </p>
             </div>
-            <div class="relative">
-                <i class="fas fa-lock input-icon"></i>
-                <input type="password" id="password" required placeholder="كلمة السر" class="form-input">
-            </div>
-            <div class="flex justify-between items-center text-xs font-bold">
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="rememberMe" class="accent-primary-green">
-                    <span data-ar="تذكرني" data-en="Remember Me">تذكرني</span>
-                </label>
-                <a href="#" class="text-primary-green hover:underline" data-ar="نسيت كلمة السر؟" data-en="Forgot Password?">نسيت كلمة السر؟</a>
-            </div>
-            <button type="button" id="loginBtn" onclick="handleLogin()" class="w-full bg-green-700 text-white py-5 rounded-2xl font-black shadow-xl hover:bg-green-800 transition active:scale-95 text-lg">
-                <span data-ar="تسجيل الدخول" data-en="Log In">تسجيل الدخول</span>
-            </button>
-        </form>
-
-        <!-- Login with OTP Form -->
-        <div id="otp-form" class="hidden">
-            <div class="flex justify-center gap-2" dir="ltr">
-                <input type="text" maxlength="1" class="otp-input">
-                <input type="text" maxlength="1" class="otp-input">
-                <input type="text" maxlength="1" class="otp-input">
-                <input type="text" maxlength="1" class="otp-input">
-            </div>
-            <button type="button" onclick="verifyOtp()" class="w-full mt-6 bg-green-700 text-white py-4 rounded-2xl font-bold">تحقق من الرمز</button>
-        </div>
-
-        <div class="text-center mt-6">
-            <button id="toggleFormBtn" onclick="toggleForm()" class="text-sm font-bold text-slate-600 hover:text-primary-green transition" data-ar="أو سجل دخولك برمز سري" data-en="Or log in with a secret code">أو سجل دخولك برمز سري</button>
-        </div>
-
-        <div class="text-center mt-8 text-sm font-bold">
-            <span class="text-slate-500" data-ar="ليس لديك حساب؟" data-en="Don't have an account?">ليس لديك حساب؟</span>
-            <a href="index.html" class="text-primary-green hover:underline" data-ar="سجل الآن" data-en="Sign Up Now">سجل الآن</a>
         </div>
     </div>
 
     <script>
-        // --- محاكاة الواجهة البرمجية الخلفية (الأمان والتحكم) ---
-        const NaseebAPI = {
-            login: async function(identifier, password) {
-                return new Promise(resolve => {
-                    setTimeout(() => {
-                        // بيانات وهمية للتحقق
-                        const users = {
-                            "user@naseeb.com": "password123",
-                            "0912345678": "password123",
-                            "test@test.com": "test"
-                        };
-                        if (users[identifier] && users[identifier] === password) {
-                            resolve({ success: true, user: { name: "Musab", plan: "VIP", city: "الخرطوم" } });
-                        } else if (users[identifier] && users[identifier] !== password) {
-                            resolve({ success: false, error: "wrong_password" });
-                        } else {
-                            resolve({ success: false, error: "not_found" });
-                        }
-                    }, 1000); // محاكاة تأخير الشبكة
-                });
-            },
-            sendOtp: async function(identifier) {
-                // In a real app, this would send an SMS or email
-                console.log(`Sending OTP to ${identifier}...`);
-                return { success: true };
-            }
-        };
+        const SERVER_URL = "https://sudanese-love--musabalajb.replit.app"; // Your backend URL
 
-        // --- إدارة حالة تسجيل الدخول ---
-        let failedAttempts = 0;
-        let isLocked = false;
-
-        function handleLogin() {
-            if (isLocked) return;
-
-            const identifier = document.getElementById('identifier').value;
-            const password = document.getElementById('password').value;
-            const loginBtn = document.getElementById('loginBtn');
-            const originalText = loginBtn.innerHTML;
-
-            loginBtn.disabled = true;
-            loginBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
-            hideError();
-
-            NaseebAPI.login(identifier, password).then(response => {
-                loginBtn.disabled = false;
-                loginBtn.innerHTML = originalText;
-
-                if (response.success) {
-                    // نجاح تسجيل الدخول
-                    failedAttempts = 0;
-                    const rememberMe = document.getElementById('rememberMe').checked;
-                    if (rememberMe) {
-                        localStorage.setItem('naseeb_user', JSON.stringify(response.user));
-                    }
-                    sessionStorage.setItem('naseeb_user', JSON.stringify(response.user));
-                    
-                    // حفظ البيانات الأساسية للاستخدام في الصفحات الأخرى
-                    localStorage.setItem('naseeb_logged', 'true');
-                    localStorage.setItem('userName', response.user.name);
-                    localStorage.setItem('userPlan', response.user.plan);
-                    localStorage.setItem('userCity', response.user.city);
-
-                    window.location.href = 'members.html';
-                } else {
-                    // فشل تسجيل الدخول
-                    failedAttempts++;
-                    if (response.error === 'wrong_password') {
-                        showError('كلمة المرور غير صحيحة.');
-                    } else {
-                        showError('البريد الإلكتروني أو رقم الهاتف غير مسجل.');
-                    }
-
-                    if (failedAttempts >= 3) {
-                        lockLogin();
-                    }
-                }
-            });
-        }
-
-        function lockLogin() {
-            isLocked = true;
-            failedAttempts = 0;
-            const loginBtn = document.getElementById('loginBtn');
-            let countdown = 30;
-            
-            const interval = setInterval(() => {
-                showError(`محاولات كثيرة خاطئة. يرجى الانتظار ${countdown} ثانية.`);
-                countdown--;
-                if (countdown < 0) {
-                    clearInterval(interval);
-                    isLocked = false;
-                    hideError();
-                }
-            }, 1000);
-        }
-
-        function toggleForm() {
-            const passwordForm = document.getElementById('password-form');
-            const otpForm = document.getElementById('otp-form');
-            const toggleBtn = document.getElementById('toggleFormBtn');
-
-            if (passwordForm.style.display !== 'none') {
-                passwordForm.style.display = 'none';
-                otpForm.style.display = 'block';
-                toggleBtn.innerText = 'أو سجل دخولك بكلمة السر';
-                NaseebAPI.sendOtp(document.getElementById('identifier').value);
-            } else {
-                passwordForm.style.display = 'block';
-                otpForm.style.display = 'none';
-                toggleBtn.innerText = 'أو سجل دخولك برمز سري';
-            }
-        }
-
-        function verifyOtp() {
-            // Logic to verify OTP would go here
-            // For this simulation, we'll just log in successfully
-            console.log("OTP verified (simulation).");
-            localStorage.setItem('naseeb_logged', 'true');
-            window.location.href = 'members.html';
-        }
-
-        function showError(message) {
-            const errorBox = document.getElementById('error-box');
-            errorBox.textContent = message;
-            errorBox.style.display = 'block';
-        }
-
-        function hideError() {
-            const errorBox = document.getElementById('error-box');
-            errorBox.style.display = 'none';
-        }
-
-        // --- التحقق من وجود مستخدم مسجل ---
-        window.onload = () => {
-            const rememberedUser = localStorage.getItem('naseeb_user');
-            if (rememberedUser) {
-                // إذا كان المستخدم قد اختار "تذكرني"، يتم تسجيل دخوله تلقائياً
-                console.log("User found in localStorage, logging in automatically.");
-                sessionStorage.setItem('naseeb_user', rememberedUser);
+        // Auto-redirect if already logged in
+        window.onload = function() {
+            const token = localStorage.getItem('naseeb_token');
+            if (token) {
                 window.location.href = 'members.html';
             }
         };
+
+        async function handleLogin(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const loginBtn = document.getElementById('loginBtn');
+            const errorMessageDiv = document.getElementById('error-message');
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // Show loading state
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
+            errorMessageDiv.classList.add('hidden');
+
+            try {
+                const response = await fetch(`${SERVER_URL}/api/v1/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    // --- SUCCESS ---
+                    loginBtn.innerHTML = `<i class="fas fa-check"></i>`;
+                    
+                    // Store token and user info
+                    const storage = rememberMe ? localStorage : sessionStorage;
+                    storage.setItem('naseeb_token', data.token);
+                    storage.setItem('naseeb_user_name', data.user.name);
+                    storage.setItem('naseeb_user_id', data.user._id);
+                    storage.setItem('naseeb_user_plan', data.user.plan);
+
+                    // Redirect to members page
+                    setTimeout(() => {
+                        window.location.href = 'members.html';
+                    }, 500);
+
+                } else {
+                    // --- FAILURE ---
+                    throw new Error(data.message || 'An unknown error occurred.');
+                }
+
+            } catch (error) {
+                errorMessageDiv.innerText = error.message;
+                errorMessageDiv.classList.remove('hidden');
+                
+                // Restore button state
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = `<span>دخول آمن</span>`;
+            }
+        }
     </script>
 </body>
 </html>
