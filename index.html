@@ -26,11 +26,11 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .plan-card {
-            background: white; border: 2px solid #e2e8f0; border-radius: 2rem;
-            padding: 1.5rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
+            background: white; border: 2px solid #e2e8f0; border-radius: 1.5rem;
+            padding: 1.25rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
         }
-        .plan-card:hover { transform: translateY(-8px); }
-        .plan-card.selected { border-width: 4px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); }
+        .plan-card:hover { transform: translateY(-5px); }
+        .plan-card.selected { border-width: 3px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
         .plan-card.selected.sutra { border-color: var(--primary); }
         .plan-card.selected.gold { border-color: var(--gold); }
         .plan-card.selected.diamond { border-color: var(--diamond); }
@@ -69,32 +69,39 @@
         </div>
     </header>
 
-    <section class="max-w-6xl mx-auto -mt-20 px-6 grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
-        <div class="bg-white p-6 rounded-[2rem] shadow-xl text-center border-b-4 border-emerald-600">
-            <i class="fas fa-users text-3xl text-emerald-600 mb-3"></i>
-            <h3 class="font-black text-2xl">+5,000</h3>
-            <p class="text-xs font-bold text-slate-500" data-ar="عضو موثوق" data-en="Trusted Members"></p>
-        </div>
-        <div class="bg-white p-6 rounded-[2rem] shadow-xl text-center border-b-4 border-amber-500">
-            <i class="fas fa-hand-holding-heart text-3xl text-amber-500 mb-3"></i>
-            <h3 class="font-black text-2xl">+100</h3>
-            <p class="text-xs font-bold text-slate-500" data-ar="قصة نجاح" data-en="Success Stories"></p>
-        </div>
-        <div class="bg-white p-6 rounded-[2rem] shadow-xl text-center border-b-4 border-purple-600">
-            <i class="fas fa-shield-halved text-3xl text-purple-600 mb-3"></i>
-            <h3 class="font-black text-2xl">100%</h3>
-            <p class="text-xs font-bold text-slate-500" data-ar="خصوصية وأمان" data-en="Privacy & Security"></p>
-        </div>
-        <div class="bg-white p-6 rounded-[2rem] shadow-xl text-center border-b-4 border-blue-600">
-            <i class="fas fa-globe-africa text-3xl text-blue-600 mb-3"></i>
-            <h3 class="font-black text-2xl">+20</h3>
-            <p class="text-xs font-bold text-slate-500" data-ar="دولة حول العالم" data-en="Countries Worldwide"></p>
-        </div>
-    </section>
-
-    <main id="registerSection" class="max-w-7xl mx-auto px-4 pb-20">
+    <main id="registerSection" class="max-w-4xl mx-auto px-4 pb-20 -mt-20">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             
+            <!-- Live Preview Column (Classic Vertical Layout) -->
+            <div class="lg:col-span-5 lg:sticky top-10">
+                <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-emerald-50">
+                    <div class="relative h-80 bg-slate-200">
+                        <img id="previewImg" src="https://ui-avatars.com/api/?name=Naseeb&background=065f46&color=fff" class="w-full h-full object-cover blur-[40px]" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-950 to-transparent"></div>
+                        
+                        <div class="absolute top-4 right-4">
+                            <svg class="w-12 h-12" viewBox="0 0 36 36">
+                                <path id="completion-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3"></path>
+                                <path id="completion-circle-fg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3" stroke-dasharray="100, 100" stroke-dashoffset="100"></path>
+                                <text id="completion-text" x="18" y="22" text-anchor="middle" font-size="9" fill="white" font-weight="bold">0%</text>
+                            </svg>
+                        </div>
+                         <div class="absolute bottom-0 w-full p-6 text-white">
+                            <h3 id="prevName" class="text-3xl font-black">...</h3>
+                            <p id="prevCity" class="text-sm font-bold text-emerald-100 opacity-80">...</p>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <div class="grid grid-cols-3 gap-2 text-[10px] font-bold">
+                            <div class="bg-emerald-50 p-3 rounded-lg"><b id="prevAge">-</b><br><span data-ar="العمر" data-en="Age"></span></div>
+                            <div class="bg-emerald-50 p-3 rounded-lg"><b id="prevStatus">-</b><br><span data-ar="الحالة" data-en="Status"></span></div>
+                            <div class="bg-emerald-50 p-3 rounded-lg"><b id="prevJob" class="truncate">-</b><br><span data-ar="المهنة" data-en="Job"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registration Form Column -->
             <div class="lg:col-span-7 bg-white rounded-[3rem] shadow-2xl p-8 md:p-12 border border-slate-100">
                 <form id="regForm" onsubmit="return false;">
                     
@@ -170,7 +177,7 @@
                             </div>
                         </div>
                         <div class="text-center mt-6">
-                            <button type="button" onclick="selectPlan('free')" class="text-slate-600 font-bold underline" data-ar="أو استمر مع الباقة المجانية" data-en="Or continue with the Free Plan"></button>
+                            <button type="button" onclick="selectPlan('free'); finalSubmit();" class="text-slate-600 font-bold underline" data-ar="أو استمر مع الباقة المجانية" data-en="Or continue with the Free Plan"></button>
                         </div>
 
                         <div id="paymentSection" class="hidden mt-6 p-6 bg-emerald-950 rounded-3xl text-white text-center">
@@ -183,33 +190,6 @@
                     </div>
                 </form>
             </div>
-
-            <div class="lg:col-span-5 sticky top-10">
-                <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-emerald-50">
-                    <div class="relative h-64 bg-slate-200">
-                        <img id="previewImg" src="https://ui-avatars.com/api/?name=Naseeb&background=065f46&color=fff" class="w-full h-full object-cover blur-[40px]" loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-950 to-transparent"></div>
-                        
-                        <div class="absolute top-4 right-4">
-                            <svg class="w-12 h-12" viewBox="0 0 36 36">
-                                <path id="completion-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3"></path>
-                                <path id="completion-circle-fg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3" stroke-dasharray="100, 100" stroke-dashoffset="100"></path>
-                                <text id="completion-text" x="18" y="22" text-anchor="middle" font-size="9" fill="white" font-weight="bold">0%</text>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="p-6 text-center">
-                        <h3 id="prevName" class="text-2xl font-black text-emerald-900">...</h3>
-                        <p id="prevCity" class="text-slate-500 font-bold mb-4">...</p>
-                        <div class="grid grid-cols-3 gap-1 text-[10px] font-bold">
-                            <div class="bg-emerald-50 p-2 rounded-lg"><b id="prevAge">-</b><br><span data-ar="العمر" data-en="Age"></span></div>
-                            <div class="bg-emerald-50 p-2 rounded-lg"><b id="prevStatus">-</b><br><span data-ar="الحالة" data-en="Status"></span></div>
-                            <div class="bg-emerald-50 p-2 rounded-lg"><b id="prevJob" class="truncate">-</b><br><span data-ar="المهنة" data-en="Job"></span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </main>
 
@@ -225,8 +205,8 @@
 
     <script>
         // =================================================================================
-        // NASEEB GLOBAL v11.0 - THE SUPER INDEX
-        // This script is fully integrated, secure, and optimized.
+        // NASEEB GLOBAL v12.0 - THE CLASSIC REFINED
+        // This script is fully integrated, secure, and optimized with a classic layout.
         // =================================================================================
 
         // --- GLOBAL CONFIG & STATE ---
@@ -403,3 +383,29 @@
         }
 
         function updateGeoNote(countryName) {
+            const note = document.getElementById('geoNote');
+            if (countryName) {
+                const textAr = `🌍 الأسعار تظهر بعملة بلدك (${countryName})`; const textEn = `🌍 Prices shown in your local currency (${countryName})`;
+                note.setAttribute('data-ar', textAr); note.setAttribute('data-en', textEn);
+                note.innerText = currentLang === 'ar' ? textAr : textEn;
+            }
+        }
+
+        function updatePrices() {
+            const rate = exchangeRates[userCurrency] || exchangeRates['USD'];
+            if (!rate) return;
+            document.querySelectorAll('.price').forEach(el => {
+                const sdg = parseFloat(el.getAttribute('data-price-sdg'));
+                const finalPrice = (userCurrency === 'SDG') ? sdg : Math.round((sdg * rate) / 5) * 5;
+                el.innerText = new Intl.NumberFormat(currentLang === 'ar' ? 'ar-EG' : 'en-US').format(finalPrice);
+            });
+            document.querySelectorAll('.currency-code').forEach(el => el.innerText = userCurrency);
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.getElementById('mainHtml').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('langLabel').innerText = currentLang === 'ar' ? 'English' : 'عربي';
+            document.querySelectorAll('[data-ar]').forEach(el => {
+                const text = el.getAttribute(`data-${currentLang}`);
+                if (text) el.innerText = text;
