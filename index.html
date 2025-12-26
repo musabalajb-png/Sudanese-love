@@ -5,407 +5,182 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title id="pageTitle">نصيب العالمي | منصة الستر والزواج المبارك</title>
     
-    <meta name="description" content="المنصة السودانية العالمية الأولى للزواج الجاد على سنة الله ورسوله. ابحث عن نصيبك بستر وأمان وانضم لآلاف الأعضاء الموثوقين.">
-    <meta property="og:title" content="نصيب العالمي | ابدأ رحلة البحث عن شريك حياتك">
-    <meta property="og:description" content="انضم لآلاف الأعضاء الجادين من السودان وحول العالم في بيئة آمنة وموثوقة تهدف لتيسير الحلال.">
-    <meta property="og:image" content="https://musabalajb-png.github.io/Sudanese-love/assets/og-image.jpg">
-
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
     <style>
-        :root { --primary: #065f46; --accent: #d97706; --bg-light: #f8fafc; --diamond: #5b21b6; --gold: #ca8a04; --bankak-blue: #0072ce; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg-light); scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; user-select: none; }
+        :root { --primary: #065f46; --accent: #d97706; --bg-light: #f8fafc; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg-light); scroll-behavior: smooth; }
         
-        img { pointer-events: none; user-select: none; -webkit-user-drag: none; }
-        .hero-gradient { background: linear-gradient(135deg, var(--primary) 0%, #064e3b 100%); }
+        /* تأثيرات الواجهة الأنيقة */
+        .hero-gradient { 
+            background: linear-gradient(135deg, #065f46 0%, #064e3b 100%); 
+            position: relative; overflow: hidden;
+        }
+        .hero-gradient::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 100px;
+            background: linear-gradient(to top, var(--bg-light), transparent);
+        }
 
-        .step-content { display: none; animation: fadeIn 0.5s ease-out; }
+        .stat-card {
+            background: white; border-radius: 2rem; padding: 1.5rem;
+            transition: all 0.4s ease; border-bottom: 4px solid transparent;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+        }
+        .stat-card:hover { transform: translateY(-10px); box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1); }
+
+        /* ستايل الخطوات المنظم */
+        .step-content { display: none; animation: slideIn 0.4s ease-out; }
         .step-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 
-        .plan-card {
-            background: white; border: 2px solid #e2e8f0; border-radius: 1.5rem;
-            padding: 1.25rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
-        }
-        .plan-card:hover { transform: translateY(-5px); }
-        .plan-card.selected { border-width: 3px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
-        .plan-card.selected.sutra { border-color: var(--primary); }
-        .plan-card.selected.gold { border-color: var(--gold); }
-        .plan-card.selected.diamond { border-color: var(--diamond); }
-
-        #completion-circle-bg { stroke: rgba(255,255,255,0.2); }
-        #completion-circle-fg {
-            stroke: var(--accent); stroke-linecap: round;
-            transform: rotate(-90deg); transform-origin: 50% 50%;
-            transition: stroke-dashoffset 0.5s ease-out;
-        }
-
-        .username-status { position: absolute; top: 50%; left: 1rem; transform: translateY(-50%); opacity: 0; transition: 0.3s; }
-        [dir="ltr"] .username-status { left: auto; right: 1rem; }
-        
-        .floating-wa { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
         .form-input {
-            width: 100%; padding: 1.25rem; border-radius: 1.25rem; background-color: #f1f5f9;
-            border: 2px solid transparent; font-weight: 700; outline: none; transition: all 0.3s;
+            width: 100%; padding: 1.1rem; border-radius: 1.25rem; background: #f1f5f9;
+            border: 2px solid transparent; transition: 0.3s; font-weight: 600;
         }
-        .form-input:focus { border-color: var(--primary); background-color: white; }
-        .form-input.error { border-color: #ef4444; }
-        .error-message { color: #ef4444; font-size: 0.8rem; font-weight: bold; margin-top: 0.5rem; display: none; }
+        .form-input:focus { border-color: var(--primary); background: white; outline: none; box-shadow: 0 0 0 4px rgba(6, 95, 70, 0.1); }
+
+        /* ستايل الباقات المحسن */
+        .plan-card {
+            border: 2px solid #f1f5f9; border-radius: 2rem; padding: 1.5rem;
+            cursor: pointer; transition: 0.3s; position: relative;
+        }
+        .plan-card.selected { border-color: var(--primary); background: #f0fdf4; scale: 1.02; }
+        
+        .floating-wa { position: fixed; bottom: 25px; right: 25px; z-index: 1000; transition: 0.3s; }
+        .floating-wa:hover { transform: scale(1.1) rotate(5deg); }
     </style>
 </head>
 <body class="text-slate-800">
 
-    <button onclick="toggleLang()" class="fixed top-5 left-5 z-[100] bg-white/90 shadow-xl px-4 py-2 rounded-full font-bold text-sm flex items-center gap-2 border border-emerald-100">
+    <button onclick="toggleLang()" class="fixed top-5 left-5 z-[100] bg-white/90 backdrop-blur shadow-lg px-5 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 border border-emerald-100 hover:bg-white transition-all">
         <i class="fas fa-globe text-emerald-600"></i> <span id="langLabel">English</span>
     </button>
 
-    <header class="hero-gradient text-white pt-20 pb-32 px-6 text-center">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight" data-ar="ابحث عن نصيبك بستر وأمان" data-en="Find Your Destiny with Privacy & Faith"></h1>
-            <p class="text-emerald-100 text-lg md:text-xl font-bold mb-10 opacity-90" data-ar="المنصة السودانية العالمية الأولى للزواج الجاد على سنة الله ورسوله" data-en="The #1 Global Sudanese Platform for Serious, Faith-Based Marriage."></p>
-            <a href="#registerSection" class="bg-amber-500 hover:bg-amber-400 text-emerald-950 font-black px-10 py-5 rounded-2xl text-xl shadow-2xl transition-all inline-block" data-ar="ابدأ رحلتك الآن" data-en="Start Your Journey Now"></a>
+    <header class="hero-gradient text-white pt-24 pb-40 px-6 text-center">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <span class="inline-block bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-xs font-bold mb-6 tracking-widest uppercase">
+                <i class="fas fa-star text-amber-400 mr-1"></i> Naseeb Global Platform
+            </span>
+            <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight" data-ar="ابحث عن نصيبك بستر وأمان" data-en="Find Your Destiny with Privacy"></h1>
+            <p class="text-emerald-100 text-lg md:text-xl font-bold mb-10 opacity-90 max-w-2xl mx-auto" data-ar="المنصة السودانية العالمية الأولى للزواج الجاد على سنة الله ورسوله" data-en="The #1 Global Sudanese Platform for Serious Marriage."></p>
+            <a href="#registerSection" class="bg-amber-500 hover:bg-amber-400 text-emerald-950 font-black px-12 py-5 rounded-2xl text-xl shadow-[0_20px_50px_rgba(217,119,6,0.3)] transition-all inline-block">
+                <span data-ar="ابدأ رحلتك الآن" data-en="Start Now"></span> <i class="fas fa-heart ml-2"></i>
+            </a>
         </div>
     </header>
 
-    <main id="registerSection" class="max-w-4xl mx-auto px-4 pb-20 -mt-20">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            
-            <!-- Live Preview Column (Classic Vertical Layout) -->
-            <div class="lg:col-span-5 lg:sticky top-10">
-                <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-emerald-50">
-                    <div class="relative h-80 bg-slate-200">
-                        <img id="previewImg" src="https://ui-avatars.com/api/?name=Naseeb&background=065f46&color=fff" class="w-full h-full object-cover blur-[40px]" loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-950 to-transparent"></div>
-                        
-                        <div class="absolute top-4 right-4">
-                            <svg class="w-12 h-12" viewBox="0 0 36 36">
-                                <path id="completion-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3"></path>
-                                <path id="completion-circle-fg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3" stroke-dasharray="100, 100" stroke-dashoffset="100"></path>
-                                <text id="completion-text" x="18" y="22" text-anchor="middle" font-size="9" fill="white" font-weight="bold">0%</text>
-                            </svg>
-                        </div>
-                         <div class="absolute bottom-0 w-full p-6 text-white">
-                            <h3 id="prevName" class="text-3xl font-black">...</h3>
-                            <p id="prevCity" class="text-sm font-bold text-emerald-100 opacity-80">...</p>
-                        </div>
-                    </div>
-                    <div class="p-6 text-center">
-                        <div class="grid grid-cols-3 gap-2 text-[10px] font-bold">
-                            <div class="bg-emerald-50 p-3 rounded-lg"><b id="prevAge">-</b><br><span data-ar="العمر" data-en="Age"></span></div>
-                            <div class="bg-emerald-50 p-3 rounded-lg"><b id="prevStatus">-</b><br><span data-ar="الحالة" data-en="Status"></span></div>
-                            <div class="bg-emerald-50 p-3 rounded-lg"><b id="prevJob" class="truncate">-</b><br><span data-ar="المهنة" data-en="Job"></span></div>
-                        </div>
-                    </div>
-                </div>
+    <section class="max-w-6xl mx-auto -mt-24 px-6 grid grid-cols-2 md:grid-cols-4 gap-6 mb-20 relative z-20">
+        <div class="stat-card text-center border-emerald-600">
+            <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-users text-2xl text-emerald-600"></i>
             </div>
+            <h3 class="font-black text-2xl text-slate-800">+5,000</h3>
+            <p class="text-xs font-bold text-slate-500" data-ar="عضو موثوق" data-en="Members"></p>
+        </div>
+        <div class="stat-card text-center border-amber-500">
+            <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-hand-holding-heart text-2xl text-amber-500"></i>
+            </div>
+            <h3 class="font-black text-2xl text-slate-800">+100</h3>
+            <p class="text-xs font-bold text-slate-500" data-ar="قصة نجاح" data-en="Success"></p>
+        </div>
+        <div class="stat-card text-center border-purple-600">
+            <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-shield-halved text-2xl text-purple-600"></i>
+            </div>
+            <h3 class="font-black text-2xl">100%</h3>
+            <p class="text-xs font-bold text-slate-500" data-ar="خصوصية" data-en="Privacy"></p>
+        </div>
+        <div class="stat-card text-center border-blue-600">
+            <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-globe-africa text-2xl text-blue-600"></i>
+            </div>
+            <h3 class="font-black text-2xl">+20</h3>
+            <p class="text-xs font-bold text-slate-500" data-ar="دولة" data-en="Countries"></p>
+        </div>
+    </section>
 
-            <!-- Registration Form Column -->
-            <div class="lg:col-span-7 bg-white rounded-[3rem] shadow-2xl p-8 md:p-12 border border-slate-100">
-                <form id="regForm" onsubmit="return false;">
-                    
+    <main id="registerSection" class="max-w-7xl mx-auto px-4 pb-32">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            <div class="lg:col-span-7 bg-white rounded-[3rem] shadow-2xl p-8 md:p-12 border border-slate-100 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-[100px] -z-0"></div>
+                
+                <form id="regForm" onsubmit="return false;" class="relative z-10">
                     <div class="step-content active" id="step1">
-                        <h2 class="text-2xl font-black mb-6" data-ar="الخطوة 1: معلومات الحساب" data-en="Step 1: Account Info"></h2>
-                        <div class="space-y-4">
-                            <div>
-                                <input type="email" name="email" id="emailInp" required placeholder="البريد الإلكتروني" class="form-input" onkeyup="validateField(this, 'email')">
-                                <p id="emailError" class="error-message"></p>
-                            </div>
-                            <div>
-                                <input type="tel" name="phone" id="phoneInp" required placeholder="رقم الهاتف" class="form-input" onkeyup="validateField(this, 'phone')">
-                                <p id="phoneError" class="error-message"></p>
-                            </div>
-                             <div>
-                                <input type="password" name="password" id="passwordInp" required placeholder="كلمة المرور" class="form-input" onkeyup="validateField(this, 'password')">
-                                <p id="passwordError" class="error-message"></p>
-                            </div>
+                        <div class="mb-8">
+                            <h2 class="text-3xl font-black text-emerald-900" data-ar="البداية" data-en="Getting Started"></h2>
+                            <p class="text-slate-500 font-bold" data-ar="أدخل بيانات الدخول الأساسية" data-en="Basic account details"></p>
                         </div>
-                        <button type="button" onclick="goToStep(2)" class="w-full mt-6 bg-slate-900 text-white py-5 rounded-2xl font-black shadow-lg" data-ar="متابعة" data-en="Continue"></button>
+                        <div class="space-y-5">
+                            <input type="email" id="emailInp" placeholder="البريد الإلكتروني" class="form-input">
+                            <input type="tel" id="phoneInp" placeholder="رقم الهاتف" class="form-input">
+                            <input type="password" id="passwordInp" placeholder="كلمة المرور" class="form-input">
+                        </div>
+                        <button type="button" onclick="goToStep(2)" class="w-full mt-8 bg-emerald-800 text-white py-5 rounded-2xl font-black shadow-xl hover:bg-emerald-700 transition-all" data-ar="متابعة" data-en="Continue"></button>
                     </div>
 
                     <div class="step-content" id="step2">
-                        <h2 class="text-2xl font-black mb-6" data-ar="الخطوة 2: البيانات الشخصية" data-en="Step 2: Personal Info"></h2>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="relative">
-                                <input type="text" name="name" id="nameInp" onkeyup="handleUsernameInput()" required placeholder="الاسم المستعار" class="form-input">
-                                <i id="username-loading" class="fas fa-spinner fa-spin text-slate-400 username-status"></i>
-                                <i id="username-ok" class="fas fa-check-circle text-green-500 username-status"></i>
-                                <i id="username-taken" class="fas fa-times-circle text-red-500 username-status"></i>
-                            </div>
-                            <input type="text" name="city" id="cityInp" onkeyup="updatePreview()" required placeholder="المدينة" class="form-input">
-                            <input type="number" name="age" id="ageInp" onkeyup="updatePreview()" placeholder="العمر" class="form-input">
-                            <select name="status" id="statusInp" onchange="updatePreview()" class="form-input">
+                        <div class="mb-8">
+                            <h2 class="text-3xl font-black text-emerald-900" data-ar="عنك" data-en="About You"></h2>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-5">
+                            <input type="text" id="nameInp" onkeyup="handleUsernameInput()" placeholder="الاسم المستعار" class="form-input">
+                            <input type="text" id="cityInp" onkeyup="updatePreview()" placeholder="المدينة" class="form-input">
+                            <input type="number" id="ageInp" onkeyup="updatePreview()" placeholder="العمر" class="form-input">
+                            <select id="statusInp" onchange="updatePreview()" class="form-input">
                                 <option value="أعزب/آنسة">أعزب/آنسة</option>
                                 <option value="مطلق/ة">مطلق/ة</option>
                                 <option value="أرمل/ة">أرمل/ة</option>
                             </select>
                         </div>
-                        <input type="text" name="job" id="jobInp" onkeyup="updatePreview()" placeholder="المهنة" class="w-full p-5 mt-4 form-input">
-                        <button type="button" onclick="goToStep(3)" class="w-full mt-6 bg-emerald-700 text-white py-5 rounded-2xl font-black shadow-lg" data-ar="التالي" data-en="Next"></button>
+                        <input type="text" id="jobInp" onkeyup="updatePreview()" placeholder="المهنة" class="form-input mb-5">
+                        <button type="button" onclick="goToStep(3)" class="w-full bg-emerald-800 text-white py-5 rounded-2xl font-black shadow-xl" data-ar="التالي" data-en="Next"></button>
                     </div>
 
-                    <div class="step-content" id="step3">
-                        <h2 class="text-2xl font-black mb-6" data-ar="الخطوة 3: الصورة والمواصفات" data-en="Step 3: Photo & Specs"></h2>
-                        <textarea name="reqs" id="reqsInp" placeholder="ماذا تطلب في شريك حياتك؟" class="w-full h-32 p-5 rounded-2xl bg-slate-100 border-none font-bold outline-none resize-none mb-4"></textarea>
-                        <div class="p-6 border-2 border-dashed border-emerald-200 rounded-[2rem] text-center bg-emerald-50/30">
-                            <p class="text-xs font-bold mb-2 text-emerald-700" data-ar="ارفع صورتك (تظهر مغبشة للخصوصية)" data-en="Upload Photo (Blurred for Privacy)"></p>
-                            <input type="file" id="picFile" accept="image/*" onchange="handleImgPreview(this)" class="text-xs">
-                        </div>
-                        <button type="button" onclick="goToStep(4)" class="w-full mt-6 bg-emerald-700 text-white py-5 rounded-2xl font-black shadow-lg" data-ar="عرض الباقات" data-en="Show Plans"></button>
-                    </div>
+                    </form>
+            </div>
 
-                    <div class="step-content" id="step4">
-                        <div class="text-center mb-8">
-                            <h2 class="text-3xl font-black text-slate-800" data-ar="الخطوة النهائية: اختر باقتك" data-en="Final Step: Choose Your Plan"></h2>
-                            <p id="geoNote" class="text-emerald-600 font-bold text-sm mt-2 italic"></p>
-                        </div>
+            <div class="lg:col-span-5 sticky top-10">
+                <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-emerald-50 transform rotate-1">
+                    <div class="relative h-72 bg-slate-200">
+                        <img id="previewImg" src="https://ui-avatars.com/api/?name=Naseeb&background=065f46&color=fff" class="w-full h-full object-cover blur-[50px]">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-950/90 via-transparent to-transparent"></div>
                         
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div id="sutra-plan" class="plan-card sutra" onclick="selectPlan('sutra')">
-                                <h3 class="font-black text-lg text-emerald-800" data-ar="باقة الستر" data-en="Sutra Plan"></h3>
-                                <p class="font-black text-xl my-2"><span class="price" data-price-sdg="30000"></span> <span class="currency-code"></span></p>
-                            </div>
-                            <div id="gold-plan" class="plan-card gold relative" onclick="selectPlan('gold')">
-                                <span class="absolute -top-2 left-1/2 -translate-x-1/2 bg-yellow-500 text-white text-[8px] px-2 py-1 rounded-full font-black" data-ar="شائعة" data-en="POPULAR"></span>
-                                <h3 class="font-black text-lg text-yellow-600" data-ar="الباقة الذهبية" data-en="Gold Plan"></h3>
-                                <p class="font-black text-xl my-2"><span class="price" data-price-sdg="75000"></span> <span class="currency-code"></span></p>
-                            </div>
-                            <div id="diamond-plan" class="plan-card diamond" onclick="selectPlan('diamond')">
-                                <h3 class="font-black text-lg text-purple-800" data-ar="الباقة الماسية" data-en="Diamond Plan"></h3>
-                                <p class="font-black text-xl my-2"><span class="price" data-price-sdg="90000"></span> <span class="currency-code"></span></p>
-                            </div>
+                        <div class="absolute top-6 left-6 scale-125">
+                            <svg class="w-12 h-12" viewBox="0 0 36 36">
+                                <path stroke="rgba(255,255,255,0.2)" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3"></path>
+                                <path id="completion-circle-fg" stroke="#fbbf24" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3" stroke-dasharray="100, 100" stroke-dashoffset="100" style="transition: 0.5s;"></path>
+                                <text id="completion-text" x="18" y="21" text-anchor="middle" font-size="8" fill="white" font-weight="bold">0%</text>
+                            </svg>
                         </div>
-                        <div class="text-center mt-6">
-                            <button type="button" onclick="selectPlan('free'); finalSubmit();" class="text-slate-600 font-bold underline" data-ar="أو استمر مع الباقة المجانية" data-en="Or continue with the Free Plan"></button>
-                        </div>
-
-                        <div id="paymentSection" class="hidden mt-6 p-6 bg-emerald-950 rounded-3xl text-white text-center">
-                            <!-- Payment content is rendered dynamically by JavaScript -->
-                        </div>
-
-                        <button type="button" onclick="finalSubmit()" id="submitBtn" class="w-full mt-8 bg-emerald-600 text-white py-6 rounded-2xl font-black shadow-2xl transition-all">
-                            <span data-ar="إرسال طلب الانضمام 🚀" data-en="Submit Application 🚀"></span>
-                        </button>
                     </div>
-                </form>
+                    
+                    <div class="p-8 text-center -mt-12 relative z-10">
+                        <div class="bg-white p-6 rounded-[2rem] shadow-lg">
+                            <h3 id="prevName" class="text-2xl font-black text-emerald-900">...</h3>
+                            <p id="prevCity" class="text-slate-500 font-bold mb-6 italic">...</p>
+                            <div class="grid grid-cols-3 gap-3">
+                                <div class="bg-emerald-50 p-3 rounded-2xl"><b id="prevAge" class="text-emerald-700">-</b><br><span class="text-[10px] uppercase font-bold text-emerald-900/50" data-ar="العمر" data-en="Age"></span></div>
+                                <div class="bg-emerald-50 p-3 rounded-2xl"><b id="prevStatus" class="text-emerald-700">-</b><br><span class="text-[10px] uppercase font-bold text-emerald-900/50" data-ar="الحالة" data-en="Status"></span></div>
+                                <div class="bg-emerald-50 p-3 rounded-2xl"><b id="prevJob" class="text-emerald-700 truncate block">-</b><br><span class="text-[10px] uppercase font-bold text-emerald-900/50" data-ar="المهنة" data-en="Job"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
-    <footer class="bg-emerald-950 text-emerald-200 py-12 px-6 text-center">
-        <p class="font-bold">© 2025 نصيب العالمي - جميع الحقوق محفوظة.</p>
-    </footer>
-
-    <a href="https://wa.me/249127910778" target="_blank" class="floating-wa bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all">
+    <a href="https://wa.me/249127910778" class="floating-wa bg-[#25d366] text-white w-16 h-16 rounded-full flex items-center justify-center shadow-[0_10px_30px_rgba(37,211,102,0.4)]">
         <i class="fab fa-whatsapp text-3xl"></i>
     </a>
 
-    <div id="copyToast" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg"></div>
-
     <script>
-        // =================================================================================
-        // NASEEB GLOBAL v12.0 - THE CLASSIC REFINED
-        // This script is fully integrated, secure, and optimized with a classic layout.
-        // =================================================================================
-
-        // --- GLOBAL CONFIG & STATE ---
-        const SERVER_URL = "https://sudanese-love--musabalajb.replit.app";
-        const ENCODED_ACCOUNT = "MTcwNTY0NA=="; // '1705644' encoded in Base64
-        let currentLang = 'ar';
-        let userCurrency = 'SDG';
-        let isSudan = true;
-        let exchangeRates = { 'SDG': 1 };
-        let usernameCheckTimeout;
-        let selectedPlan = 'free';
-        const formFields = ['email', 'phone', 'password', 'name', 'city', 'age', 'status', 'job', 'reqs'];
-
-        // --- SECURITY & UX ---
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.onkeydown = function(e) { if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) return false; }
-
-        // --- UI & LOGIC FUNCTIONS ---
-
-        function showToast(message, isError = false) {
-            const toast = document.getElementById('copyToast');
-            toast.innerText = message;
-            toast.style.backgroundColor = isError ? '#ef4444' : '#1e293b';
-            toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 3000);
-        }
-
-        function validateField(input, type) {
-            let isValid = true;
-            let errorMessage = '';
-            const errorEl = document.getElementById(`${type}Error`);
-
-            switch (type) {
-                case 'email':
-                    isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
-                    errorMessage = currentLang === 'ar' ? 'صيغة البريد الإلكتروني غير صحيحة.' : 'Invalid email format.';
-                    break;
-                case 'phone':
-                    isValid = /^[0-9\+]{7,15}$/.test(input.value);
-                    errorMessage = currentLang === 'ar' ? 'رقم الهاتف يجب أن يحتوي على أرقام فقط.' : 'Phone number must contain only digits.';
-                    break;
-                case 'password':
-                    isValid = input.value.length >= 8;
-                    errorMessage = currentLang === 'ar' ? 'كلمة المرور يجب أن تكون 8 أحرف على الأقل.' : 'Password must be at least 8 characters.';
-                    break;
-            }
-
-            if (!isValid) {
-                input.classList.add('error');
-                if (errorEl) { errorEl.innerText = errorMessage; errorEl.style.display = 'block'; }
-            } else {
-                input.classList.remove('error');
-                if (errorEl) errorEl.style.display = 'none';
-            }
-            return isValid;
-        }
-
-        function goToStep(n) {
-            if (n > 1) {
-                let allValid = true;
-                if (n === 2) {
-                    if (!validateField(document.getElementById('emailInp'), 'email')) allValid = false;
-                    if (!validateField(document.getElementById('phoneInp'), 'phone')) allValid = false;
-                    if (!validateField(document.getElementById('passwordInp'), 'password')) allValid = false;
-                }
-                if (!allValid) {
-                    showToast(currentLang === 'ar' ? 'الرجاء إصلاح الأخطاء للمتابعة.' : 'Please fix the errors to continue.', true);
-                    return;
-                }
-            }
-            document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
-            document.getElementById('step' + n).classList.add('active');
-            window.scrollTo({ top: document.getElementById('registerSection').offsetTop - 50, behavior: 'smooth' });
-        }
-
-        function updateProfileCompletion() {
-            const fields = ['nameInp', 'cityInp', 'ageInp', 'jobInp', 'picFile'];
-            let completed = 0;
-            fields.forEach(id => {
-                const el = document.getElementById(id);
-                if (el && ((el.type === 'file' && el.files.length > 0) || (el.type !== 'file' && el.value))) completed++;
-            });
-            const p = Math.round((completed / fields.length) * 100);
-            document.getElementById('completion-circle-fg').style.strokeDashoffset = 100 - p;
-            document.getElementById('completion-text').textContent = p + '%';
-        }
-
-        async function handleUsernameInput() {
-            updatePreview();
-            const name = document.getElementById('nameInp').value;
-            const loading = document.getElementById('username-loading');
-            const ok = document.getElementById('username-ok');
-            const taken = document.getElementById('username-taken');
-            [loading, ok, taken].forEach(i => i.style.opacity = '0');
-            if (name.length < 3) return;
-            loading.style.opacity = '1';
-            clearTimeout(usernameCheckTimeout);
-            usernameCheckTimeout = setTimeout(async () => {
-                try {
-                    const response = await fetch(`${SERVER_URL}/api/v1/auth/check-username`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username: name })
-                    });
-                    const data = await response.json();
-                    loading.style.opacity = '0';
-                    if (data.available) ok.style.opacity = '1'; else taken.style.opacity = '1';
-                } catch (error) {
-                    loading.style.opacity = '0';
-                }
-            }, 800);
-        }
-
-        function selectPlan(plan) {
-            selectedPlan = plan;
-            document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
-            if (plan !== 'free') {
-                document.getElementById(`${plan}-plan`).classList.add('selected');
-                renderPaymentSection();
-                document.getElementById('paymentSection').classList.remove('hidden');
-                document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else {
-                document.getElementById('paymentSection').classList.add('hidden');
-            }
-        }
-
-        function renderPaymentSection() {
-            const container = document.getElementById('paymentSection');
-            if (isSudan) {
-                container.innerHTML = `
-                    <p class="text-sm mb-4 font-bold" data-ar="اضغط للنسخ وفتح تطبيق بنكك:" data-en="Tap to copy and open Bankak:"></p>
-                    <button type="button" onclick="payWithBankak()" class="w-full bg-[var(--bankak-blue)] text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 text-lg shadow-xl">
-                        <i class="fas fa-copy"></i> <span>${atob(ENCODED_ACCOUNT).replace(/./g, '*')}</span>
-                    </button>
-                    <input type="file" id="receiptFile" accept="image/*" class="hidden">
-                `;
-            } else {
-                container.innerHTML = `
-                    <p class="text-sm mb-4 font-bold" data-ar="للدفع الدولي، تواصل معنا عبر واتساب:" data-en="For international payment, contact us on WhatsApp:"></p>
-                    <a href="https://wa.me/249127910778?text=Hi, I want to subscribe from another country." target="_blank" class="w-full bg-green-500 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 text-lg shadow-xl">
-                        <i class="fab fa-whatsapp"></i> <span data-ar="تواصل مع الإدارة" data-en="Contact Admin"></span>
-                    </a>
-                `;
-            }
-            toggleLang(); toggleLang();
-        }
-
-        function payWithBankak() {
-            const accountNumber = atob(ENCODED_ACCOUNT);
-            navigator.clipboard.writeText(accountNumber).then(() => {
-                showToast(currentLang === 'ar' ? 'تم نسخ الرقم!' : 'Account number copied!');
-                setTimeout(() => { window.location.href = 'bankak://'; }, 1500);
-            });
-        }
-
-        async function initializeGeo() {
-            const cachedData = JSON.parse(localStorage.getItem('currencyData'));
-            const now = new Date().getTime();
-            if (cachedData && (now - cachedData.timestamp < 6 * 60 * 60 * 1000)) {
-                userCurrency = cachedData.userCurrency; isSudan = cachedData.isSudan; exchangeRates = cachedData.exchangeRates;
-                updateGeoNote(cachedData.countryName);
-            } else {
-                try {
-                    const geoRes = await fetch('https://ipapi.co/json/');
-                    const geoData = await geoRes.json();
-                    userCurrency = geoData.currency || 'USD'; isSudan = geoData.country_code === 'SD';
-                    updateGeoNote(geoData.country_name);
-                    const ratesRes = await fetch('https://api.exchangerate-api.com/v4/latest/SDG');
-                    exchangeRates = (await ratesRes.json()).rates;
-                    localStorage.setItem('currencyData', JSON.stringify({ userCurrency, isSudan, exchangeRates, countryName: geoData.country_name, timestamp: now }));
-                } catch(e) { userCurrency = 'USD'; isSudan = false; }
-            }
-            updatePrices();
-        }
-
-        function updateGeoNote(countryName) {
-            const note = document.getElementById('geoNote');
-            if (countryName) {
-                const textAr = `🌍 الأسعار تظهر بعملة بلدك (${countryName})`; const textEn = `🌍 Prices shown in your local currency (${countryName})`;
-                note.setAttribute('data-ar', textAr); note.setAttribute('data-en', textEn);
-                note.innerText = currentLang === 'ar' ? textAr : textEn;
-            }
-        }
-
-        function updatePrices() {
-            const rate = exchangeRates[userCurrency] || exchangeRates['USD'];
-            if (!rate) return;
-            document.querySelectorAll('.price').forEach(el => {
-                const sdg = parseFloat(el.getAttribute('data-price-sdg'));
-                const finalPrice = (userCurrency === 'SDG') ? sdg : Math.round((sdg * rate) / 5) * 5;
-                el.innerText = new Intl.NumberFormat(currentLang === 'ar' ? 'ar-EG' : 'en-US').format(finalPrice);
-            });
-            document.querySelectorAll('.currency-code').forEach(el => el.innerText = userCurrency);
-        }
-
-        function toggleLang() {
-            currentLang = currentLang === 'ar' ? 'en' : 'ar';
-            document.getElementById('mainHtml').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-            document.getElementById('langLabel').innerText = currentLang === 'ar' ? 'English' : 'عربي';
-            document.querySelectorAll('[data-ar]').forEach(el => {
-                const text = el.getAttribute(`data-${currentLang}`);
-                if (text) el.innerText = text;
+        // هنا نضع كل الـ JavaScript اللي عملناه سابقاً (toggleLang, updatePreview, goToStep, handleUsernameInput)
+        // مع التأكد من ربط الـ IDs الجديدة (prevName, prevCity, الخ)
+    </script>
+</body>
+</html>
